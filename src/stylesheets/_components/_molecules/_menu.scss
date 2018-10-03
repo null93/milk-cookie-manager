@@ -1,0 +1,24 @@
+.menu {
+	position: absolute;
+	visibility: hidden;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 20;
+	opacity: 0;
+	transition: visibility $animation-speed,
+				opacity $animation-speed;
+	&.active {
+		opacity: 1;
+		visibility: visible;
+	}
+	.menu-wrapper {
+		position: absolute;
+		width: 150px;
+		border-radius: 0 0 3px 3px;
+		overflow: hidden;
+		box-shadow: 0 6px 6px 0 rgba( 0, 0, 0, 0.23 ),
+					0 10px 20px 0 rgba( 0, 0, 0, 0.19 );
+	}
+}

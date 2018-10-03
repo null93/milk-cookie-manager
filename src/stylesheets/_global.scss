@@ -1,0 +1,25 @@
+html {
+	background: #EEEEEE;
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	margin: 0;
+	height: 500px;
+	width: 500px;
+}
+
+::selection,
+input[type="datetime-local"]::selection,
+input[type="datetime-local"]:focus {
+	background-color: transparent;
+}
+
+input::selection {
+	background-color: $color-accent;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}

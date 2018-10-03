@@ -1,0 +1,23 @@
+{
+	"name": "MILK",
+	"version": "1.0.1",
+	"description": "Cookie's best friend! Modern cookie manager.",
+	"permissions": [
+		"cookies",
+		"tabs",
+		"<all_urls>",
+		"activeTab"
+	],
+	"browser_action": {
+		"default_title": "MILK",
+		"default_icon": "icon128.png",
+		"default_popup": "index.html"
+	},
+	"manifest_version": 2,
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"icons": {
+		"16": "icon16.png",
+		"48": "icon48.png",
+		"128": "icon128.png"
+	}
+}

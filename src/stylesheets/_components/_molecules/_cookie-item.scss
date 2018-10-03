@@ -1,0 +1,77 @@
+.cookie-item {
+	height: 90px;
+	display: flex;
+	background: $color-white;
+	transition: background $animation-speed;
+	cursor: pointer;
+	&:hover {
+		background: $color-highlight;
+	}
+	.properties {
+		display: flex;
+		flex-wrap: wrap;
+		flex-shrink: 1;
+		align-items: center;
+		padding: 10px 15px;
+		box-sizing: content-box;
+		img {
+			width: 24px;
+		}
+	}
+	.values {
+		display: flex;
+		flex-wrap: wrap;
+		padding: 12.5px 10px;
+		h1, h2 {
+			margin: 0;
+			padding: 0;
+			width: 249px;
+			flex-grow: 1;
+			line-height: 15px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			display: block;
+			overflow: hidden;
+		}
+		h1 {
+			font-size: 14px;
+			font-weight: 700;
+			height: 20px;
+			span {
+				font-size: 14px;
+				font-weight: 700;
+				background: $color-accent;
+			}
+		}
+		h2 {
+			font-size: 12px;
+			font-weight: 400;
+			height: 15px;
+			span {
+				font-size: 12px;
+				font-weight: 400;
+				background: $color-accent;
+				border-radius: 5px;
+				&.tag {
+					text-decoration: underline;
+					background: none;
+				}
+			}
+		}
+	}
+	.expires-container {
+		min-width: 100px;
+		max-width: 100px;
+		font-size: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		padding-right: 15px;
+		span.tag {
+			background: $color-primary;
+			color: #FFF;
+			padding: 5px 10px;
+			border-radius: 5px;
+		}
+	}
+}

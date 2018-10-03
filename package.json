@@ -1,0 +1,35 @@
+{
+	"name": "chrome-milk",
+	"version": "1.0.0",
+	"description": "Chrome extension that manages your browser's cookies",
+	"main": "./src/index.jsx",
+	"author": "Rafael Grigorian <me@raffi.io>",
+	"license": "MIT",
+	"scripts": {
+		"build": "parcel build src/index.html --no-cache --out-dir public_html",
+		"serve": "parcel serve src/index.html --no-cache --out-dir public_html",
+		"clean": "rm -rf public_html dist",
+		"zip": "mkdir dist && zip -r dist/chrome-milk.zip public_html/*",
+		"release": "yarn clean && yarn build && yarn zip"
+	},
+	"dependencies": {
+		"@material-ui/core": "^3.5.1",
+		"parcel": "^1.9.7",
+		"react": "^16.2.0",
+		"react-dom": "^16.2.0"
+	},
+	"devDependencies": {
+		"moment": "^2.22.2",
+		"node-sass": "^4.9.3",
+		"parcel-bundler": "^1.6.1",
+		"parcel-plugin-static-files-copy": "^1.2.3"
+	},
+	"alias": {
+		"asset": "./src/assets",
+		"style": "./src/stylesheets",
+		"atom": "./src/components/atoms",
+		"molecule": "./src/components/molecules",
+		"orginism": "./src/components/orginisms",
+		"page": "./src/components/pages"
+	}
+}

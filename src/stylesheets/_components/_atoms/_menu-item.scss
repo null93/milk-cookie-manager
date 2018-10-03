@@ -1,0 +1,19 @@
+div.menu-item {
+	font-size: 14px;
+	background: $color-white;
+	color: $color-text-disabled;
+	padding: 14px;
+	height: 42px;
+	line-height: 14px;
+	user-select: none;
+	text-align: left;
+	cursor: initial;
+	transition: background $animation-speed;
+	&.active {
+		color: $color-text;
+		cursor: pointer;
+		&:hover {
+			background: $color-highlight;
+		}
+	}
+}
