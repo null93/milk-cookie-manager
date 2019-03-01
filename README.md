@@ -1,9 +1,11 @@
 # Chrome Extension - MILK
 > Cookie's best friend! Modern cookie manager.
 
-![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
-![Version 1.0.1](https://img.shields.io/badge/Version-1.0.1-yellow.svg?style=for-the-badge)
-![Version 1.0.1](https://img.shields.io/chrome-web-store/d/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge)
+![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge&color=3466d6)
+![Version 1.0.1](https://img.shields.io/badge/Version-1.0.1-yellow.svg?style=for-the-badge&color=3466d6)
+![Users](https://img.shields.io/chrome-web-store/d/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge&color=3466d6)
+![Rating](https://img.shields.io/chrome-web-store/rating/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge&color=3466d6)
+![Reviews](https://img.shields.io/chrome-web-store/rating-count/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge&color=3466d6)
 
 ![screenshot](docs/images/screenshot-1.png)
 
