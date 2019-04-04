@@ -1,6 +1,6 @@
 {
-	"name": "MILK",
-	"version": "1.0.1",
+	"name": "MILK — Cookie Manager",
+	"version": "1.0.2",
 	"description": "Cookie's best friend! Modern cookie manager.",
 	"permissions": [
 		"cookies",
