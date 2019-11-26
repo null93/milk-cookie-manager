@@ -6,11 +6,18 @@
 	"author": "Rafael Grigorian <me@raffi.io>",
 	"license": "MIT",
 	"scripts": {
-		"build": "parcel build src/index.html --no-cache --out-dir public_html",
-		"serve": "parcel serve src/index.html --no-cache --out-dir public_html",
+		"build": "NODE_ENV=production parcel build src/index.html --no-cache --out-dir public_html",
+		"serve": "NODE_ENV=development parcel serve src/index.html --no-cache --out-dir public_html",
 		"clean": "rm -rf public_html dist",
 		"zip": "mkdir dist && zip -r dist/chrome-milk.zip public_html/*",
 		"release": "yarn clean && yarn build && yarn zip"
+	},
+	"resolutions": {
+		"**/**/set-value": "^2.0.1",
+		"**/**/js-yaml": "^3.13.1",
+		"**/**/static-eval": "^2.0.2",
+		"**/**/serialize-to-js": "^2.0.0",
+		"**/**/tar": "^4.4.2"
 	},
 	"dependencies": {
 		"@material-ui/core": "^3.5.1",
@@ -20,7 +27,7 @@
 	},
 	"devDependencies": {
 		"moment": "^2.22.2",
-		"node-sass": "^4.9.3",
+		"node-sass": "^4.13.0",
 		"parcel-bundler": "^1.6.1",
 		"parcel-plugin-static-files-copy": "^1.2.3"
 	},
