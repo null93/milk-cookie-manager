@@ -209,6 +209,7 @@ class Editor extends React.Component {
 								<MenuItem value={"lax"}>Lax</MenuItem>
 								<MenuItem value={"no_restriction"}>No Restriction</MenuItem>
 								<MenuItem value={"strict"}>Strict</MenuItem>
+								<MenuItem value={"unspecified"}>Unspecified</MenuItem>
 							</Select>
 						</FormControl>
 						<div className="options" >
@@ -274,7 +275,7 @@ Editor.propTypes = {
 	path: PropTypes.string.isRequired,
 	value: PropTypes.string.isRequired,
 	expirationDate: PropTypes.number.isRequired,
-	sameSite: PropTypes.oneOf ([ "lax", "strict", "no_restriction" ]).isRequired,
+	sameSite: PropTypes.oneOf ([ "lax", "strict", "no_restriction", "unspecified" ]).isRequired,
 	hostOnly: PropTypes.bool.isRequired,
 	httpOnly: PropTypes.bool.isRequired,
 	secure: PropTypes.bool.isRequired,

@@ -7,6 +7,7 @@ import VisibleIcon from "asset/images/visible.svg"
 import InvisibleIcon from "asset/images/invisible.svg"
 import NoneIcon from "asset/images/none.svg"
 import LaxIcon from "asset/images/lax.svg"
+import UnspecifiedIcon from "asset/images/unspecified.svg"
 import StrictIcon from "asset/images/strict.svg"
 
 class CookieItem extends React.Component {
@@ -38,7 +39,8 @@ class CookieItem extends React.Component {
 					src={{
 						"no_restriction": NoneIcon,
 						"lax": LaxIcon,
-						"strict": StrictIcon
+						"strict": StrictIcon,
+						"unspecified": UnspecifiedIcon
 					} [this.props.data.sameSite]}
 				/>
 			</div>
