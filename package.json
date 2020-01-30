@@ -1,6 +1,6 @@
 {
 	"name": "chrome-milk",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "Chrome extension that manages your browser's cookies",
 	"main": "./src/index.jsx",
 	"author": "Rafael Grigorian <me@raffi.io>",
