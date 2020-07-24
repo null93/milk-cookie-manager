@@ -17,19 +17,25 @@
 		"**/**/js-yaml": "^3.13.1",
 		"**/**/static-eval": "^2.0.2",
 		"**/**/serialize-to-js": "^3.0.1",
+		"**/**/kind-of": "^6.0.3",
+		"**/**/minimist": "^1.2.3",
+		"**/**/acorn": "^6.4.1",
+		"**/**/yargs-parser": "^13.1.2",
 		"**/**/tar": "^4.4.2"
 	},
 	"dependencies": {
-		"@material-ui/core": "^3.5.1",
-		"parcel": "^1.9.7",
-		"react": "^16.2.0",
-		"react-dom": "^16.2.0"
+		"@material-ui/core": "^4.11.0",
+		"js-yaml": "^3.13.1",
+		"parcel": "^1.12.4",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"static-eval": "^2.0.2"
 	},
 	"devDependencies": {
-		"moment": "^2.22.2",
-		"node-sass": "^4.13.0",
-		"parcel-bundler": "^1.6.1",
-		"parcel-plugin-static-files-copy": "^2.3.1"
+		"moment": "^2.27.0",
+		"node-sass": "^4.14.1",
+		"parcel-bundler": "^1.12.4",
+		"parcel-plugin-static-files-copy": "^2.4.3"
 	},
 	"alias": {
 		"asset": "./src/assets",
