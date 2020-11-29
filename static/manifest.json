@@ -1,23 +1,31 @@
 {
 	"name": "MILK — Cookie Manager",
-	"version": "1.0.3",
+	"version": "2.0.0",
 	"description": "Cookie's best friend! Modern cookie manager.",
 	"permissions": [
 		"cookies",
-		"tabs",
 		"<all_urls>",
-		"activeTab"
+		"tabs",
+		"storage",
+		"contextMenus"
 	],
 	"browser_action": {
-		"default_title": "MILK",
-		"default_icon": "icon128.png",
+		"default_title": "MILK Cookie Manager",
+		"default_icon": "icon-128.png",
 		"default_popup": "index.html"
 	},
+	"background": {
+		"scripts": [ "background.js" ],
+		"persistent": false
+	},
+	"options_page": "options.html",
 	"manifest_version": 2,
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"minimum_chrome_version": "12.0.707.0",
 	"icons": {
-		"16": "icon16.png",
-		"48": "icon48.png",
-		"128": "icon128.png"
+		"16": "icon-16.png",
+		"32": "icon-32.png",
+		"48": "icon-48.png",
+		"128": "icon-128.png"
 	}
 }

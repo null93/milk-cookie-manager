@@ -1,49 +1,39 @@
 {
 	"name": "chrome-milk",
-	"version": "1.0.3",
+	"version": "2.0.0",
 	"description": "Chrome extension that manages your browser's cookies",
-	"main": "./src/index.jsx",
-	"author": "Rafael Grigorian <me@raffi.io>",
+	"author": "Rafael Grigorian <rafael@grigorian.org>",
 	"license": "MIT",
 	"scripts": {
-		"build": "NODE_ENV=production parcel build src/index.html --no-cache --out-dir public_html",
-		"serve": "NODE_ENV=development parcel serve src/index.html --no-cache --no-hmr --out-dir public_html",
-		"clean": "rm -rf public_html dist",
-		"zip": "mkdir dist && zip -r dist/chrome-milk.zip public_html/*",
+		"prebuild": "mkdir -p dist && cp -r static/* dist/",
+		"build": "NODE_ENV=production parcel build --no-cache --no-source-maps src/*.html",
+		"preserve": "mkdir -p dist && cp -r static/* dist/",
+		"serve": "NODE_ENV=development parcel serve --no-autoinstall --no-cache src/*.html",
+		"clean": "rm -rf dist .cache .parcel-cache",
+		"zip": "mkdir -p target && zip -r target/chrome-milk.zip dist/*",
 		"release": "yarn clean && yarn build && yarn zip"
 	},
-	"resolutions": {
-		"**/**/set-value": "^2.0.1",
-		"**/**/js-yaml": "^3.13.1",
-		"**/**/static-eval": "^2.0.2",
-		"**/**/serialize-to-js": "^3.0.1",
-		"**/**/kind-of": "^6.0.3",
-		"**/**/minimist": "^1.2.3",
-		"**/**/acorn": "^6.4.1",
-		"**/**/yargs-parser": "^13.1.2",
-		"**/**/tar": "^4.4.2",
-		"**/**/node-forge": "^0.10.0"
-	},
 	"dependencies": {
-		"@material-ui/core": "^4.11.0",
-		"js-yaml": "^3.13.1",
-		"parcel": "^1.12.4",
-		"react": "^16.13.1",
-		"react-dom": "^16.13.1",
-		"static-eval": "^2.0.2"
+		"@emotion/react": "^11.1.1",
+		"@emotion/styled": "^11.0.0",
+		"@material-ui/core": "^5.0.0-alpha.18",
+		"@material-ui/icons": "^5.0.0-alpha.14",
+		"copy-to-clipboard": "^3.3.1",
+		"lodash": "^4.17.20",
+		"moment": "^2.29.1",
+		"prop-types": "^15.7.2",
+		"react": "^17.0.1",
+		"react-dom": "^17.0.1",
+		"react-window": "^1.8.5",
+		"typeface-roboto": "^1.1.13"
 	},
 	"devDependencies": {
-		"moment": "^2.27.0",
-		"node-sass": "^4.14.1",
-		"parcel-bundler": "^1.12.4",
-		"parcel-plugin-static-files-copy": "^2.4.3"
+		"parcel": "^2.0.0-nightly.466"
 	},
 	"alias": {
-		"asset": "./src/assets",
-		"style": "./src/stylesheets",
-		"atom": "./src/components/atoms",
-		"molecule": "./src/components/molecules",
-		"orginism": "./src/components/orginisms",
-		"page": "./src/components/pages"
+		"contexts": "./src/contexts",
+		"components": "./src/components",
+		"icons": "./src/icons",
+		"utils": "./src/utils"
 	}
 }

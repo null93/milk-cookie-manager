@@ -1,5 +1,5 @@
 import "typeface-roboto"
-import Application from "components/Application"
+import Options from "components/Options"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import React from "react"
 import ReactDOM from "react-dom"
@@ -19,7 +19,7 @@ ReactDOM.render (
 				}
 				return <MuiThemeProvider theme={theme ( data.options.dark )} >
 					<CssBaseline/>
-					<Application/>
+					<Options/>
 				</MuiThemeProvider>
 			}
 		}
