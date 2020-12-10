@@ -1,6 +1,6 @@
 {
 	"name": "chrome-milk",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Chrome extension that manages your browser's cookies",
 	"author": "Rafael Grigorian <rafael@grigorian.org>",
 	"license": "MIT",
