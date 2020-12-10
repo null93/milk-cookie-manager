@@ -19,7 +19,6 @@ class ChromeProvider extends React.Component {
 		const cachedIsDark = window.localStorage.getItem ("dark")
 			? window.localStorage.getItem ("dark") === "true"
 			: false
-		console.log ( cachedIsDark )
 		this.state = {
 			activeUrl: "",
 			items: [],

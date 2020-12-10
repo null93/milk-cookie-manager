@@ -10,7 +10,7 @@
 		"preserve": "mkdir -p dist && cp -r static/* dist/",
 		"serve": "NODE_ENV=development parcel serve --no-autoinstall --no-cache src/*.html",
 		"clean": "rm -rf dist .cache .parcel-cache",
-		"zip": "mkdir -p target && zip -r target/chrome-milk.zip dist/*",
+		"zip": "mkdir -p target && zip -r target/chrome-milk-$npm_package_version.zip dist/*",
 		"release": "yarn clean && yarn build && yarn zip"
 	},
 	"dependencies": {
