@@ -28,7 +28,7 @@
 		"typeface-roboto": "^1.1.13"
 	},
 	"devDependencies": {
-		"parcel": "^2.0.0-nightly.466"
+		"parcel": "^2.0.0-nightly.475"
 	},
 	"alias": {
 		"contexts": "./src/contexts",
