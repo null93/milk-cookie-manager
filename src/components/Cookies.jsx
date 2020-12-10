@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 import Paper from "@material-ui/core/Paper"
 import Divider from "@material-ui/core/Divider"
 import Fab from "@material-ui/core/Fab"
+import CircularProgress from "@material-ui/core/CircularProgress"
 import AddIcon from "@material-ui/icons/Add"
 import ProtectOnIcon from "@material-ui/icons/Security"
 import SecureOnIcon from "@material-ui/icons/Lock"
@@ -209,12 +210,17 @@ class Cookies extends React.Component {
 		}
 		return <React.Fragment>
 			{
-				items.length <= 0 && <div className={classes.none} >
+				!data.initialCookiesLoaded && <div className={classes.none} >
+					<CircularProgress disableShrink />
+				</div>
+			}
+			{
+				data.initialCookiesLoaded && items.length <= 0 && <div className={classes.none} >
 					No Cookies<br/>Found
 				</div>
 			}
 			{
-				items.length > 0 && <FixedSizeList
+				data.initialCookiesLoaded && items.length > 0 && <FixedSizeList
 					style={{ marginTop: 52 }}
 					height={window.innerHeight - 52}
 					width="100%"

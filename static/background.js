@@ -11,22 +11,26 @@ function serialize ( cookie ) {
 	return JSON.stringify ( cookie )
 }
 
+function setContextMenu () {
+	chrome.contextMenus.create ({
+		id: "fullscreen",
+		title: "Fullscreen",
+		type: "normal",
+		contexts: [ "page" ],
+	})
+	chrome.contextMenus.create ({
+		id: "options",
+		title: "Options",
+		type: "normal",
+		contexts: [ "page" ],
+	})
+}
+
 function loadContextMenu () {
 	chrome.contextMenus.removeAll ( () => {
 		chrome.storage.local.get ( [ "contextMenu" ], ({ contextMenu }) => {
 			if ( contextMenu ) {
-				chrome.contextMenus.create ({
-					id: "fullscreen",
-					title: "Fullscreen",
-					type: "normal",
-					contexts: [ "page" ],
-				})
-				chrome.contextMenus.create ({
-					id: "options",
-					title: "Options",
-					type: "normal",
-					contexts: [ "page" ],
-				})
+				setContextMenu ()
 			}
 		})
 	})
@@ -40,6 +44,7 @@ function contextMenusOnClick ( { menuItemId }, tab ) {
 }
 
 loadContextMenu ()
+chrome.runtime.onInstalled.addListener ( ({ reason }) => reason === "install" ? setContextMenu () : null )
 chrome.contextMenus.onClicked.addListener ( contextMenusOnClick )
 chrome.storage.onChanged.addListener ( loadContextMenu )
 chrome.cookies.onChanged.addListener ( function ({ removed, cause, cookie }) {

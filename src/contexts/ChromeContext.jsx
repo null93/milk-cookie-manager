@@ -16,15 +16,20 @@ class ChromeProvider extends React.Component {
 
 	constructor ( props ) {
 		super ( props )
+		const cachedIsDark = window.localStorage.getItem ("dark")
+			? window.localStorage.getItem ("dark") === "true"
+			: false
+		console.log ( cachedIsDark )
 		this.state = {
 			activeUrl: "",
 			items: [],
 			filtered: [],
+			initialCookiesLoaded: false,
 			options: {
 				regexp: false,
 				filtered: true,
 				sensitive: false,
-				dark: false,
+				dark: cachedIsDark,
 				tooltips: true,
 				showWarnings: true,
 				contextMenu: true,
@@ -72,6 +77,7 @@ class ChromeProvider extends React.Component {
 		chrome.storage.local.get (
 			[ "regexp", "sensitive", "dark", "tooltips", "showWarnings", "contextMenu", "expirationFormat", "sortType", "sortDirection", "block", "protect" ],
 			result => {
+				window.localStorage.setItem ( "dark", result.dark !== undefined ? result.dark : false )
 				this.setState ( state => ({
 					options: {
 						...state.options,
@@ -100,6 +106,7 @@ class ChromeProvider extends React.Component {
 			list: { block, protect }
 		} = this.state
 		chrome.storage.local.set ( { regexp, sensitive, dark, tooltips, showWarnings, contextMenu, expirationFormat, sortType, sortDirection, block, protect }, callback )
+		window.localStorage.setItem ( "dark", dark )
 	}
 
 	loadCookies ( callback = () => {} ) {
@@ -108,6 +115,7 @@ class ChromeProvider extends React.Component {
 		const filter = isValidUrl && filtered ? { url: activeUrl } : {}
 		chrome.cookies.getAll ( filter, items => {
 			this.setState ({
+				initialCookiesLoaded: true,
 				items: items,
 				filtered: this.filterCookies ( items )
 			}, callback )
