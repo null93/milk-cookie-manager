@@ -10,13 +10,28 @@
 				height: 100vh;
 				min-width: 550px;
 				min-height: 500px;
+				overflow: hidden;
 			}
 			::selection {
 				background: #FFDE03;
 				color: #4B4B4B;
 			}
 			::-webkit-scrollbar {
-				display: none;
+				width: 18px;
+				height: 18px;
+			}
+			::-webkit-scrollbar-track {
+				background: #FFFFFF00;
+				visibility: hidden;
+			}
+			::-webkit-scrollbar-thumb {
+				background: rgba( 0, 0, 0, 0.3 );
+				visibility: hidden;
+				border: solid 4px #FFFFFF00;
+				background-clip: padding-box;
+			}
+			:hover::-webkit-scrollbar-thumb {
+				visibility: visible;
 			}
 		</style>
 	</head>

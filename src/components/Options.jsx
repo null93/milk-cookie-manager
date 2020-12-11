@@ -51,7 +51,7 @@ const styles = theme => ({
 	menu: {
 		height: "calc( 100vh - 64px )",
 		minWidth: 300,
-		overflowY: "scroll",
+		overflowY: "auto",
 	},
 	list: {
 		marginTop: theme.spacing ( 2 ),
@@ -85,7 +85,7 @@ const styles = theme => ({
 	container: {
 		maxWidth: 680,
 		padding: theme.spacing ( 0, 4, 4, 4 ),
-		overflowY: "scroll",
+		overflowY: "auto",
 		boxSizing: "content-box",
 		marginTop: theme.spacing ( -1 ),
 	},

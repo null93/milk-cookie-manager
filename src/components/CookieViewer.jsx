@@ -228,13 +228,13 @@ class CookieViewer extends React.Component {
 						<StyledTextField
 							error={Boolean ( error )}
 							variant="filled"
-							label={`Expiration Date (${moment.duration ( moment.unix ( expirationDate ) - moment () ).humanize ()})`}
+							label={`Expiration Date (${session ? "when browser is closed" : moment.duration ( moment.unix ( expirationDate ) - moment () ).humanize ()})`}
 							type="datetime-local"
 							onChange={e => this.setCookie ({ expirationDate: moment ( e.target.value.substring ( 0, 19 ) ).unix () })}
 							disabled={session || isProtected}
 							InputLabelProps={{ shrink: true }}
 							inputProps={{ step: 1 }}
-							value={moment.unix ( expirationDate ).format ("YYYY-MM-DDTHH:mm:ss").substring ( 0, 19 )}
+							value={moment.unix ( session ? 0 : expirationDate ).format ("YYYY-MM-DDTHH:mm:ss").substring ( 0, 19 )}
 							InputProps={{
 								endAdornment: <InputAdornment position="end" >
 									<Tooltip

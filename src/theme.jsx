@@ -65,7 +65,6 @@ module.exports = isDark => {
 						width: "100%",
 						color: isDark ? "#FFFFFF" : "#4B4B4B",
 						border: "none",
-						borderRadius: 0,
 						"&$selected": {
 							backgroundColor: isDark ? "#8AB4F8" : "#1A73E8",
 							color: isDark ? "#292A2D" : "#FFFFFF",
@@ -86,7 +85,8 @@ module.exports = isDark => {
 				styleOverrides: {
 					root: {
 						width: "100%",
-						padding: "16px 0",
+						margin: "16px 0",
+						background: isDark ? "#202124" : "#F8F9FA",
 					},
 				},
 			},
@@ -107,13 +107,6 @@ module.exports = isDark => {
 					padding: {
 						paddingTop: 0,
 						paddingBottom: 0,
-					},
-				},
-			},
-			MuiButton: {
-				styleOverrides: {
-					sizeLarge: {
-						borderRadius: 0,
 					},
 				},
 			},

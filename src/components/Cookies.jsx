@@ -38,6 +38,10 @@ const styles = theme => ({
 		// 	)
 		// },
 	},
+	list: {
+		marginTop: 52,
+		background: theme.palette.background.paper,
+	},
 	title: {
 		fontSize: "1.05em",
 	},
@@ -87,8 +91,8 @@ const styles = theme => ({
 	},
 	fab: {
 		position: "fixed",
-		right: theme.spacing ( 1 ),
-		bottom: theme.spacing ( 1 ),
+		right: theme.spacing ( 2 ),
+		bottom: theme.spacing ( 2 ),
 	},
 	protectedIcon: {
 		position: "absolute",
@@ -221,7 +225,7 @@ class Cookies extends React.Component {
 			}
 			{
 				data.initialCookiesLoaded && items.length > 0 && <FixedSizeList
-					style={{ marginTop: 52 }}
+					className={classes.list}
 					height={window.innerHeight - 52}
 					width="100%"
 					itemSize={85}
