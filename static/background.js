@@ -12,27 +12,27 @@ function serialize ( cookie ) {
 }
 
 function setContextMenu () {
-	chrome.contextMenus.create ({
-		id: "fullscreen",
-		title: "Fullscreen",
-		type: "normal",
-		contexts: [ "page" ],
-	})
-	chrome.contextMenus.create ({
-		id: "options",
-		title: "Options",
-		type: "normal",
-		contexts: [ "page" ],
+	chrome.contextMenus.removeAll ( () => {
+		chrome.contextMenus.create ({
+			id: "fullscreen",
+			title: "Fullscreen",
+			type: "normal",
+			contexts: [ "page" ],
+		})
+		chrome.contextMenus.create ({
+			id: "options",
+			title: "Options",
+			type: "normal",
+			contexts: [ "page" ],
+		})
 	})
 }
 
 function loadContextMenu () {
-	chrome.contextMenus.removeAll ( () => {
-		chrome.storage.local.get ( [ "contextMenu" ], ({ contextMenu }) => {
-			if ( contextMenu ) {
-				setContextMenu ()
-			}
-		})
+	chrome.storage.local.get ( [ "contextMenu" ], ({ contextMenu }) => {
+		if ( contextMenu === undefined || contextMenu === true ) {
+			setContextMenu ()
+		}
 	})
 }
 
@@ -49,6 +49,8 @@ chrome.contextMenus.onClicked.addListener ( contextMenusOnClick )
 chrome.storage.onChanged.addListener ( loadContextMenu )
 chrome.cookies.onChanged.addListener ( function ({ removed, cause, cookie }) {
 	chrome.storage.local.get ( [ "block", "protect" ], ({ block, protect }) => {
+		if ( !block ) block = {}
+		if ( !protect ) protect = {}
 		const key = createCookieKey ( cookie )
 		if ( [ "explicit" ].includes ( cause ) ) {
 			if ( !removed && key in block ) {
@@ -58,7 +60,7 @@ chrome.cookies.onChanged.addListener ( function ({ removed, cause, cookie }) {
 				})
 			}
 			else if ( ( removed && key in protect ) || ( !removed && serialize ( cookie ) !== serialize ( protect [ key ] ) ) ) {
-				cookie = protect [ key ]
+				cookie = protect [ key ] ? protect [ key ] : cookie
 				chrome.cookies.set ({
 					url: getUrl ( cookie ),
 					domain: cookie.hostOnly ? undefined : cookie.domain,

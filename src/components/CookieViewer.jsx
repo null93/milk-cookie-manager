@@ -63,6 +63,7 @@ const styles = theme => ({
 		overflow: "hidden",
 		textOverflow: "ellipsis",
 		whiteSpace: "nowrap",
+		textAlign: "center",
 	},
 	body: {
 		padding: theme.spacing ( 0, 2 ),
