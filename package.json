@@ -1,6 +1,6 @@
 {
 	"name": "chrome-milk",
-	"version": "2.0.1",
+	"version": "2.0.2",
 	"description": "Chrome extension that manages your browser's cookies",
 	"author": "Rafael Grigorian <rafael@grigorian.org>",
 	"license": "MIT",
@@ -28,7 +28,7 @@
 		"typeface-roboto": "^1.1.13"
 	},
 	"devDependencies": {
-		"parcel": "^2.0.0-nightly.475"
+		"parcel": "^2.0.0-nightly.476"
 	},
 	"alias": {
 		"contexts": "./src/contexts",
