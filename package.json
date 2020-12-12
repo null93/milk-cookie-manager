@@ -9,7 +9,7 @@
 		"build": "NODE_ENV=production parcel build --no-cache --no-source-maps src/*.html",
 		"preserve": "mkdir -p dist && cp -r static/* dist/",
 		"serve": "NODE_ENV=development parcel serve --no-autoinstall --no-cache src/*.html",
-		"clean": "rm -rf dist .cache .parcel-cache",
+		"clean": "rm -rf dist .parcel-cache target",
 		"zip": "mkdir -p target && zip -r target/chrome-milk-$npm_package_version.zip dist/*",
 		"release": "yarn clean && yarn build && yarn zip"
 	},
