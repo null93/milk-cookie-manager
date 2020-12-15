@@ -48,7 +48,7 @@ const styles = theme => ({
 		height: "100%",
 		zIndex: 100,
 		maxWidth: 850,
-		maxHeight: 555,
+		maxHeight: 530,
 		userSelect: "none",
 		borderRadius: 0,
 	},

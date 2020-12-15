@@ -53,14 +53,19 @@ chrome.cookies.onChanged.addListener ( function ({ removed, cause, cookie }) {
 		if ( !protect ) protect = {}
 		const key = createCookieKey ( cookie )
 		if ( [ "explicit" ].includes ( cause ) ) {
-			if ( !removed && key in block ) {
+			const isCreatedWhenBlocked = !removed && key in block
+			const isRemovedWhenProtected = removed && key in protect
+			const isUpdatedWhenProtected = !removed
+				&& key in protect
+				&& serialize ( cookie ) !== serialize ( protect [ key ] )
+			if ( isCreatedWhenBlocked ) {
 				chrome.cookies.remove ({
 					url: getUrl ( cookie ),
 					name: cookie.name,
 				})
 			}
-			else if ( ( removed && key in protect ) || ( !removed && serialize ( cookie ) !== serialize ( protect [ key ] ) ) ) {
-				cookie = protect [ key ] ? protect [ key ] : cookie
+			else if ( isRemovedWhenProtected || isUpdatedWhenProtected ) {
+				cookie = protect [ key ]
 				chrome.cookies.set ({
 					url: getUrl ( cookie ),
 					domain: cookie.hostOnly ? undefined : cookie.domain,

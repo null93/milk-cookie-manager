@@ -85,7 +85,7 @@ module.exports = isDark => {
 				styleOverrides: {
 					root: {
 						width: "100%",
-						margin: "16px 0",
+						margin: "4px 0",
 						background: isDark ? "#202124" : "#F8F9FA",
 					},
 				},
