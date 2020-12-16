@@ -192,7 +192,7 @@ class Options extends React.Component {
 						color="primary" >
 						<Logo viewBox="0 0 48 48" fontSize="inherit" className={classes.logo} />
 					</IconButton>
-					<Typography variant="h6" noWrap ><b>MILK Cookie Manager</b> - Options</Typography>
+					<Typography variant="h6" noWrap ><b>MILK</b> — Cookie Manager — Options</Typography>
 				</Toolbar>
 			</AppBar>
 			<div className={classes.bottom} >

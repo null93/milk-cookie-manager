@@ -110,7 +110,7 @@ class ChromeProvider extends React.Component {
 
 	loadCookies ( callback = () => {} ) {
 		const { activeUrl, options: { filtered } } = this.state
-		const isValidUrl = activeUrl && !/^chrome(-[a-z]+)?:\/\//m.test ( activeUrl )
+		const isValidUrl = activeUrl && !/^(chrome|moz)(-[a-z]+)?:\/\//m.test ( activeUrl )
 		const filter = isValidUrl && filtered ? { url: activeUrl } : {}
 		chrome.cookies.getAll ( filter, items => {
 			this.setState ({
@@ -127,7 +127,7 @@ class ChromeProvider extends React.Component {
 			highlighted: true,
 		}, tabs => {
 			const url = _.get ( tabs, "[0].url", "chrome-ignore://" )
-			if ( url && !/^chrome(-[a-z]+)?:\/\//m.test ( url ) ) {
+			if ( url && !/^(chrome|moz)(-[a-z]+)?:\/\//m.test ( url ) ) {
 				this.setState ({ activeUrl: url }, () => {
 					this.loadCookies ( () =>
 						this.setState ({

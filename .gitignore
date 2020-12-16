@@ -1,7 +1,9 @@
+# Files
 .DS_Store
-/.cache/
+TODO.md
+
+# Directories
 /.parcel-cache/
-/public_html/
 /dist/
 /node_modules/
 /target/
