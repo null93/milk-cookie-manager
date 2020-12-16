@@ -5,13 +5,15 @@
 	"author": "Rafael Grigorian <rafael@grigorian.org>",
 	"license": "MIT",
 	"scripts": {
-		"prebuild": "mkdir -p dist && cp -r static/* dist/",
-		"build": "NODE_ENV=production parcel build --no-cache --no-source-maps src/*.html",
+		"prebuild": "mkdir -p dist && cp -r static/* dist/ && yarn secure-manifest",
 		"preserve": "mkdir -p dist && cp -r static/* dist/",
+		"secure-manifest": "sed -i.bak \"s/ 'unsafe-eval'//\" dist/manifest.json && rm dist/manifest.json.bak",
+		"build": "NODE_ENV=production parcel build --no-cache --no-source-maps src/*.html",
 		"serve": "NODE_ENV=development parcel serve --no-autoinstall --no-cache src/*.html",
-		"clean": "rm -rf dist .parcel-cache target",
 		"zip": "mkdir -p target && zip -r target/chrome-milk-$npm_package_version.zip dist/*",
-		"release": "yarn clean && yarn build && yarn zip"
+		"release": "yarn clean && yarn build && yarn zip",
+		"clean": "rm -rf dist .parcel-cache target",
+		"nuke": "yarn clean && rm -rf node_modules"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.1.1",
