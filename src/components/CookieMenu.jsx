@@ -18,7 +18,7 @@ import DeleteIcon from "@material-ui/icons/Delete"
 import BlockIcon from "@material-ui/icons/Block"
 import DuplicateIcon from "@material-ui/icons/ControlPointDuplicate"
 import { withStyles } from "@material-ui/core/styles"
-import { withChrome } from "contexts/ChromeContext"
+import { withCookies } from "contexts/CookiesContext"
 
 const styles = theme => ({
 	root: {
@@ -75,7 +75,7 @@ class MainMenu extends React.Component {
 	render () {
 		const {
 			classes,
-			data,
+			cookies,
 			isProtected,
 			onDelete,
 			onBlock,
@@ -84,7 +84,7 @@ class MainMenu extends React.Component {
 			onDuplicate
 		} = this.props
 		const { anchor, dialog } = this.state
-		const hits = data.filtered.length
+		const hits = cookies.found.length
 		return <React.Fragment>
 			<Tooltip
 				arrow
@@ -198,7 +198,7 @@ class MainMenu extends React.Component {
 
 MainMenu.propTypes = {
 	classes: PropTypes.object.isRequired,
-	data: PropTypes.object.isRequired,
+	cookies: PropTypes.object.isRequired,
 	isProtected: PropTypes.bool.isRequired,
 	onDelete: PropTypes.func.isRequired,
 	onClose: PropTypes.func.isRequired,
@@ -206,4 +206,7 @@ MainMenu.propTypes = {
 	onDuplicate: PropTypes.func.isRequired,
 }
 
-export default withChrome ( withStyles ( styles ) ( MainMenu ) )
+export default
+withCookies (
+	withStyles ( styles ) ( MainMenu )
+)

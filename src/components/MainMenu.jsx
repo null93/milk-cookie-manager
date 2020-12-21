@@ -1,3 +1,5 @@
+import browser from "webextension-polyfill"
+import copy from "copy-to-clipboard"
 import React from "react"
 import PropTypes from "prop-types"
 import IconButton from "@material-ui/core/IconButton"
@@ -22,13 +24,12 @@ import SettingsIcon from "@material-ui/icons/Settings"
 import FullscreenIcon from "@material-ui/icons/Fullscreen"
 import TerminalIcon from "@material-ui/icons/Code"
 import { withStyles } from "@material-ui/core/styles"
-import { withChrome } from "contexts/ChromeContext"
+import { withFocus } from "contexts/FocusContext"
+import { withSearch } from "contexts/SearchContext"
+import { withStorage } from "contexts/StorageContext"
+import { withCookies } from "contexts/CookiesContext"
 
 const styles = theme => ({
-	root: {
-		marginTop: theme.spacing ( 1 ),
-		marginLeft: -5,
-	},
 	button: {
 		padding: 6,
 	},
@@ -82,9 +83,9 @@ class MainMenu extends React.Component {
 	}
 
 	render () {
-		const { classes, data } = this.props
+		const { classes, search, storage, focus, cookies } = this.props
 		const { anchor, dialog } = this.state
-		const hits = data.filtered.length
+		const hits = cookies.found.length
 		return <React.Fragment>
 			<Tooltip
 				arrow
@@ -130,7 +131,6 @@ class MainMenu extends React.Component {
 				}
 			</Dialog>
 			<Menu
-				className={classes.root}
 				classes={{ list: classes.list }}
 				anchorEl={anchor}
 				open={Boolean ( anchor )}
@@ -146,7 +146,7 @@ class MainMenu extends React.Component {
 							className={classes.item}
 							disabled={hits < 1}
 							onClick={
-								data.options.showWarnings
+								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
 									description: "You are about to delete all currently visible cookies. Are you sure you want to proceed?",
@@ -155,14 +155,14 @@ class MainMenu extends React.Component {
 									submit: {
 										label: `Delete ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} Cookie${hits > 1 ? "s" : ""}`,
 										callback: () => {
-											data.delete ()
+											cookies.delete ()
 											this.handleDialogClose ()
 											this.handleClose ()
 										},
 									},
 								})
 								: () => {
-									data.delete ()
+									cookies.delete ()
 									this.handleDialogClose ()
 									this.handleClose ()
 								}
@@ -182,7 +182,7 @@ class MainMenu extends React.Component {
 							className={classes.item}
 							disabled={hits < 1}
 							onClick={
-								data.options.showWarnings
+								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
 									description: "You are about to block and delete all currently visible cookies (protected cookies are skipped). Are you sure you want to proceed?",
@@ -191,14 +191,14 @@ class MainMenu extends React.Component {
 									submit: {
 										label: `Block ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} Cookie${hits > 1 ? "s" : ""}`,
 										callback: () => {
-											data.block ()
+											cookies.block ()
 											this.handleDialogClose ()
 											this.handleClose ()
 										},
 									},
 								})
 								: () => {
-									data.block ()
+									cookies.block ()
 									this.handleDialogClose ()
 									this.handleClose ()
 								}
@@ -218,7 +218,7 @@ class MainMenu extends React.Component {
 							className={classes.item}
 							disabled={hits < 1}
 							onClick={
-								data.options.showWarnings
+								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
 									description: "You are about to protect all currently visible cookies. Are you sure you want to proceed?",
@@ -227,14 +227,14 @@ class MainMenu extends React.Component {
 									submit: {
 										label: `Protect ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} Cookie${hits > 1 ? "s" : ""}`,
 										callback: () => {
-											data.protect ()
+											cookies.protect ()
 											this.handleDialogClose ()
 											this.handleClose ()
 										},
 									},
 								})
 								: () => {
-									data.protect ()
+									cookies.protect ()
 									this.handleDialogClose ()
 									this.handleClose ()
 								}
@@ -252,9 +252,9 @@ class MainMenu extends React.Component {
 						title="Copy CURL Command With Visible Cookies" >
 						<MenuItem
 							className={classes.item}
-							disabled={hits < 1 || data.activeUrl === "" || !data.options.filtered}
+							disabled={hits < 1 || !focus.last || !search.filtered}
 							onClick={() => {
-								data.copyCurl ()
+								copy ( cookies.curl () )
 								this.handleClose ()
 							}} >
 							<ListItemIcon className={classes.icon} >
@@ -271,7 +271,7 @@ class MainMenu extends React.Component {
 						<MenuItem
 							className={classes.item}
 							disabled={false}
-							onClick={() => this.handleClose ( () => data.import (
+							onClick={() => this.handleClose ( () => cookies.import (
 									({ current, total }) => this.setDialogState ({
 										open: true,
 										title: "Importing Cookies",
@@ -323,7 +323,7 @@ class MainMenu extends React.Component {
 						<MenuItem
 							className={classes.item}
 							disabled={hits < 1}
-							onClick={() => this.handleClose ( () => data.export () )} >
+							onClick={() => this.handleClose ( () => cookies.export () )} >
 							<ListItemIcon className={classes.icon} >
 								<ExportIcon color="primary" />
 							</ListItemIcon>
@@ -340,7 +340,7 @@ class MainMenu extends React.Component {
 							disabled={false}
 							onClick={() => {
 								this.handleClose ()
-								chrome.tabs.create ({ url: "/index.html" })
+								browser.tabs.create ({ url: "/index.html" })
 							}} >
 							<ListItemIcon className={classes.icon} >
 								<FullscreenIcon color="primary" />
@@ -358,7 +358,7 @@ class MainMenu extends React.Component {
 							disabled={false}
 							onClick={() => {
 								this.handleClose ()
-								chrome.tabs.create ({ url: "/options.html" })
+								browser.tabs.create ({ url: "/options.html" })
 							}} >
 							<ListItemIcon className={classes.icon} >
 								<SettingsIcon color="primary" />
@@ -375,7 +375,19 @@ class MainMenu extends React.Component {
 
 MainMenu.propTypes = {
 	classes: PropTypes.object.isRequired,
-	data: PropTypes.object.isRequired,
+	storage: PropTypes.object.isRequired,
+	focus: PropTypes.object.isRequired,
+	search: PropTypes.object.isRequired,
+	cookies: PropTypes.object.isRequired,
 }
 
-export default withChrome ( withStyles ( styles ) ( MainMenu ) )
+export default
+withStorage (
+	withSearch (
+		withFocus (
+			withCookies (
+				withStyles ( styles ) ( MainMenu )
+			)
+		)
+	)
+)

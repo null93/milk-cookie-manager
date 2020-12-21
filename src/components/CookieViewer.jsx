@@ -36,8 +36,9 @@ import NoRestrictionIcon from "@material-ui/icons/GpsOff"
 import LaxIcon from "@material-ui/icons/GpsNotFixed"
 import StrictIcon from "@material-ui/icons/GpsFixed"
 import CookieMenu from "components/CookieMenu"
-import { withChrome } from "contexts/ChromeContext"
 import { withStyles } from "@material-ui/core/styles"
+import { withStorage } from "contexts/StorageContext"
+import { withCookies } from "contexts/CookiesContext"
 
 const styles = theme => ({
 	backdrop: {
@@ -73,29 +74,25 @@ const styles = theme => ({
 	},
 })
 
-function createCookieKey ( cookie ) {
-	return `<${cookie.name}><${cookie.domain}><${cookie.path}>`
-}
-
 class CookieViewer extends React.Component {
 
 	constructor ( props ) {
 		super ( props )
+		const { cookies } = this.props
 		this.state = {
 			cookie: {
 				...props.cookie,
 			},
 			error: false,
-			key: createCookieKey ( props.cookie ),
+			key: cookies.hash ( props.cookie ),
 			isProtected: this.isProtected (),
 		}
 	}
 
 	isProtected () {
-		const { data, cookie } = this.props
-		const protectList = data.list.protect
-		const key = createCookieKey ( cookie )
-		return key in protectList
+		const { storage, cookies, cookie } = this.props
+		const key = cookies.hash ( cookie )
+		return key in ( storage.data.protect || {} )
 	}
 
 	setCookie ( data, additional = {}, callback = () => {} ) {
@@ -107,6 +104,7 @@ class CookieViewer extends React.Component {
 	}
 
 	handleSave ( duplicate = false ) {
+		const { cookies } = this.props
 		const isNewCookie = this.props.isNew
 		const onClose = this.props.onClose
 		const oldCookie = this.props.cookie
@@ -114,49 +112,17 @@ class CookieViewer extends React.Component {
 			...(duplicate ? this.props : this.state).cookie,
 			name: duplicate ? `${(duplicate ? this.props : this.state).cookie.name}_duplicate` : (duplicate ? this.props : this.state).cookie.name
 		}
-		const getUrl = cookie => `http${cookie.secure ? "s" : ""}://${cookie.domain.replace (/^\./, "")}${cookie.path}`
-		const set = cookie => new Promise ( ( resolve, reject ) => {
-			chrome.cookies.set ({
-				url: getUrl ( cookie ),
-				domain: cookie.hostOnly ? undefined : cookie.domain,
-				name: cookie.name,
-				value: cookie.value,
-				path: cookie.path,
-				secure: cookie.sameSite === "no_restriction" ? true : cookie.secure,
-				httpOnly: cookie.httpOnly,
-				sameSite: cookie.sameSite,
-				expirationDate: cookie.session ? undefined : cookie.expirationDate,
-				storeId: cookie.storeId,
-			}, response => {
-				if ( chrome.runtime.lastError ) {
-					reject ( chrome.runtime.lastError )
-				}
-				else {
-					resolve ( response )
-				}
-			})
-		})
-		const remove = cookie => new Promise ( ( resolve, reject ) => {
-			chrome.cookies.remove ({
-				name: cookie.name,
-				url: getUrl ( cookie ),
-			}, response => {
-				if ( chrome.runtime.lastError ) {
-					reject ( chrome.runtime.lastError )
-				}
-				else {
-					resolve ( response )
-				}
-			})
-		})
 		return Promise.resolve ()
-			.then ( () => isNewCookie || duplicate ? Promise.resolve () : remove ( oldCookie ) )
-			.then ( () => set ( newCookie ) )
+			.then ( () => isNewCookie || duplicate ? Promise.resolve () : cookies.delete ( oldCookie ) )
+			.then ( () => cookies.set ( newCookie ) )
 			.then ( () => onClose () )
-			.catch ( error => this.setState (
-				{ error: error.message },
-				() => isNewCookie || duplicate ? Promise.resolve () : set ( oldCookie )
-			))
+			.catch ( error => {
+				console.log ( error )
+				return this.setState (
+					{ error: error.message },
+					() => isNewCookie || duplicate ? Promise.resolve () : cookies.set ( oldCookie )
+				)
+			})
 	}
 
 	render () {
@@ -320,11 +286,14 @@ class CookieViewer extends React.Component {
 										httpOnly: value.includes ("httpOnly"),
 										secure: value.includes ("secure"),
 										session: value.includes ("session"),
+										expirationDate: value.includes ("session")
+											? expirationDate
+											: !expirationDate
+											? moment ().add ( 1, "year" ).unix ()
+											: expirationDate,
 									},
 									{ isProtected: newIsProtected },
-									newIsProtected
-										? onProtect ()
-										: onRemoveProtect ()
+									newIsProtected ? onProtect : onRemoveProtect
 								)
 							}} >
 							<ToggleButton
@@ -403,7 +372,8 @@ class CookieViewer extends React.Component {
 
 CookieViewer.propTypes = {
 	classes: PropTypes.object.isRequired,
-	data: PropTypes.object.isRequired,
+	storage: PropTypes.object.isRequired,
+	cookies: PropTypes.object.isRequired,
 	isNew: PropTypes.bool.isRequired,
 	cookie: PropTypes.object.isRequired,
 	onClose: PropTypes.func.isRequired,
@@ -414,4 +384,4 @@ CookieViewer.propTypes = {
 	onRemoveProtect: PropTypes.func.isRequired,
 }
 
-export default withStyles ( styles ) ( withChrome ( CookieViewer ) )
+export default withStorage ( withCookies ( withStyles ( styles ) ( CookieViewer ) ) )

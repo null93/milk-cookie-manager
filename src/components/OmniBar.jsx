@@ -17,9 +17,16 @@ import MainMenu from "components/MainMenu"
 import CaseInsensitiveIcon from "@material-ui/icons/FormatStrikethrough"
 import CaseSensitiveIcon from "@material-ui/icons/Title"
 import Logo from "icons/Logo"
-import { withStyles } from "@material-ui/core/styles"
-import { withChrome } from "contexts/ChromeContext"
-import compileRegExp from "utils/compileRegExp"
+import {
+	withStyles } from "@material-ui/core/styles"
+import {
+	withCookies } from "contexts/CookiesContext"
+import {
+	withStorage } from "contexts/StorageContext"
+import {
+	withSearch } from "contexts/SearchContext"
+import {
+	withFocus } from "contexts/FocusContext"
 
 const styles = theme => ({
 	root: {
@@ -72,10 +79,11 @@ class OmniBar extends React.Component {
 	}
 
 	render () {
-		const { classes, data, theme } = this.props
+		const { classes, storage, focus, search, cookies, theme } = this.props
 		const { focused } = this.state
-		const { activeUrl, search: { term }, options: { sensitive, filtered, regexp } } = data
-		const hits = data.filtered.length
+		const { term, filtered } = search
+		const { data: { sensitive, regexp } } = storage
+		const hits = cookies.found.length
 		return <Paper
 			className={`${classes.root} ${!focused ? classes.unFocused : ""}`}
 			elevation={focused ? 5 : 0}
@@ -93,10 +101,10 @@ class OmniBar extends React.Component {
 				className={classes.input}
 				placeholder={regexp ? "Search Cookies With RegExp" : "Search Cookies"}
 				value={term}
-				onChange={e => data.setTerm ( e.target.value )}
+				onChange={e => search.set ( "term", e.target.value )}
 				inputProps={{ spellCheck: false }}
 				style={
-					regexp && term.length > 0 && !compileRegExp ( term )
+					regexp && term.length > 0 && !search.compile ( term, sensitive )
 					? { color: theme.palette.error.main }
 					: {}
 				}
@@ -112,7 +120,7 @@ class OmniBar extends React.Component {
 							size="small"
 							color="primary"
 							className={classes.button}
-							onClick={() => data.setTerm ("")} >
+							onClick={() => search.set ( "term", "" )} >
 							<ClearIcon/>
 						</IconButton>
 					</Tooltip>
@@ -140,7 +148,7 @@ class OmniBar extends React.Component {
 					size="small"
 					color="primary"
 					className={classes.button}
-					onClick={() => data.setSensitive ( !sensitive )} >
+					onClick={() => storage.set ( "sensitive", !sensitive )} >
 					{sensitive ? <CaseSensitiveIcon/> : <CaseInsensitiveIcon/>}
 				</IconButton>
 			</Tooltip>
@@ -157,7 +165,7 @@ class OmniBar extends React.Component {
 					size="small"
 					color="primary"
 					className={classes.button}
-					onClick={() => data.setRegExp ( !regexp )} >
+					onClick={() => storage.set ( "regexp", !regexp )} >
 					{regexp ? <RegExpIcon/> : <WordSearchIcon/>}
 				</IconButton>
 			</Tooltip>
@@ -169,14 +177,14 @@ class OmniBar extends React.Component {
 				arrow
 				TransitionComponent={Fade}
 				placement="bottom"
-				title={!activeUrl ? "Showing All Cookies, Focus Tab To Filter" : filtered ? "Filtering By Domain Of Last Focused Tab" : "Currently Showing All Cookies"} >
+				title={!focus.last ? "Showing All Cookies, Focus Tab To Filter" : filtered ? "Filtering By Domain Of Last Focused Tab" : "Currently Showing All Cookies"} >
 				<IconButton
 					size="small"
 					color="primary"
 					className={classes.button}
-					disabled={!activeUrl}
-					onClick={() => data.setFiltered ( !filtered )} >
-					{!activeUrl ? <FilterGlobalIcon/> : filtered ? <FilterOnIcon/> : <FilterOffIcon/>}
+					disabled={!focus.last}
+					onClick={() => search.set ( "filtered", !filtered )} >
+					{!focus.last ? <FilterGlobalIcon/> : filtered ? <FilterOnIcon/> : <FilterOffIcon/>}
 				</IconButton>
 			</Tooltip>
 			<Divider
@@ -191,7 +199,19 @@ class OmniBar extends React.Component {
 
 OmniBar.propTypes = {
 	classes: PropTypes.object.isRequired,
-	data: PropTypes.object.isRequired,
+	storage: PropTypes.object.isRequired,
+	focus: PropTypes.object.isRequired,
+	search: PropTypes.object.isRequired,
+	cookies: PropTypes.object.isRequired,
 }
 
-export default withChrome ( withStyles ( styles, { withTheme: true } ) ( OmniBar ) )
+export default
+withStorage (
+	withFocus (
+		withSearch (
+			withCookies (
+				withStyles ( styles, { withTheme: true } ) ( OmniBar )
+			)
+		)
+	)
+)

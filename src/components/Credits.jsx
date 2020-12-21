@@ -1,3 +1,4 @@
+import browser from "webextension-polyfill"
 import React from "react"
 import PropTypes from "prop-types"
 import Table from "@material-ui/core/Table"
@@ -41,7 +42,7 @@ class Credits extends React.Component {
 				{name}
 			</TableCell>
 			<TableCell size="small" align="right" style={{ width: 64 }} >
-				<Button size="small" onClick={() => chrome.tabs.create ({ url: link })} >link</Button>
+				<Button size="small" onClick={() => browser.tabs.create ({ url: link })} >link</Button>
 			</TableCell>
 		</TableRow>
 	}
@@ -57,8 +58,10 @@ class Credits extends React.Component {
 				this.renderRow ( makeIcon ( SourceIcon ), "facebook/react", "https://github.com/facebook/react" ),
 				this.renderRow ( makeIcon ( SourceIcon ), "lodash/lodash", "https://github.com/lodash/lodash" ),
 				this.renderRow ( makeIcon ( SourceIcon ), "moment/moment", "https://github.com/moment/moment" ),
+				this.renderRow ( makeIcon ( SourceIcon ), "mozilla/webextension-polyfill", "https://github.com/mozilla/webextension-polyfill" ),
 				this.renderRow ( makeIcon ( SourceIcon ), "mui-org/material-ui", "https://github.com/mui-org/material-ui" ),
 				this.renderRow ( makeIcon ( SourceIcon ), "parcel-bundler/parcel", "https://github.com/parcel-bundler/parcel" ),
+				this.renderRow ( makeIcon ( SourceIcon ), "petkaantonov/bluebird", "https://github.com/petkaantonov/bluebird" ),
 				this.renderRow ( makeIcon ( SourceIcon ), "sudodoki/copy-to-clipboard", "https://github.com/sudodoki/copy-to-clipboard" ),
 				this.renderRow ( makeIcon ( ImageIcon ), "icon-approximately-equal", "https://materialdesignicons.com/icon/approximately-equal" ),
 				this.renderRow ( makeIcon ( ImageIcon ), "icon-crosshairs-question", "https://materialdesignicons.com/icon/crosshairs-question" ),

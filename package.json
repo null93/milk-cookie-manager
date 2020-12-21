@@ -5,11 +5,11 @@
 	"author": "Rafael Grigorian <rafael@grigorian.org>",
 	"license": "MIT",
 	"scripts": {
-		"prebuild": "mkdir -p dist && cp -r static/* dist/ && yarn secure-manifest",
-		"preserve": "mkdir -p dist && cp -r static/* dist/",
-		"secure-manifest": "sed -i.bak \"s/ 'unsafe-eval'//\" dist/manifest.json && rm dist/manifest.json.bak",
-		"build": "NODE_ENV=production parcel build --no-cache --no-source-maps src/*.html",
-		"serve": "NODE_ENV=development parcel serve --no-autoinstall --no-cache src/*.html",
+		"polyfill": "cp node_modules/webextension-polyfill/dist/browser-polyfill.min.js dist/browser-polyfill.js",
+		"prebuild": "mkdir -p dist && cp -r static/* dist/ && yarn polyfill",
+		"preserve": "mkdir -p dist && cp -r static/* dist/ && yarn polyfill",
+		"build": "NODE_ENV=production; parcel build --no-cache --no-source-maps src/*.html",
+		"serve": "parcel serve --no-autoinstall --no-cache src/*.html",
 		"zip": "mkdir -p target && zip -r target/chrome-milk-$npm_package_version.zip dist/*",
 		"release": "yarn clean && yarn build && yarn zip",
 		"clean": "rm -rf dist .parcel-cache target",
@@ -20,6 +20,7 @@
 		"@emotion/styled": "^11.0.0",
 		"@material-ui/core": "^5.0.0-alpha.18",
 		"@material-ui/icons": "^5.0.0-alpha.14",
+		"bluebird": "^3.7.2",
 		"copy-to-clipboard": "^3.3.1",
 		"lodash": "^4.17.20",
 		"moment": "^2.29.1",
@@ -27,15 +28,17 @@
 		"react": "^17.0.1",
 		"react-dom": "^17.0.1",
 		"react-window": "^1.8.5",
-		"typeface-roboto": "^1.1.13"
+		"typeface-roboto": "^1.1.13",
+		"webextension-polyfill": "^0.7.0"
 	},
 	"devDependencies": {
-		"parcel": "^2.0.0-nightly.476"
+		"parcel": "^2.0.0-nightly.486"
 	},
 	"alias": {
 		"contexts": "./src/contexts",
 		"components": "./src/components",
+		"data": "./src/data",
 		"icons": "./src/icons",
-		"utils": "./src/utils"
+		"source": "./src"
 	}
 }

@@ -18,8 +18,9 @@ import StrictIcon from "@material-ui/icons/GpsFixed"
 import Expiration from "components/Expiration"
 import { FixedSizeList } from "react-window"
 import { withStyles } from "@material-ui/core/styles"
-import { withChrome } from "contexts/ChromeContext"
-import compileRegExp from "utils/compileRegExp"
+import { withStorage } from "contexts/StorageContext"
+import { withSearch } from "contexts/SearchContext"
+import { withCookies } from "contexts/CookiesContext"
 
 const styles = theme => ({
 	paper: {
@@ -105,21 +106,17 @@ const styles = theme => ({
 	},
 })
 
-function createCookieKey ( cookie ) {
-	return `<${cookie.name}><${cookie.domain}><${cookie.path}>`
-}
-
 class Cookies extends React.Component {
 
 	highlight ( target ) {
-		const { data } = this.props
-		var { search: { term }, options: { regexp, sensitive } } = data
-		var re = compileRegExp ( term )
+		const { storage, search } = this.props
+		var { term, pattern } = search
+		var { regexp, sensitive } = storage.data
 		var last = 0
 		var result = []
 		var match = null
-		if ( regexp && term && re ) {
-			while ( ( match = re.exec ( target ) ) != null ) {
+		if ( regexp && term && pattern ) {
+			while ( ( match = pattern.exec ( target ) ) != null ) {
 				if ( !match || !match [ 0 ] || match [ 0 ].length < 1 ) break
 				if ( match.index > last ) {
 					result.push ( target.substring ( last, match.index ) )
@@ -154,9 +151,9 @@ class Cookies extends React.Component {
 	}
 
 	renderItem ( index, style, cookie ) {
-		const { classes, data, term, onItemClick } = this.props
-		const protectList = data.list.protect
-		const key = createCookieKey ( cookie )
+		const { classes, storage, cookies, onItemClick } = this.props
+		const protectList = storage.data.protect
+		const key = cookies.hash ( cookie )
 		const isProtected = key in protectList
 		const name = this.highlight ( cookie.name )
 		const path = this.highlight ( cookie.domain + cookie.path )
@@ -189,9 +186,9 @@ class Cookies extends React.Component {
 				{
 					cookie.expirationDate
 					? <Expiration
-						type={data.options.expirationFormat}
+						type={storage.data.expirationFormat}
 						timestamp={cookie.expirationDate}
-						onExpire={() => data.loadCookies ()}
+						onExpire={() => cookies.load ()}
 					/>
 					: <b><em>{"<SESSION>"}</em></b>
 				}
@@ -202,29 +199,29 @@ class Cookies extends React.Component {
 	}
 
 	render () {
-		const { classes, data, onCreate } = this.props
-		var items = _.sortBy ( data.filtered, o => data.options.sortType === "expirationDate"
-			? o [ data.options.sortType ]
-			: o [ data.options.sortType ]
+		const { classes, storage, onCreate, cookies } = this.props
+		var items = _.sortBy ( cookies.found, o => storage.data.sortType === "expirationDate"
+			? o [ storage.data.sortType ]
+			: o [ storage.data.sortType ]
 				.replace (/^[^0-9a-z]*/i, "")
 				.toLowerCase ()
 		)
-		if ( data.options.sortDirection === "descending" ) {
+		if ( storage.data.sortDirection === "descending" ) {
 			_.reverse ( items )
 		}
 		return <React.Fragment>
 			{
-				!data.initialCookiesLoaded && <div className={classes.none} >
+				!cookies.initialized && <div className={classes.none} >
 					<CircularProgress disableShrink />
 				</div>
 			}
 			{
-				data.initialCookiesLoaded && items.length <= 0 && <div className={classes.none} >
+				cookies.initialized && items.length <= 0 && <div className={classes.none} >
 					No Cookies<br/>Found
 				</div>
 			}
 			{
-				data.initialCookiesLoaded && items.length > 0 && <FixedSizeList
+				cookies.initialized && items.length > 0 && <FixedSizeList
 					className={classes.list}
 					height={window.innerHeight - 52}
 					width="100%"
@@ -252,9 +249,18 @@ class Cookies extends React.Component {
 
 Cookies.propTypes = {
 	classes: PropTypes.object.isRequired,
-	data: PropTypes.object.isRequired,
+	storage: PropTypes.object.isRequired,
+	search: PropTypes.object.isRequired,
+	cookies: PropTypes.object.isRequired,
 	onItemClick: PropTypes.func.isRequired,
 	onCreate: PropTypes.func.isRequired,
 }
 
-export default withChrome ( withStyles ( styles ) ( Cookies ) )
+export default
+withStorage (
+	withSearch (
+		withCookies (
+			withStyles ( styles ) ( Cookies )
+		)
+	)
+)

@@ -1,29 +1,26 @@
 import "typeface-roboto"
-import Options from "components/Options"
-import CssBaseline from "@material-ui/core/CssBaseline"
+import browser from "webextension-polyfill"
+import defaults from "data/defaults"
+import theme from "source/theme"
 import React from "react"
 import ReactDOM from "react-dom"
+import Options from "components/Options"
+import CssBaseline from "@material-ui/core/CssBaseline"
 import { MuiThemeProvider } from "@material-ui/core/styles"
-import { ChromeProvider, ChromeConsumer } from "contexts/ChromeContext"
-import theme from "./theme"
-
-const NODE_ENV = process.env.NODE_ENV
+import { StorageProvider, StorageConsumer } from "contexts/StorageContext"
 
 ReactDOM.render (
-	<ChromeProvider>
-		<ChromeConsumer>
+	<StorageProvider
+		defaults={defaults} >
+		<StorageConsumer>
 		{
-			data => {
-				if ( NODE_ENV !== "production" ) {
-					console.log ( "MuiTheme:", theme ( data.options.dark ) )
-				}
-				return <MuiThemeProvider theme={theme ( data.options.dark )} >
-					<CssBaseline/>
-					<Options/>
-				</MuiThemeProvider>
-			}
+			storage => <MuiThemeProvider
+				theme={theme ( storage.data.dark )} >
+				<CssBaseline/>
+				<Options/>
+			</MuiThemeProvider>
 		}
-		</ChromeConsumer>
-	</ChromeProvider>,
-	document.getElementById ("main")
+		</StorageConsumer>
+	</StorageProvider>,
+	document.getElementById ("main"),
 )

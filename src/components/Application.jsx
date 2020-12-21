@@ -5,7 +5,9 @@ import PropTypes from "prop-types"
 import OmniBar from "components/OmniBar"
 import Cookies from "components/Cookies"
 import CookieViewer from "components/CookieViewer"
-import { withChrome } from "contexts/ChromeContext"
+import { withFocus } from "contexts/FocusContext"
+import { withStorage } from "contexts/StorageContext"
+import { withCookies } from "contexts/CookiesContext"
 import { withStyles } from "@material-ui/core/styles"
 
 const styles = theme => ({
@@ -29,19 +31,18 @@ class Application extends React.Component {
 	}
 
 	selectNewCookie ( cookie ) {
-		const { data } = this.props
-		const domain = data.activeUrl ? _.get ( new URL ( data.activeUrl ), "hostname", "" ) : ""
+		const { focus } = this.props
 		this.setState ({
 			isNew: true,
 			cookie: {
-				domain: domain,
+				domain: focus.domain ? `.${focus.domain}` : ".",
 				expirationDate: moment ().add ( 1, "year" ).unix (),
 				hostOnly: false,
 				httpOnly: true,
 				name: "",
-				path: "/",
-				sameSite: "unspecified",
-				secure: true,
+				path: focus.path ? focus.path : "/",
+				sameSite: "lax",
+				secure: focus.last ? focus.last.startsWith ("https") : true,
 				session: false,
 				storeId: "0",
 				value: "",
@@ -54,7 +55,7 @@ class Application extends React.Component {
 	}
 
 	render () {
-		const { data } = this.props
+		const { cookies, storage } = this.props
 		const { cookie, isNew } = this.state
 		return <div>
 			<OmniBar/>
@@ -67,14 +68,14 @@ class Application extends React.Component {
 					cookie={cookie}
 					isNew={isNew}
 					onClose={() => this.unSelectCookie ()}
-					onExport={() => data.export ( cookie )}
-					onDelete={() => this.unSelectCookie ( () => data.delete ( cookie ) )}
+					onExport={() => cookies.export ( cookie )}
+					onDelete={() => this.unSelectCookie ( () => cookies.delete ( cookie ) )}
 					onBlock={() => this.unSelectCookie ( () => {
-						data.addBlock ( cookie )
-						data.delete ( cookie )
+						storage.add ( "block", cookies.hash ( cookie ), cookie )
+						cookies.delete ( cookie )
 					})}
-					onProtect={() => data.addProtect ( cookie )}
-					onRemoveProtect={() => data.removeProtect ( cookie )}
+					onProtect={() => storage.add ( "protect", cookies.hash ( cookie ), cookie )}
+					onRemoveProtect={() => storage.remove ( "protect", cookies.hash ( cookie ) )}
 				/>
 			}
 		</div>
@@ -84,7 +85,16 @@ class Application extends React.Component {
 
 Application.propTypes = {
 	classes: PropTypes.object.isRequired,
-	data: PropTypes.object.isRequired,
+	storage: PropTypes.object.isRequired,
+	focus: PropTypes.object.isRequired,
+	cookies: PropTypes.object.isRequired,
 }
 
-export default withChrome ( withStyles ( styles ) ( Application ) )
+export default
+withStorage (
+	withFocus (
+		withCookies (
+			withStyles ( styles ) ( Application )
+		)
+	)
+)

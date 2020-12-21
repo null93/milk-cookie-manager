@@ -38,6 +38,11 @@ class Expiration extends React.Component {
 		}
 	}
 
+	plural ( value, label ) {
+		const postfix = value === 1 ? "" : "s"
+		return `${value} ${label}${postfix}`
+	}
+
 	render () {
 		const { type, timestamp } = this.props
 		const { today } = this.state
@@ -50,16 +55,13 @@ class Expiration extends React.Component {
 				return <div key={today} >
 				{
 					[
-						duration._data.years,
-						duration._data.months,
-						duration._data.days
-					].join ("/")
-					+ " " +
-					[
-						duration._data.hours,
-						duration._data.minutes,
-						duration._data.seconds
-					].join (":")
+						`${this.plural ( duration._data.years, "year" )}`,
+						`${this.plural ( duration._data.months, "month" )}`,
+						`${this.plural ( duration._data.days, "day" )}`,
+						`${this.plural ( duration._data.hours, "hour" )}`,
+						`${this.plural ( duration._data.minutes, "minute" )}`,
+						`${this.plural ( duration._data.seconds, "second" )}`,
+					].filter ( e => !e.startsWith ("0") ).join (", ")
 				}
 				</div>
 			case "timestamp":

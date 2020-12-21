@@ -1,3 +1,4 @@
+import _ from "lodash"
 import React from "react"
 import PropTypes from "prop-types"
 import Table from "@material-ui/core/Table"
@@ -8,7 +9,7 @@ import TableFooter from "@material-ui/core/TableFooter"
 import TablePagination from "@material-ui/core/TablePagination"
 import TableRow from "@material-ui/core/TableRow"
 import Button from "@material-ui/core/Button"
-import { withChrome } from "contexts/ChromeContext"
+import { withStorage } from "contexts/StorageContext"
 
 class Protected extends React.Component {
 
@@ -21,9 +22,9 @@ class Protected extends React.Component {
 	}
 
 	render () {
-		const { data } = this.props
+		const { storage } = this.props
 		const { perPage } = this.state
-		const rows = Object.values ( data.list.protect )
+		const rows = Object.values ( storage.data.protect )
 			.sort ( ( a, b ) => a.name < b.name ? -1 : 1 )
 		const page = Math.min ( Math.max ( 0, Math.ceil ( rows.length / perPage ) - 1 ), this.state.page )
 		return <Table>
@@ -32,7 +33,11 @@ class Protected extends React.Component {
 					<TableCell style={{ width: "50%" }} >Name</TableCell>
 					<TableCell style={{ width: "50%" }} >Domain + Path</TableCell>
 					<TableCell style={{ width: 64 }} >
-						<Button size="small" onClick={() => data.clearProtect ()} >Truncate</Button>
+						<Button
+							size="small"
+							onClick={() => storage.set ( "protect", {} )} >
+							Truncate
+						</Button>
 					</TableCell>
 				</TableRow>
 			</TableHead>
@@ -50,7 +55,11 @@ class Protected extends React.Component {
 						<TableCell size="small" style={{ width: "50%" }} >{row.name}</TableCell>
 						<TableCell size="small" style={{ width: "50%" }} >{row.domain + row.path}</TableCell>
 						<TableCell size="small" align="right" style={{ width: 64 }} >
-							<Button size="small" onClick={() => data.removeProtect ( row )} >release</Button>
+							<Button
+								size="small"
+								onClick={() => storage.remove ( "protect", `<${row.name}><${row.domain}><${row.path}>` )} >
+								release
+							</Button>
 						</TableCell>
 					</TableRow>
 				)
@@ -80,7 +89,7 @@ class Protected extends React.Component {
 }
 
 Protected.propTypes = {
-	data: PropTypes.object.isRequired,
+	storage: PropTypes.object.isRequired,
 }
 
-export default withChrome ( Protected )
+export default withStorage ( Protected )

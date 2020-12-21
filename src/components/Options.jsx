@@ -1,3 +1,4 @@
+import browser from "webextension-polyfill"
 import React from "react"
 import PropTypes from "prop-types"
 import AppBar from "@material-ui/core/AppBar"
@@ -29,7 +30,7 @@ import Logo from "icons/Logo"
 import Blocked from "components/Blocked"
 import Protected from "components/Protected"
 import Credits from "components/Credits"
-import { withChrome } from "contexts/ChromeContext"
+import { withStorage } from "contexts/StorageContext"
 import { withStyles } from "@material-ui/core/styles"
 
 const styles = theme => ({
@@ -43,6 +44,16 @@ const styles = theme => ({
 	},
 	app: {
 		background: theme.palette.background.paper,
+	},
+	title: {
+		padding: theme.spacing ( 0, 1.5 ),
+		flex: 1,
+	},
+	version: {
+		cursor: "pointer",
+		"&:hover": {
+			opacity: 0.5,
+		},
 	},
 	bottom: {
 		display: "flex",
@@ -58,10 +69,12 @@ const styles = theme => ({
 		marginBottom: theme.spacing ( 2 ),
 	},
 	toolbar: {
-		borderBottom: `solid 1px ${theme.palette.divider}`
+		display: "flex",
+		borderBottom: `solid 1px ${theme.palette.divider}`,
+		padding: theme.spacing ( 0, 1.5 ),
 	},
 	icon: {
-		padding: theme.spacing ( 0, 1.5 ),
+		padding: 0,
 	},
 	logo: {
 		color: theme.palette.primary.main,
@@ -162,7 +175,7 @@ class Options extends React.Component {
 	}
 
 	render () {
-		const { classes, data } = this.props
+		const { classes, storage, data } = this.props
 		const { dialog } = this.state
 		return <div className={classes.root} >
 			<Dialog onClose={() => this.handleDialogClose ()} open={dialog.open} >
@@ -192,7 +205,22 @@ class Options extends React.Component {
 						color="primary" >
 						<Logo viewBox="0 0 48 48" fontSize="inherit" className={classes.logo} />
 					</IconButton>
-					<Typography variant="h6" noWrap ><b>MILK</b> — Cookie Manager — Options</Typography>
+					<Typography
+						variant="h6"
+						noWrap
+						className={classes.title} >
+						<b>MILK</b> — Cookie Manager — Options
+					</Typography>
+					<Typography
+						className={classes.version}
+						variant="overline"
+						color="textSecondary"
+						noWrap
+						onClick={() => browser.tabs.create ({
+							url: `https://github.com/null93/chrome-milk/releases/tag/${process.env.npm_package_version}`
+						})} >
+						version {process.env.npm_package_version}
+					</Typography>
 				</Toolbar>
 			</AppBar>
 			<div className={classes.bottom} >
@@ -221,11 +249,11 @@ class Options extends React.Component {
 					</List>
 					<Divider />
 					<List className={classes.list} >
-						<ListItem button onClick={() => chrome.tabs.create ({ url: "https://paypal.me/RafaelGrigorian" })} >
+						<ListItem button onClick={() => browser.tabs.create ({ url: "https://paypal.me/RafaelGrigorian" })} >
 							<ListItemText primary="Donate" secondary="Consider buying me a cup of coffee" />
 							<ListItemIcon>{<ExitToAppIcon/>}</ListItemIcon>
 						</ListItem>
-						<ListItem button onClick={() => chrome.tabs.create ({ url: "https://github.com/null93/chrome-milk" })} >
+						<ListItem button onClick={() => browser.tabs.create ({ url: "https://github.com/null93/chrome-milk" })} >
 							<ListItemText primary="Github Repository" secondary="View source code and report issues" />
 							<ListItemIcon>{<ExitToAppIcon/>}</ListItemIcon>
 						</ListItem>
@@ -245,8 +273,8 @@ class Options extends React.Component {
 									<Switch
 										color="primary"
 										size="small"
-										checked={data.options.sensitive}
-										onChange={e => data.setSensitive ( e.target.checked )}
+										checked={storage.data.sensitive}
+										onChange={e => storage.set ( "sensitive", e.target.checked )}
 									/>
 								</AccordionSummary>
 							</Accordion>
@@ -256,8 +284,8 @@ class Options extends React.Component {
 									<Switch
 										color="primary"
 										size="small"
-										checked={data.options.regexp}
-										onChange={e => data.setRegExp ( e.target.checked )}
+										checked={storage.data.regexp}
+										onChange={e => storage.set ( "regexp", e.target.checked )}
 									/>
 								</AccordionSummary>
 							</Accordion>
@@ -274,8 +302,8 @@ class Options extends React.Component {
 									<Switch
 										color="primary"
 										size="small"
-										checked={data.options.dark}
-										onChange={e => data.setDark ( e.target.checked )}
+										checked={storage.data.dark}
+										onChange={e => storage.set ( "dark", e.target.checked )}
 									/>
 								</AccordionSummary>
 							</Accordion>
@@ -285,8 +313,8 @@ class Options extends React.Component {
 									<Switch
 										color="primary"
 										size="small"
-										checked={data.options.tooltips}
-										onChange={e => data.setTooltips ( e.target.checked )}
+										checked={storage.data.tooltips}
+										onChange={e => storage.set ( "tooltips", e.target.checked )}
 									/>
 								</AccordionSummary>
 							</Accordion>
@@ -296,8 +324,8 @@ class Options extends React.Component {
 									<Switch
 										color="primary"
 										size="small"
-										checked={data.options.showWarnings}
-										onChange={e => data.setShowWarnings ( e.target.checked )}
+										checked={storage.data.showWarnings}
+										onChange={e => storage.set ( "showWarnings", e.target.checked )}
 									/>
 								</AccordionSummary>
 							</Accordion>
@@ -307,8 +335,8 @@ class Options extends React.Component {
 									<Switch
 										color="primary"
 										size="small"
-										checked={data.options.contextMenu}
-										onChange={e => data.setContextMenu ( e.target.checked )}
+										checked={storage.data.contextMenu}
+										onChange={e => storage.set ( "contextMenu", e.target.checked )}
 									/>
 								</AccordionSummary>
 							</Accordion>
@@ -318,8 +346,8 @@ class Options extends React.Component {
 									<Select
 										disableUnderline
 										size="small"
-										value={data.options.expirationFormat}
-										onChange={e => data.setExpirationFormat ( e.target.value )} >
+										value={storage.data.expirationFormat}
+										onChange={e => storage.set ( "expirationFormat", e.target.value )} >
 										<MenuItem value={"humanized"}>Humanized</MenuItem>
 										<MenuItem value={"countdown"}>Countdown</MenuItem>
 										<MenuItem value={"timestamp"}>Timestamp</MenuItem>
@@ -334,9 +362,9 @@ class Options extends React.Component {
 										<Select
 											disableUnderline
 											size="small"
-											value={data.options.sortType}
+											value={storage.data.sortType}
 											style={{ marginRight: 10 }}
-											onChange={e => data.setSortType ( e.target.value )} >
+											onChange={e => storage.set ( "sortType", e.target.value )} >
 											<MenuItem value={"name"}>Name</MenuItem>
 											<MenuItem value={"domain"}>Domain</MenuItem>
 											<MenuItem value={"expirationDate"}>Expiration</MenuItem>
@@ -344,8 +372,8 @@ class Options extends React.Component {
 										<Select
 											disableUnderline
 											size="small"
-											value={data.options.sortDirection}
-											onChange={e => data.setSortDirection ( e.target.value )} >
+											value={storage.data.sortDirection}
+											onChange={e => storage.set ( "sortDirection", e.target.value )} >
 											<MenuItem value={"ascending"}>Ascending</MenuItem>
 											<MenuItem value={"descending"}>Descending</MenuItem>
 										</Select>
@@ -399,7 +427,10 @@ class Options extends React.Component {
 
 Options.propTypes = {
 	classes: PropTypes.object.isRequired,
-	data: PropTypes.object.isRequired,
+	storage: PropTypes.object.isRequired,
 }
 
-export default withChrome ( withStyles ( styles ) ( Options ) )
+export default
+withStorage (
+	withStyles ( styles ) ( Options )
+)

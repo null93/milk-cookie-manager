@@ -4,7 +4,7 @@ module.exports = isDark => {
 	const defaultTheme = createMuiTheme ()
 	const primary = isDark ? "#FFFFFF" : "#4B4B4B"
 	const secondary = isDark ? "#4B4B4B" : "#FFFFFF"
-	return createMuiTheme ({
+	const theme = createMuiTheme ({
 		type: isDark ? "dark" : "light",
 		typography: {
 			fontFamily: "'Roboto', 'system-ui', 'sans-serif'",
@@ -65,6 +65,11 @@ module.exports = isDark => {
 						width: "100%",
 						color: isDark ? "#FFFFFF" : "#4B4B4B",
 						border: "none",
+						"&:hover": {
+							backgroundColor: "#00000022",
+							color: isDark ? "#FFFFFF" : "#4B4B4B",
+							opacity: 1,
+						},
 						"&$selected": {
 							backgroundColor: isDark ? "#8AB4F8" : "#1A73E8",
 							color: isDark ? "#292A2D" : "#FFFFFF",
@@ -154,4 +159,8 @@ module.exports = isDark => {
 			},
 		},
 	})
+	if ( process.env.NODE_ENV !== "production" ) {
+		console.log ( "MuiTheme:", theme )
+	}
+	return theme
 }
