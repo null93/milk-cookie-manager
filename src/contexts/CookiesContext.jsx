@@ -1,5 +1,6 @@
 import _ from "lodash"
 import browser from "webextension-polyfill"
+import utils from "utils/cookie"
 import Promise from "bluebird"
 import React from "react"
 import PropTypes from "prop-types"
@@ -61,22 +62,13 @@ class CookiesProvider extends React.Component {
 			})
 	}
 
-	hash ( cookie ) {
-		return `<${cookie.name}><${cookie.domain}><${cookie.path}>`
-	}
-
-	getUrl ( cookie ) {
-		const proto = `http${cookie.secure ? "s" : ""}`
-		return `${proto}://${cookie.domain.replace (/^\./, "")}${cookie.path}`
-	}
-
 	delete ( input ) {
 		const cookies = input ? [ input ] : this.state.found
 		return Promise.map ( cookies,
 			cookie => browser.cookies.remove ({
 				name: cookie.name,
 				storeId: cookie.storeId,
-				url: this.getUrl ( cookie ),
+				url: utils.url ( cookie ),
 			})
 		)
 	}
@@ -86,15 +78,15 @@ class CookiesProvider extends React.Component {
 		const { protect } = storage.data
 		const cookies = input ? [ input ] : this.state.found
 		const [ keys, values ] = _.unzip ( cookies
-			.filter ( cookie => !( this.hash ( cookie ) in protect ) )
-			.map ( cookie => [ this.hash ( cookie ), cookie ] )
+			.filter ( cookie => !( utils.hash ( cookie ) in protect ) )
+			.map ( cookie => [ utils.hash ( cookie ), cookie ] )
 		)
 		return storage.add ( "block", keys, values )
 			.then ( () => Promise.map ( cookies,
 				cookie => browser.cookies.remove ({
 					name: cookie.name,
 					storeId: cookie.storeId,
-					url: this.getUrl ( cookie ),
+					url: utils.url ( cookie ),
 				})
 			))
 	}
@@ -104,8 +96,8 @@ class CookiesProvider extends React.Component {
 		const { block } = storage.data
 		const cookies = input ? [ input ] : this.state.found
 		const [ keys, values ] = _.unzip ( cookies
-			.filter ( cookie => !( this.hash ( cookie ) in block ) )
-			.map ( cookie => [ this.hash ( cookie ), cookie ] )
+			.filter ( cookie => !( utils.hash ( cookie ) in block ) )
+			.map ( cookie => [ utils.hash ( cookie ), cookie ] )
 		)
 		return storage.add ( "protect", keys, values )
 	}
@@ -185,7 +177,7 @@ class CookiesProvider extends React.Component {
 
 	set ( cookie ) {
 		return browser.cookies.set ({
-			url: this.getUrl ( cookie ),
+			url: utils.url ( cookie ),
 			domain: cookie.hostOnly ? undefined : cookie.domain,
 			name: cookie.name,
 			value: cookie.value,
@@ -204,8 +196,8 @@ class CookiesProvider extends React.Component {
 			found: this.state.found,
 			initialized: this.state.initialized,
 			load: this.load.bind ( this ),
-			hash: this.hash.bind ( this ),
-			getUrl: this.getUrl.bind ( this ),
+			hash: utils.hash,
+			getUrl: utils.url,
 			delete: this.delete.bind ( this ),
 			block: this.block.bind ( this ),
 			protect: this.protect.bind ( this ),

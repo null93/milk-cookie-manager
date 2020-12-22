@@ -358,7 +358,7 @@ class MainMenu extends React.Component {
 							disabled={false}
 							onClick={() => {
 								this.handleClose ()
-								browser.tabs.create ({ url: "/options.html" })
+								browser.runtime.openOptionsPage ()
 							}} >
 							<ListItemIcon className={classes.icon} >
 								<SettingsIcon color="primary" />

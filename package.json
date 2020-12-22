@@ -5,9 +5,8 @@
 	"author": "Rafael Grigorian <rafael@grigorian.org>",
 	"license": "MIT",
 	"scripts": {
-		"polyfill": "cp node_modules/webextension-polyfill/dist/browser-polyfill.min.js dist/browser-polyfill.js",
-		"prebuild": "mkdir -p dist && cp -r static/* dist/ && yarn polyfill",
-		"preserve": "mkdir -p dist && cp -r static/* dist/ && yarn polyfill",
+		"prebuild": "mkdir -p dist && cp -r static/* dist/",
+		"preserve": "mkdir -p dist && cp -r static/* dist/",
 		"build": "NODE_ENV=production; parcel build --no-cache --no-source-maps src/*.html",
 		"serve": "parcel serve --no-autoinstall --no-cache src/*.html",
 		"zip": "mkdir -p target && zip -r target/chrome-milk-$npm_package_version.zip dist/*",
@@ -39,6 +38,7 @@
 		"components": "./src/components",
 		"data": "./src/data",
 		"icons": "./src/icons",
-		"source": "./src"
+		"source": "./src",
+		"utils": "./src/utils"
 	}
 }
