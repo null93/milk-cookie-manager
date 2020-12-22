@@ -249,10 +249,12 @@ class CookieViewer extends React.Component {
 										? true
 										: secure
 								})} >
-								<MenuItem value="unspecified" >
-									<ListItemIcon><UnspecifiedIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
-									<ListItemText primary="Unspecified" />
-								</MenuItem>
+								{
+									navigator.userAgent.indexOf ("Chrome") >= 0 && <MenuItem value="unspecified" >
+										<ListItemIcon><UnspecifiedIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
+										<ListItemText primary="Unspecified" />
+									</MenuItem>
+								}
 								<MenuItem value="no_restriction" >
 									<ListItemIcon><NoRestrictionIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
 									<ListItemText primary="No Restriction" />
