@@ -7,7 +7,7 @@
 ![Rating](https://img.shields.io/chrome-web-store/rating/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge&color=1A73E8)
 ![Reviews](https://img.shields.io/chrome-web-store/rating-count/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge&color=1A73E8)
 
-![screenshot](docs/images/screenshot-1.png)
+![screenshot](docs/images/github-banner.png)
 
 ### About
 

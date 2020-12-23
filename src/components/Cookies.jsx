@@ -31,13 +31,13 @@ const styles = theme => ({
 		borderBottom: `solid 1px ${theme.palette.divider}`,
 		cursor: "pointer",
 		borderRadius: 0,
-		// "&:hover": {
-		// 	backgroundColor: theme.palette.action.hover,
-		// 	transition: theme.transitions.create (
-		// 		[ "background-color" ],
-		// 		{ duration: theme.transitions.duration.complex }
-		// 	)
-		// },
+		"&:hover": {
+			backgroundColor: theme.palette.action.hover,
+			transition: theme.transitions.create (
+				[ "background-color" ],
+				{ duration: theme.transitions.duration.complex }
+			)
+		},
 	},
 	list: {
 		marginTop: 52,
