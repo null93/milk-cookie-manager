@@ -2,7 +2,7 @@ module.exports = {
 	// Options
 	regexp: false,
 	sensitive: false,
-	dark: false,
+	dark: Boolean ( window.matchMedia ("(prefers-color-scheme: dark)").matches ),
 	tooltips: true,
 	showWarnings: true,
 	contextMenu: true,
