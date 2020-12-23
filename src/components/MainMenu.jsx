@@ -14,6 +14,11 @@ import Dialog from "@material-ui/core/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import DialogContent from "@material-ui/core/DialogContent"
 import DialogActions from "@material-ui/core/DialogActions"
+import Table from "@material-ui/core/Table"
+import TableBody from "@material-ui/core/TableBody"
+import TableRow from "@material-ui/core/TableRow"
+import TableCell from "@material-ui/core/TableCell"
+import CopyButton from "components/CopyButton"
 import MenuIcon from "@material-ui/icons/MoreVert"
 import ImportIcon from "icons/Import"
 import ExportIcon from "icons/Export"
@@ -38,7 +43,10 @@ const styles = theme => ({
 	},
 	icon: {
 		minWidth: 34,
-	}
+	},
+	cell: {
+		borderBottom: "none !important",
+	},
 })
 
 class MainMenu extends React.Component {
@@ -50,7 +58,9 @@ class MainMenu extends React.Component {
 			dialog: {
 				open: false,
 				title: "Confirm Action",
-				description: "Are you sure you want to proceed?",
+				content: <Typography gutterBottom >
+					Are you sure you want to proceed?
+				</Typography>,
 				showCancel: true,
 				showSubmit: true,
 				cancel: {
@@ -105,9 +115,7 @@ class MainMenu extends React.Component {
 					<b>{dialog.title}</b>
 				</DialogTitle>
 				<DialogContent dividers >
-					<Typography gutterBottom >
-						{dialog.description}
-					</Typography>
+					{dialog.content}
 				</DialogContent>
 				{
 					( dialog.showCancel || dialog.showSubmit ) && <DialogActions>
@@ -149,7 +157,7 @@ class MainMenu extends React.Component {
 								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
-									description: "You are about to delete all currently visible cookies. Are you sure you want to proceed?",
+									content: <Typography gutterBottom >You are about to delete all currently visible cookies. Are you sure you want to proceed?</Typography>,
 									showCancel: true,
 									showSubmit: true,
 									submit: {
@@ -185,7 +193,7 @@ class MainMenu extends React.Component {
 								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
-									description: "You are about to block and delete all currently visible cookies (protected cookies are skipped). Are you sure you want to proceed?",
+									content: <Typography gutterBottom >You are about to block and delete all currently visible cookies (protected cookies are skipped). Are you sure you want to proceed?</Typography>,
 									showCancel: true,
 									showSubmit: true,
 									submit: {
@@ -221,7 +229,7 @@ class MainMenu extends React.Component {
 								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
-									description: "You are about to protect all currently visible cookies. Are you sure you want to proceed?",
+									content: <Typography gutterBottom >You are about to protect all currently visible cookies. Are you sure you want to proceed?</Typography>,
 									showCancel: true,
 									showSubmit: true,
 									submit: {
@@ -275,15 +283,60 @@ class MainMenu extends React.Component {
 									({ current, total }) => this.setDialogState ({
 										open: true,
 										title: "Importing Cookies",
-										description: `Currently imported ${current} out of ${total} cookies.`,
+										content: <Typography gutterBottom >{`Currently processed ${current} out of ${total} cookies.`}</Typography>,
 										showCancel: false,
 										showSubmit: false,
 									})
 								)
-								.then ( message => this.setDialogState ({
+								.then ( results => this.setDialogState ({
 									open: true,
-									title: "Import Results",
-									description: message,
+									title: "Imported Results",
+									content: <Table>
+										<TableBody>
+											<TableRow>
+												<TableCell padding="none" size="small" className={classes.cell} >
+													<Typography>Successfully Imported</Typography>
+												</TableCell>
+												<TableCell padding="none" size="small" className={classes.cell} >
+													<Typography>{results.success.length}</Typography>
+												</TableCell>
+												<TableCell padding="none" size="small" align="right" className={classes.cell} >
+													<CopyButton
+														disabled={results.success.length < 1}
+														data={JSON.stringify ( results.success, null, "\t" )}
+													/>
+												</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableCell padding="none" size="small" className={classes.cell} >
+													<Typography>Expired Cookies</Typography>
+												</TableCell>
+												<TableCell padding="none" size="small" className={classes.cell} >
+													<Typography>{results.expired.length}</Typography>
+												</TableCell>
+												<TableCell padding="none" size="small" align="right" className={classes.cell} >
+													<CopyButton
+														disabled={results.expired.length < 1}
+														data={JSON.stringify ( results.expired, null, "\t" )}
+													/>
+												</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableCell padding="none" size="small" className={classes.cell} >
+													<Typography>Failed To Import</Typography>
+												</TableCell>
+												<TableCell padding="none" size="small" className={classes.cell} >
+													<Typography>{results.failed.length}</Typography>
+												</TableCell>
+												<TableCell padding="none" size="small" align="right" className={classes.cell} >
+													<CopyButton
+														disabled={results.failed.length < 1}
+														data={JSON.stringify ( results.failed, null, "\t" )}
+													/>
+												</TableCell>
+											</TableRow>
+										</TableBody>
+									</Table>,
 									showCancel: false,
 									showSubmit: true,
 									submit: {
@@ -294,10 +347,10 @@ class MainMenu extends React.Component {
 										},
 									},
 								}))
-								.catch ( message => this.setDialogState ({
+								.catch ( error => this.setDialogState ({
 									open: true,
 									title: "Import Results",
-									description: "Failed to import cookies, please check JSON file and try again.",
+									content: <Typography gutterBottom >Failed to import cookies, please check JSON file and try again.</Typography>,
 									showCancel: false,
 									showSubmit: true,
 									submit: {

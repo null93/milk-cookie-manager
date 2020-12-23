@@ -9,13 +9,13 @@ function enableContextMenu () {
 			id: "fullscreen",
 			title: "Fullscreen",
 			type: "normal",
-			contexts: [ "page" ],
+			contexts: [ "all" ],
 		}))
 		.then ( () => browser.contextMenus.create ({
 			id: "options",
 			title: "Options",
 			type: "normal",
-			contexts: [ "page" ],
+			contexts: [ "all" ],
 		}))
 }
 

@@ -1,5 +1,6 @@
 import _ from "lodash"
 import browser from "webextension-polyfill"
+import moment from "moment"
 import utils from "utils/cookie"
 import Promise from "bluebird"
 import React from "react"
@@ -147,25 +148,45 @@ class CookiesProvider extends React.Component {
 				if ( file ) {
 					const reader = new FileReader ()
 					reader.readAsText ( file, "UTF-8" )
-					reader.onload = async e => {
-						const raw = e.target.result
-						var data = JSON.parse ( raw )
-						if ( !Array.isArray ( data ) ) data = [ data ]
-						let total = data.length
-						let success = 0
-						await data.reduce (
-							( a, e, i ) => a.then ( async () => {
-								success += await this.set ( e )
-									.then ( () => 1 )
-									.catch ( () => 0 )
-								updateCount ({ current: i, success, total })
-								return Promise.resolve ()
-							}),
-							Promise.resolve ()
-						)
-						resolve (`Successfully imported ${success}/${total} cookies.`)
+					reader.onload = e => {
+						try {
+							const raw = e.target.result
+							var data = JSON.parse ( raw )
+							if ( !Array.isArray ( data ) ) data = [ data ]
+							const results = {
+								current: 0,
+								total: data.length,
+								success: [],
+								expired: [],
+								failed: [],
+							}
+							return Promise.each ( data, cookie => {
+								return this.set ( cookie )
+									.then ( () => {
+										results.current++
+										if ( !cookie.expirationDate || cookie.expirationDate > moment ().unix () ) {
+											results.success.push ( cookie )
+										}
+										else {
+											results.expired.push ( cookie )
+										}
+										return updateCount ( results )
+									})
+									.catch ( error => {
+										console.error ( error )
+										results.current++
+										results.failed.push ( cookie )
+										return updateCount ( results )
+									})
+							})
+							.then ( () => resolve ( results ) )
+							.catch ( error => reject ( error ) )
+						}
+						catch ( error ) {
+							reject ( error )
+						}
 					}
-					reader.onerror = e => reject ("Could not load selected file! Please try again.")
+					reader.onerror = error => reject ( error )
 				}
 				else {
 					reject ("Could not load selected file! Please try again.")
