@@ -72,6 +72,13 @@ const styles = theme => ({
 	toggleLabel: {
 		marginLeft: theme.spacing ( 1 ),
 	},
+	primary: {
+		display: "inline",
+	},
+	secondary: {
+		display: "inline",
+		paddingLeft: 5,
+	},
 })
 
 class CookieViewer extends React.Component {
@@ -252,20 +259,60 @@ class CookieViewer extends React.Component {
 								{
 									navigator.userAgent.indexOf ("Chrome") >= 0 && <MenuItem value="unspecified" >
 										<ListItemIcon><UnspecifiedIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
-										<ListItemText primary="Unspecified" />
+										<ListItemText
+											primary="Unspecified"
+											secondary="— Default behavior will mimic Lax"
+											primaryTypographyProps={{
+												className: classes.primary,
+											}}
+											secondaryTypographyProps={{
+												className: classes.secondary,
+												variant: "body1",
+											}}
+										/>
 									</MenuItem>
 								}
 								<MenuItem value="no_restriction" >
 									<ListItemIcon><NoRestrictionIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
-									<ListItemText primary="No Restriction" />
+									<ListItemText
+										primary="No Restriction"
+										secondary="— Not limited by context but secure flag is required"
+										primaryTypographyProps={{
+											className: classes.primary,
+										}}
+										secondaryTypographyProps={{
+											className: classes.secondary,
+											variant: "body1",
+										}}
+									/>
 								</MenuItem>
 								<MenuItem value="lax" >
 									<ListItemIcon><LaxIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
-									<ListItemText primary="LAX" />
+									<ListItemText
+										primary="Lax"
+										secondary="— Restricted to first-party or same-site contexts"
+										primaryTypographyProps={{
+											className: classes.primary,
+										}}
+										secondaryTypographyProps={{
+											className: classes.secondary,
+											variant: "body1",
+										}}
+									/>
 								</MenuItem>
 								<MenuItem value="strict" >
 									<ListItemIcon><StrictIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
-									<ListItemText primary="Strict" />
+									<ListItemText
+										primary="Strict"
+										secondary="— Restricted to first-party context only"
+										primaryTypographyProps={{
+											className: classes.primary,
+										}}
+										secondaryTypographyProps={{
+											className: classes.secondary,
+											variant: "body1",
+										}}
+									/>
 								</MenuItem>
 							</Select>
 						</FormControl>
