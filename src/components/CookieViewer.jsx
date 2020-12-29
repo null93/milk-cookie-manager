@@ -79,6 +79,10 @@ const styles = theme => ({
 		display: "inline",
 		paddingLeft: 5,
 	},
+	listItemText: {
+		marginTop: 2,
+		marginBottom: 2,
+	},
 })
 
 class CookieViewer extends React.Component {
@@ -260,6 +264,7 @@ class CookieViewer extends React.Component {
 									navigator.userAgent.indexOf ("Chrome") >= 0 && <MenuItem value="unspecified" >
 										<ListItemIcon><UnspecifiedIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
 										<ListItemText
+											classes={{ multiline: classes.listItemText }}
 											primary="Unspecified"
 											secondary="— Default behavior will mimic Lax"
 											primaryTypographyProps={{
@@ -275,6 +280,7 @@ class CookieViewer extends React.Component {
 								<MenuItem value="no_restriction" >
 									<ListItemIcon><NoRestrictionIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
 									<ListItemText
+										classes={{ multiline: classes.listItemText }}
 										primary="No Restriction"
 										secondary="— Not limited by context but secure flag is required"
 										primaryTypographyProps={{
@@ -289,6 +295,7 @@ class CookieViewer extends React.Component {
 								<MenuItem value="lax" >
 									<ListItemIcon><LaxIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
 									<ListItemText
+										classes={{ multiline: classes.listItemText }}
 										primary="Lax"
 										secondary="— Restricted to first-party or same-site contexts"
 										primaryTypographyProps={{
@@ -303,6 +310,7 @@ class CookieViewer extends React.Component {
 								<MenuItem value="strict" >
 									<ListItemIcon><StrictIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
 									<ListItemText
+										classes={{ multiline: classes.listItemText }}
 										primary="Strict"
 										secondary="— Restricted to first-party context only"
 										primaryTypographyProps={{
