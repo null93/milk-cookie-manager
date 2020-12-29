@@ -65,13 +65,7 @@ class CookiesProvider extends React.Component {
 
 	delete ( input ) {
 		const cookies = input ? [ input ] : this.state.found
-		return Promise.map ( cookies,
-			cookie => browser.cookies.remove ({
-				name: cookie.name,
-				storeId: cookie.storeId,
-				url: utils.url ( cookie ),
-			})
-		)
+		return Promise.map ( cookies, cookie => utils.remove ( cookie ) )
 	}
 
 	block ( input ) {
@@ -83,12 +77,9 @@ class CookiesProvider extends React.Component {
 			.map ( cookie => [ utils.hash ( cookie ), cookie ] )
 		)
 		return storage.add ( "block", keys, values )
-			.then ( () => Promise.map ( cookies,
-				cookie => browser.cookies.remove ({
-					name: cookie.name,
-					storeId: cookie.storeId,
-					url: utils.url ( cookie ),
-				})
+			.then ( () => Promise.map (
+				cookies,
+				cookie => utils.remove ( cookie )
 			))
 	}
 
@@ -161,7 +152,7 @@ class CookiesProvider extends React.Component {
 								failed: [],
 							}
 							return Promise.each ( data, cookie => {
-								return this.set ( cookie )
+								return utils.set ( cookie )
 									.then ( () => {
 										results.current++
 										if ( !cookie.expirationDate || cookie.expirationDate > moment ().unix () ) {
@@ -196,21 +187,6 @@ class CookiesProvider extends React.Component {
 		})
 	}
 
-	set ( cookie ) {
-		return browser.cookies.set ({
-			url: utils.url ( cookie ),
-			domain: cookie.hostOnly ? undefined : cookie.domain,
-			name: cookie.name,
-			value: cookie.value,
-			path: cookie.path,
-			secure: cookie.sameSite === "no_restriction" ? true : cookie.secure,
-			httpOnly: cookie.httpOnly,
-			sameSite: cookie.sameSite,
-			expirationDate: cookie.session ? undefined : cookie.expirationDate,
-			storeId: cookie.storeId,
-		})
-	}
-
 	render () {
 		const value = {
 			all: this.state.all,
@@ -225,7 +201,7 @@ class CookiesProvider extends React.Component {
 			curl: this.curl.bind ( this ),
 			import: this.import.bind ( this ),
 			export: this.export.bind ( this ),
-			set: this.set.bind ( this ),
+			set: utils.set,
 		}
 		if ( process.env.NODE_ENV !== "production" ) {
 			console.log ( "Cookies Provider:", value )

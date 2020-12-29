@@ -9,9 +9,8 @@ import TableFooter from "@material-ui/core/TableFooter"
 import TablePagination from "@material-ui/core/TablePagination"
 import TableRow from "@material-ui/core/TableRow"
 import Button from "@material-ui/core/Button"
-import { withStorage } from "contexts/StorageContext"
 
-class Protected extends React.Component {
+class TableList extends React.Component {
 
 	constructor ( props ) {
 		super ( props )
@@ -22,20 +21,29 @@ class Protected extends React.Component {
 	}
 
 	render () {
-		const { storage } = this.props
+		const { items, itemKey, onTruncate, noItemsMessage, columns } = this.props
 		const { perPage } = this.state
-		const rows = Object.values ( storage.data.protect )
+		const rows = Object.values ( items )
 			.sort ( ( a, b ) => a.name < b.name ? -1 : 1 )
 		const page = Math.min ( Math.max ( 0, Math.ceil ( rows.length / perPage ) - 1 ), this.state.page )
+		const columnNames = _.keys ( columns )
 		return <Table>
 			<TableHead>
 				<TableRow>
-					<TableCell style={{ width: "50%" }} >Name</TableCell>
-					<TableCell style={{ width: "50%" }} >Domain + Path</TableCell>
-					<TableCell style={{ width: 64 }} >
+					{
+						columnNames.filter ( e => !!e ).map ( columnName =>
+							<TableCell
+								style={{ width: "50%" }}
+								key={columnName} >
+								{columnName}
+							</TableCell>
+						)
+					}
+					<TableCell align="right" >
 						<Button
+							disabled={rows.length < 1}
 							size="small"
-							onClick={() => storage.set ( "protect", {} )} >
+							onClick={onTruncate} >
 							Truncate
 						</Button>
 					</TableCell>
@@ -45,22 +53,24 @@ class Protected extends React.Component {
 			{
 				rows.length < 1 && <TableRow>
 					<TableCell colSpan={3} size="small" >
-						No Protected Cookies
+						{noItemsMessage}
 					</TableCell>
 				</TableRow>
 			}
 			{
 				rows.slice ( page * perPage, page * perPage + perPage ).map (
-					row => <TableRow key={`<${row.name}><${row.domain}><${row.path}>`} >
-						<TableCell size="small" style={{ width: "50%" }} >{row.name}</TableCell>
-						<TableCell size="small" style={{ width: "50%" }} >{row.domain + row.path}</TableCell>
-						<TableCell size="small" align="right" style={{ width: 64 }} >
-							<Button
-								size="small"
-								onClick={() => storage.remove ( "protect", `<${row.name}><${row.domain}><${row.path}>` )} >
-								release
-							</Button>
-						</TableCell>
+					row => <TableRow key={itemKey ( row )} >
+						{
+							columnNames.map ( ( columnName, index ) =>
+								<TableCell
+									key={columnName}
+									size="small"
+									style={index === columnNames.length - 1 ? {} : { width: "50%" }}
+									align={index === columnNames.length - 1 ? "right" : "left"} >
+									{columns [ columnName ] ( row )}
+								</TableCell>
+							)
+						}
 					</TableRow>
 				)
 			}
@@ -88,8 +98,12 @@ class Protected extends React.Component {
 
 }
 
-Protected.propTypes = {
-	storage: PropTypes.object.isRequired,
+TableList.propTypes = {
+	items: PropTypes.object.isRequired,
+	itemKey: PropTypes.func.isRequired,
+	onTruncate: PropTypes.func.isRequired,
+	noItemsMessage: PropTypes.string.isRequired,
+	columns: PropTypes.object.isRequired,
 }
 
-export default withStorage ( Protected )
+export default TableList 

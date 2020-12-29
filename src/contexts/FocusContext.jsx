@@ -44,21 +44,26 @@ class FocusProvider extends React.Component {
 		return validated ? _.get ( new URL ( validated ), "pathname" ) : null
 	}
 
-	onWindowFocusChanged ( windowId ) {
+	onWindowFocusChanged ( windowId = -1 ) {
 		return browser.tabs.query ({
 			lastFocusedWindow: true,
 			highlighted: true,
 		})
 		.then ( tabs => {
 			const tab = tabs.shift ()
-			this.setState ({
-				window: tab.windowId,
-				tab: tab.id,
-				url: tab.url,
-				last: this.getLast ( tab.url ),
-				domain: this.getDomain ( tab.url ),
-				path: this.getPath ( tab.url ),
-			})
+			if ( tab ) {
+				this.setState ({
+					window: _.get ( tab, "windowId", windowId ),
+					tab: tab.id,
+					url: tab.url,
+					last: this.getLast ( tab.url ),
+					domain: this.getDomain ( tab.url ),
+					path: this.getPath ( tab.url ),
+				})
+			}
+			else {
+				this.setState ( this.getDefaultState () )
+			}
 		})
 		.catch ( error => {
 			console.error ( "Failed to query last tab:", error )

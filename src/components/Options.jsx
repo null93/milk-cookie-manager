@@ -1,4 +1,5 @@
 import browser from "webextension-polyfill"
+import utils from "utils/cookie"
 import React from "react"
 import PropTypes from "prop-types"
 import AppBar from "@material-ui/core/AppBar"
@@ -27,8 +28,7 @@ import DialogTitle from "@material-ui/core/DialogTitle"
 import DialogContent from "@material-ui/core/DialogContent"
 import DialogActions from "@material-ui/core/DialogActions"
 import Logo from "icons/Logo"
-import Blocked from "components/Blocked"
-import Protected from "components/Protected"
+import TableList from "components/TableList"
 import Credits from "components/Credits"
 import { withStorage } from "contexts/StorageContext"
 import { withStyles } from "@material-ui/core/styles"
@@ -149,14 +149,10 @@ class Options extends React.Component {
 				open: false,
 				title: "Confirm",
 				description: "Are you sure you want to proceed?",
-				cancel: {
-					label: "Nevermind",
-					callback: () => this.handleDialogClose (),
-				},
-				submit: {
-					label: "Yes",
-					callback: () => this.handleDialogClose (),
-				},
+				cancel_label: "Nevermind",
+				cancel_callback: () => this.handleDialogClose (),
+				submit_label: "Yes",
+				submit_callback: () => this.handleDialogClose (),
 			},
 		}
 	}
@@ -188,11 +184,11 @@ class Options extends React.Component {
 					</Typography>
 				</DialogContent>
 				<DialogActions>
-					<Button autoFocus onClick={() => dialog.cancel.callback ()} color="primary" >
-						{dialog.cancel.label}
+					<Button autoFocus onClick={() => dialog.cancel_callback ()} color="primary" >
+						{dialog.cancel_label}
 					</Button>
-					<Button onClick={() => dialog.submit.callback ()} color="primary" >
-						{dialog.submit.label}
+					<Button onClick={() => dialog.submit_callback ()} color="primary" >
+						{dialog.submit_label}
 					</Button>
 				</DialogActions>
 			</Dialog>
@@ -388,7 +384,30 @@ class Options extends React.Component {
 						</Typography>
 						<div>
 							<Accordion elevation={2} expanded={false} className={classes.table} >
-								<Blocked/>
+								<TableList
+									items={storage.data.block}
+									itemKey={item => utils.hash ( item )}
+									onTruncate={
+										storage.data.showWarnings
+										? () => this.setDialogState ({
+											open: true,
+											title: "Truncate Blocked Cookies",
+											description: "Are you sure you want to remove all blocked cookie patterns? This action cannot be undone.",
+											submit_callback: () => storage.set ( "block", {} ).then ( () => this.handleDialogClose () ),
+										})
+										: () => storage.set ( "block", {} ).then ( () => this.handleDialogClose () )
+									}
+									noItemsMessage="No Blocked Cookies"
+									columns={{
+										"Name": item => item.name,
+										"Domain + Path": item => item.domain + item.path,
+										"": item => <Button
+											size="small"
+											onClick={() => storage.remove ( "block", utils.hash ( item ) )} >
+											unblock
+										</Button>,
+									}}
+								/>
 							</Accordion>
 						</div>
 						<Typography id="protected-cookies" className={classes.section} variant="h6" >Protected Cookies</Typography>
@@ -399,7 +418,30 @@ class Options extends React.Component {
 						</Typography>
 						<div>
 							<Accordion elevation={2} expanded={false} className={classes.table} >
-								<Protected/>
+								<TableList
+									items={storage.data.protect}
+									itemKey={item => utils.hash ( item )}
+									onTruncate={
+										storage.data.showWarnings
+										? () => this.setDialogState ({
+											open: true,
+											title: "Truncate Protected Cookies",
+											description: "Are you sure you want to remove all protected cookie patterns? This action cannot be undone.",
+											submit_callback: () => storage.set ( "protect", {} ).then ( () => this.handleDialogClose () ),
+										})
+										: () => storage.set ( "protect", {} ).then ( () => this.handleDialogClose () )
+									}
+									noItemsMessage="No Protected Cookies"
+									columns={{
+										"Name": item => item.name,
+										"Domain + Path": item => item.domain + item.path,
+										"": item => <Button
+											size="small"
+											onClick={() => storage.remove ( "protect", utils.hash ( item ) )} >
+											release
+										</Button>,
+									}}
+								/>
 							</Accordion>
 						</div>
 						<Typography id="special-thanks" className={classes.section} variant="h6" >Special Thanks</Typography>
