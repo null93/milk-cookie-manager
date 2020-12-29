@@ -5,10 +5,10 @@
 	"author": "Rafael Grigorian <rafael@grigorian.org>",
 	"license": "MIT",
 	"scripts": {
-		"prebuild": "mkdir -p dist && cp -r static/* dist/",
+		"prebuild": "mkdir -p dist && cp -r static/* dist/ && sed -i.bak \"s/ 'unsafe-eval'//\" dist/manifest.json && rm dist/manifest.json.bak",
 		"preserve": "mkdir -p dist && cp -r static/* dist/",
-		"build": "NODE_ENV=production; parcel build --no-cache --no-source-maps src/*.html",
-		"serve": "parcel serve --no-autoinstall --no-cache src/*.html",
+		"build": "NODE_ENV=production; parcel build --no-cache --no-source-maps src/service-worker.jsx src/*.html",
+		"serve": "parcel serve --no-autoinstall --no-cache src/service-worker.jsx src/*.html",
 		"zip": "mkdir -p target && zip -r target/chrome-milk-$npm_package_version.zip dist/*",
 		"release": "yarn clean && yarn build && yarn zip",
 		"clean": "rm -rf dist .parcel-cache target",
