@@ -65,7 +65,7 @@ const styles = theme => ({
 	hits: {
 		margin: theme.spacing ( 0, 1 ),
 		whiteSpace: "pre",
-		fontWeight: "bold",
+		fontWeight: 700,
 	},
 })
 

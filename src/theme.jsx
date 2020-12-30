@@ -33,6 +33,29 @@ module.exports = isDark => {
 			divider: isDark ? "#3F4042" : "#F0F0F0",
 		},
 		components: {
+			MuiCssBaseline: {
+				styleOverrides: {
+					"@global": {
+						"::selection": {
+							background: "#FFDE03",
+							color: "#4B4B4B",
+						},
+						"html, body, #main": {
+							minWidth: 550,
+							minHeight: 530,
+							overflow: "hidden",
+						},
+						"mark": {
+							background: "#FFDE03",
+							color: "#4B4B4B",
+							borderRadius: 2,
+						},
+						"::-webkit-calendar-picker-indicator": {
+							display: "none",
+						},
+					},
+				},
+			},
 			MuiTableCell: {
 				styleOverrides: {
 					root: {
@@ -151,7 +174,7 @@ module.exports = isDark => {
 						borderRadius: 2,
 						color: isDark ? "#202124" : "#FFFFFF",
 						fontSize: "1.01em",
-						fontWeight: "bold",
+						fontWeight: 700,
 						padding: 7,
 						boxShadow: defaultTheme.shadows [ 4 ],
 					},
