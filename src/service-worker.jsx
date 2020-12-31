@@ -1,6 +1,7 @@
 "use strict"
 
 import browser from "webextension-polyfill"
+import moment from "moment"
 import utils from "utils/cookie"
 
 function handleFirstInstall ({ reason }) {
@@ -51,16 +52,20 @@ function handleCookieChange ({ removed, cause, cookie }) {
 		if ( !protect ) protect = {}
 		const key = utils.hash ( cookie )
 		if ( [ "explicit" ].includes ( cause ) ) {
-			const isCreatedWhenBlocked = !removed && key in block
-			const isRemovedWhenProtected = removed && key in protect
-			const isUpdatedWhenProtected = !removed
-				&& key in protect
-				&& utils.serialize ( cookie ) !== utils.serialize ( protect [ key ] )
+			const isBlocked = key in block
+			const isProtected = key in protect
+			const isCreatedWhenBlocked = !removed && isBlocked
+			const isCreatedWhenProtected = !removed && isProtected
+			const isRemovedWhenProtected = removed && isProtected
 			if ( isCreatedWhenBlocked ) {
 				return utils.remove ( cookie )
 			}
-			else if ( isRemovedWhenProtected || isUpdatedWhenProtected ) {
-				cookie = protect [ key ]
+			else if ( isRemovedWhenProtected || isCreatedWhenProtected ) {
+				const today = moment ().unix ()
+				const replace = protect [ key ]
+				if ( replace.expirationDate && replace.expirationDate > today ) {
+					cookie = replace
+				}
 				return utils.set ( cookie )
 			}
 		}
