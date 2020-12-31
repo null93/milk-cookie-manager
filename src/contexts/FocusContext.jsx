@@ -23,10 +23,10 @@ class FocusProvider extends React.Component {
 	}
 
 	isValidUrl ( url ) {
-		return !!url && !/^(chrome|moz)(-[a-z]+)?:\/\//m.test ( url )
+		return !!url && /^https?:/.test ( url )
 	}
 
-	getLast ( url = "chrome-ignore://" ) {
+	getLast ( url ) {
 		const { last } = this.state
 		if ( this.isValidUrl ( url ) ) {
 			return url
@@ -34,12 +34,12 @@ class FocusProvider extends React.Component {
 		return last
 	}
 
-	getDomain ( url = "chrome-ignore://" ) {
+	getDomain ( url ) {
 		const validated = this.getLast ( url )
 		return validated ? _.get ( new URL ( validated ), "hostname" ) : null
 	}
 
-	getPath ( url = "chrome-ignore://" ) {
+	getPath ( url ) {
 		const validated = this.getLast ( url )
 		return validated ? _.get ( new URL ( validated ), "pathname" ) : null
 	}
@@ -120,9 +120,9 @@ class FocusProvider extends React.Component {
 	}
 
 	componentWillUnmount () {
-		browser.windows.onFocusChanged.addListener ( this.onWindowFocusChanged.bind ( this ) )
-		browser.tabs.onHighlighted.addListener ( this.onTabHighlighted.bind ( this ) )
-		browser.tabs.onUpdated.addListener ( this.onTabUpdated.bind ( this ) )
+		browser.windows.onFocusChanged.removeListener ( this.onWindowFocusChanged.bind ( this ) )
+		browser.tabs.onHighlighted.removeListener ( this.onTabHighlighted.bind ( this ) )
+		browser.tabs.onUpdated.removeListener ( this.onTabUpdated.bind ( this ) )
 	}
 
 	render () {

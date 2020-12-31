@@ -77,6 +77,48 @@ class SearchProvider extends React.Component {
 		})
 	}
 
+	highlight ( target ) {
+		const { storage } = this.props
+		var { term, pattern } = this.state
+		var { regexp, sensitive } = storage.data
+		var last = 0
+		var result = []
+		var match = null
+		if ( regexp && term && pattern ) {
+			while ( ( match = pattern.exec ( target ) ) != null ) {
+				if ( !match || !match [ 0 ] || match [ 0 ].length < 1 ) break
+				if ( match.index > last ) {
+					result.push ( target.substring ( last, match.index ) )
+				}
+				result.push ( <mark key={match.index} >{match [ 0 ]}</mark> )
+				last = match.index + match [ 0 ].length
+			}
+			if ( last < target.length ) {
+				result.push ( target.substring ( last ) )
+			}
+			return result
+		}
+		else if ( regexp || term.length < 1 ) {
+			return target
+		}
+		const targetForMatch = sensitive ? target : target.toLowerCase ()
+		const searchTermForMatch = sensitive ? term : term.toLowerCase ()
+		do {
+			match = targetForMatch.indexOf ( searchTermForMatch, last )
+			if ( match < 0 ) break
+			if ( last !== match ) result.push ( target.substring ( last, match ) )
+			result.push ( <mark key={match} >
+				{target.substring ( match, match + term.length )}
+			</mark> )
+			last = match + term.length
+		}
+		while ( match > -1 )
+		if ( last < target.length ) {
+			result.push ( target.substring ( last ) )
+		}
+		return result
+	}
+
 	render () {
 		const value = {
 			term: this.state.term,
@@ -85,6 +127,7 @@ class SearchProvider extends React.Component {
 			set: this.set.bind ( this ),
 			compile: this.compile.bind ( this ),
 			filter: this.filter.bind ( this ),
+			highlight: this.highlight.bind ( this ),
 		}
 		if ( process.env.NODE_ENV !== "production" ) {
 			console.log ( "Search Provider:", value )

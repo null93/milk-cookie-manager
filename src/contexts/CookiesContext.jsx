@@ -1,6 +1,6 @@
 import _ from "lodash"
-import browser from "webextension-polyfill"
 import moment from "moment"
+import browser from "webextension-polyfill"
 import utils from "utils/cookie"
 import Promise from "bluebird"
 import React from "react"
@@ -35,11 +35,11 @@ class CookiesProvider extends React.Component {
 		}
 	}
 
-	getDefaultState () {
+	getDefaultState ( initialized = false ) {
 		return {
 			all: [],
 			found: [],
-			initialized: false,
+			initialized,
 		}
 	}
 
@@ -51,6 +51,10 @@ class CookiesProvider extends React.Component {
 		return browser.cookies
 			.getAll ( params )
 			.then ( cookies => {
+				const today = moment ().unix ()
+				cookies = cookies.filter ( cookie =>
+					!cookie.expirationDate || cookie.expirationDate > today
+				)
 				this.setState ({
 					all: cookies,
 					found: search.filter ( cookies ),
@@ -59,7 +63,7 @@ class CookiesProvider extends React.Component {
 			})
 			.catch ( error => {
 				console.error ( "Failed to load cookies:", error )
-				this.setState ( this.getDefaultState () )
+				this.setState ( this.getDefaultState ( true ) )
 			})
 	}
 

@@ -8,24 +8,22 @@ class Expiration extends React.Component {
 		super ( props )
 		this.timeout = null
 		this.state = {
-			today: moment ().unix ()
+			today: moment ().unix (),
 		}
 	}
 
 	refresh () {
 		const { timestamp, onExpire } = this.props
 		const today = moment ().unix ()
-		this.setState (
-			{ today: today },
-			() => {
-				if ( timestamp <= today ) {
-					onExpire ()
-				}
-				else {
-					this.timeout = setTimeout ( () => this.refresh (), 1000 )
-				}
+		this.setState ({ today: today }, () => {
+			if ( timestamp <= today ) {
+				clearTimeout ( this.timeout )
+				onExpire ()
 			}
-		)
+			else {
+				this.timeout = setTimeout ( () => this.refresh (), 1000 )
+			}
+		})
 	}
 
 	componentDidMount () {
