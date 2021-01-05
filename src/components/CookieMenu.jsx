@@ -77,6 +77,7 @@ class MainMenu extends React.Component {
 			classes,
 			cookies,
 			isProtected,
+			disabled,
 			onDelete,
 			onBlock,
 			onClose,
@@ -90,10 +91,11 @@ class MainMenu extends React.Component {
 				arrow
 				TransitionComponent={Fade}
 				placement="bottom"
-				title="Show Available Actions" >
+				title={disabled ? "" : "Show Available Actions"} >
 				<IconButton
 					size="medium"
 					color="primary"
+					disabled={disabled}
 					onClick={e => this.setState ({ anchor: e.currentTarget })} >
 					<MenuIcon/>
 				</IconButton>
@@ -199,6 +201,7 @@ class MainMenu extends React.Component {
 MainMenu.propTypes = {
 	classes: PropTypes.object.isRequired,
 	cookies: PropTypes.object.isRequired,
+	disabled: PropTypes.bool.isRequired,
 	isProtected: PropTypes.bool.isRequired,
 	onDelete: PropTypes.func.isRequired,
 	onClose: PropTypes.func.isRequired,

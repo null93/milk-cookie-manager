@@ -156,19 +156,18 @@ class CookieViewer extends React.Component {
 					<Typography className={classes.title} >
 						<b>{name || <i>Not Named</i>}</b>
 					</Typography>
-					{
-						!isNew && <CookieMenu
-							isProtected={isProtected}
-							onDelete={onDelete}
-							onBlock={onBlock}
-							onClose={onClose}
-							onExport={onExport}
-							onDuplicate={() => {
-								this.handleSave ( true )
-								onClose ()
-							}}
-						/>
-					}
+					<CookieMenu
+						disabled={isNew}
+						isProtected={isProtected}
+						onDelete={onDelete}
+						onBlock={onBlock}
+						onClose={onClose}
+						onExport={onExport}
+						onDuplicate={() => {
+							this.handleSave ( true )
+							onClose ()
+						}}
+					/>
 				</div>
 				<Grid container spacing={1} className={classes.body} >
 					<Grid item xs={12} md={12} >
@@ -180,6 +179,7 @@ class CookieViewer extends React.Component {
 							label="Name"
 							variant="filled"
 							onChange={e => this.setCookie ({ name: e.target.value })}
+							inputProps={{ name: "name" }}
 						/>
 					</Grid>
 					<Grid item xs={12} md={12} >
@@ -190,6 +190,7 @@ class CookieViewer extends React.Component {
 							label="Domain"
 							variant="filled"
 							onChange={e => this.setCookie ({ domain: `${hostOnly ? "" : "."}${e.target.value.replace (/^\./, "")}` })}
+							inputProps={{ name: "domain" }}
 						/>
 					</Grid>
 					<Grid item xs={12} md={12} >
@@ -200,6 +201,7 @@ class CookieViewer extends React.Component {
 							label="Path"
 							variant="filled"
 							onChange={e => this.setCookie ({ path: `/${e.target.value.replace (/^\//, "")}` })}
+							inputProps={{ name: "path" }}
 						/>
 					</Grid>
 					<Grid item xs={12} md={12} >
@@ -243,6 +245,7 @@ class CookieViewer extends React.Component {
 							variant="filled"
 							onChange={e => this.setCookie ({ value: e.target.value })}
 							label={`Value (${value.length} byte${value.length === 1 ? "" : "s"})`}
+							inputProps={{ name: "value" }}
 						/>
 					</Grid>
 					<Grid item xs={12} md={12} >
@@ -254,6 +257,7 @@ class CookieViewer extends React.Component {
 								value={sameSite}
 								disabled={isProtected}
 								variant="filled"
+								inputProps={{ name: "sameSite" }}
 								onChange={e => this.setCookie ({
 									sameSite: e.target.value,
 									secure: e.target.value === "no_restriction"

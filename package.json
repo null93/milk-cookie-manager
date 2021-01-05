@@ -12,7 +12,9 @@
 		"zip": "mkdir -p target && zip -r target/chrome-milk-$npm_package_version.zip dist/*",
 		"release": "yarn clean && yarn build && yarn zip",
 		"clean": "rm -rf dist .parcel-cache target",
-		"nuke": "yarn clean && rm -rf node_modules"
+		"nuke": "yarn clean && rm -rf node_modules",
+		"test": "yarn clean && yarn build && mocha spec",
+		"marketing": "yarn clean && yarn build && node tools/create-marketing.js"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.1.1",
@@ -31,7 +33,10 @@
 		"webextension-polyfill": "^0.7.0"
 	},
 	"devDependencies": {
-		"parcel": "^2.0.0-nightly.486"
+		"jimp": "^0.16.1",
+		"mocha": "^8.2.1",
+		"parcel": "^2.0.0-nightly.486",
+		"puppeteer": "^5.5.0"
 	},
 	"alias": {
 		"contexts": "./src/contexts",

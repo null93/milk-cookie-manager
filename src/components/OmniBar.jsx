@@ -102,7 +102,7 @@ class OmniBar extends React.Component {
 				placeholder={regexp ? "Search Cookies With RegExp" : "Search Cookies"}
 				value={term}
 				onChange={e => search.set ( "term", e.target.value )}
-				inputProps={{ spellCheck: false }}
+				inputProps={{ spellCheck: false, id: "search" }}
 				style={
 					regexp && term.length > 0 && !search.compile ( term, sensitive )
 					? { color: theme.palette.error.main }
@@ -131,6 +131,7 @@ class OmniBar extends React.Component {
 				</React.Fragment>
 			}
 			<Typography
+				id="hits"
 				variant="overline"
 				className={classes.hits} >
 				{`${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} Cookie${hits > 1 || hits < 1 ? "s" : ""}`}

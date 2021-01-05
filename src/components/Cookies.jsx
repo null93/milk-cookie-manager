@@ -89,6 +89,7 @@ class Cookies extends React.Component {
 			<Fab
 				color="primary"
 				size="medium"
+				id="create-new"
 				className={classes.fab}
 				onClick={onCreate} >
 				<AddIcon/>
