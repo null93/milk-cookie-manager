@@ -45,7 +45,7 @@ const styles = theme => ({
 		minWidth: 34,
 	},
 	cell: {
-		borderBottom: "none !important",
+		borderBottom: "solid 1px transparent !important",
 	},
 })
 
