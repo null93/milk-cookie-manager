@@ -6,6 +6,7 @@ module.exports = {
 	tooltips: true,
 	showWarnings: true,
 	contextMenu: true,
+	updateProtectedValue: false,
 	expirationFormat: "humanized",
 	sortType: "expirationDate",
 	sortDirection: "ascending",

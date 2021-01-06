@@ -337,6 +337,17 @@ class Options extends React.Component {
 								</AccordionSummary>
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
+								<AccordionSummary classes={{ content: classes.summary }} >
+									<Typography>Update Protected Cookie's Value</Typography>
+									<Switch
+										color="primary"
+										size="small"
+										checked={storage.data.updateProtectedValue}
+										onChange={e => storage.set ( "updateProtectedValue", e.target.checked )}
+									/>
+								</AccordionSummary>
+							</Accordion>
+							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: `${classes.summary} ${classes.noMargin}` }} >
 									<Typography>Expiration Time Format</Typography>
 									<Select

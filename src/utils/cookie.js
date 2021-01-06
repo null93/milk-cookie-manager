@@ -12,7 +12,7 @@ function hash ( cookie ) {
 }
 
 function serialize ( cookie ) {
-	return JSON.stringify ( cookie )
+	return JSON.stringify ( cookie, Object.keys ( cookie ).sort () )
 }
 
 function remove ( cookie ) {

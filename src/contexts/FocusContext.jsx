@@ -61,13 +61,13 @@ class FocusProvider extends React.Component {
 					path: this.getPath ( tab.url ),
 				})
 			}
-			else {
-				this.setState ( this.getDefaultState () )
-			}
+			// else {
+			// 	this.setState ( this.getDefaultState () )
+			// }
 		})
 		.catch ( error => {
 			console.error ( "Failed to query last tab:", error )
-			this.setState ( this.getDefaultState () )
+			// this.setState ( this.getDefaultState () )
 		})
 	}
 
@@ -91,7 +91,7 @@ class FocusProvider extends React.Component {
 			})
 			.catch ( error => {
 				console.error ( "Failed to query last tab:", error )
-				this.setState ( this.getDefaultState () )
+				// this.setState ( this.getDefaultState () )
 			})
 		}
 		return Promise.resolve ()
