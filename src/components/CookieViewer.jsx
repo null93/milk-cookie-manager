@@ -17,10 +17,8 @@ import ListItemText from "@material-ui/core/ListItemText"
 import ToggleButtonGroup from "@material-ui/core/ToggleButtonGroup"
 import ToggleButton from "@material-ui/core/ToggleButton"
 import Grid from "@material-ui/core/Grid"
-import InputAdornment from "@material-ui/core/InputAdornment"
 import StyledTextField from "components/StyledTextField"
 import CloseIcon from "@material-ui/icons/Close"
-import TodayIcon from "@material-ui/icons/Today"
 import SecureOnIcon from "@material-ui/icons/Lock"
 import SecureOffIcon from "icons/SecureOff"
 import HostOnlyOnIcon from "icons/HostOnlyOn"
@@ -36,6 +34,7 @@ import NoRestrictionIcon from "@material-ui/icons/GpsOff"
 import LaxIcon from "@material-ui/icons/GpsNotFixed"
 import StrictIcon from "@material-ui/icons/GpsFixed"
 import CookieMenu from "components/CookieMenu"
+import DateTime from "components/DateTime"
 import { withStyles } from "@material-ui/core/styles"
 import { withStorage } from "contexts/StorageContext"
 import { withCookies } from "contexts/CookiesContext"
@@ -205,35 +204,11 @@ class CookieViewer extends React.Component {
 						/>
 					</Grid>
 					<Grid item xs={12} md={12} >
-						<StyledTextField
+						<DateTime
 							error={Boolean ( error )}
-							variant="filled"
-							label={`Expiration Date (${session ? "when browser is closed" : moment.duration ( moment.unix ( expirationDate ) - moment () ).humanize ()})`}
-							type="datetime-local"
-							onChange={e => this.setCookie ({ expirationDate: moment ( e.target.value.substring ( 0, 19 ) ).unix () })}
-							disabled={session || isProtected}
-							InputLabelProps={{ shrink: true }}
-							inputProps={{ step: 1 }}
+							disabled={Boolean ( session || isProtected )}
 							value={moment.unix ( session ? 0 : expirationDate ).format ("YYYY-MM-DDTHH:mm:ss").substring ( 0, 19 )}
-							InputProps={{
-								endAdornment: <InputAdornment position="end" >
-									<Tooltip
-										arrow
-										TransitionComponent={Fade}
-										placement="left"
-										title="Today" >
-										<IconButton
-											disabled={session || isProtected}
-											tabIndex={-1}
-											onClick={() => this.setCookie ({ expirationDate: moment ().unix () })} >
-											<TodayIcon
-												fontSize="small"
-												color={session || isProtected ? "disabled" : "primary"}
-											/>
-										</IconButton>
-									</Tooltip>
-								</InputAdornment>
-							}}
+							onChange={value => this.setCookie ({ expirationDate: moment ( value ).unix () })}
 						/>
 					</Grid>
 					<Grid item xs={12} md={12} >

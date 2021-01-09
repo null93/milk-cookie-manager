@@ -53,6 +53,12 @@ module.exports = isDark => {
 						"::-webkit-calendar-picker-indicator": {
 							display: "none",
 						},
+						"::-webkit-inner-spin-button": {
+							display: "none",
+						},
+						"::-webkit-clear-button": {
+							display: "none",
+						},
 					},
 				},
 			},

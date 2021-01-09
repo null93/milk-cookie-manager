@@ -30,6 +30,9 @@ class StyledTextField extends React.Component {
 		return <TextField
 			fullWidth
 			InputProps={{
+				inputProps: {
+					spellCheck: "false",
+				},
 				endAdornment: <Tooltip
 					arrow
 					TransitionComponent={Fade}

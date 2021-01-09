@@ -106,9 +106,9 @@ class CookieItem extends React.Component {
 				orientation="vertical"
 			/>
 			<div className={classes.right} >
-				<div className={classes.cut + " " + classes.title} ><b>{cookie.name.length > 0 ? name : <b><em>{"<EMPTY>"}</em></b>}</b></div>
+				<div className={classes.cut + " " + classes.title} ><b>{cookie.name.length > 0 ? name : <b><em>{"Not Named"}</em></b>}</b></div>
 				<div className={classes.cut + " " + classes.secondary} >{path}</div>
-				<div className={classes.cut + " " + classes.secondary} >{cookie.value.length > 0 ? value : <b><em>{"<EMPTY>"}</em></b>}</div>
+				<div className={classes.cut + " " + classes.secondary} >{cookie.value.length > 0 ? value : <b><em>{"EMPTY"}</em></b>}</div>
 				<div className={classes.cut} >
 				{
 					cookie.expirationDate
@@ -117,7 +117,7 @@ class CookieItem extends React.Component {
 						timestamp={cookie.expirationDate}
 						onExpire={onExpire}
 					/>
-					: <b><em>{"<SESSION>"}</em></b>
+					: <b><em>SESSION</em></b>
 				}
 				</div>
 			</div>
