@@ -1,5 +1,5 @@
 {
-	"name": "chrome-milk",
+	"name": "milk-cookie-manager",
 	"version": "2.3.0",
 	"description": "Chrome extension that manages your browser's cookies",
 	"author": "Rafael Grigorian <rafael@grigorian.org>",
@@ -9,8 +9,9 @@
 		"preserve": "mkdir -p dist && cp -r static/* dist/",
 		"build": "NODE_ENV=production; parcel build --no-cache --no-source-maps src/service-worker.jsx src/*.html",
 		"serve": "parcel serve --no-autoinstall --no-cache src/service-worker.jsx src/*.html",
-		"zip": "mkdir -p target && zip -r target/chrome-milk-$npm_package_version.zip dist/*",
-		"release": "yarn clean && yarn build && yarn zip",
+		"package": "yarn clean && yarn build && web-ext build -s dist -a target",
+		"publish:firefox": "web-ext sign -s dist --channel=listed --api-key=$FIREFOX_API_KEY --api-secret=$FIREFOX_API_SECRET",
+		"publish:chrome": "echo not supported yet",
 		"clean": "rm -rf dist .parcel-cache target",
 		"nuke": "yarn clean && rm -rf node_modules",
 		"test": "yarn clean && yarn build && mocha spec",
@@ -36,7 +37,8 @@
 		"jimp": "^0.16.1",
 		"mocha": "^8.2.1",
 		"parcel": "^2.0.0-nightly.486",
-		"puppeteer": "^5.5.0"
+		"puppeteer": "^5.5.0",
+		"web-ext": "^5.4.1"
 	},
 	"alias": {
 		"contexts": "./src/contexts",

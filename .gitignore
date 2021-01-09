@@ -6,4 +6,5 @@ TODO.md
 /.parcel-cache/
 /dist/
 /node_modules/
+/private/
 /target/

@@ -5,7 +5,7 @@
 	"short_name": "MILK",
 	"version": "2.3.0",
 	"description": "Cookie's best friend! Modern cookie manager.",
-	"homepage_url": "https://github.com/null93/chrome-milk",
+	"homepage_url": "https://github.com/null93/milk-cookie-manager",
 	"author": "Rafael Grigorian",
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 	"offline_enabled": true,

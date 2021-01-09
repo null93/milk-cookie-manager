@@ -213,7 +213,7 @@ class Options extends React.Component {
 						color="textSecondary"
 						noWrap
 						onClick={() => browser.tabs.create ({
-							url: `https://github.com/null93/chrome-milk/releases/tag/${process.env.npm_package_version}`
+							url: `https://github.com/null93/milk-cookie-manager/releases/tag/${process.env.npm_package_version}`
 						})} >
 						version {process.env.npm_package_version}
 					</Typography>
@@ -249,7 +249,7 @@ class Options extends React.Component {
 							<ListItemText primary="Donate" secondary="Consider buying me a cup of coffee" />
 							<ListItemIcon>{<ExitToAppIcon/>}</ListItemIcon>
 						</ListItem>
-						<ListItem button onClick={() => browser.tabs.create ({ url: "https://github.com/null93/chrome-milk" })} >
+						<ListItem button onClick={() => browser.tabs.create ({ url: "https://github.com/null93/milk-cookie-manager" })} >
 							<ListItemText primary="Github Repository" secondary="View source code and report issues" />
 							<ListItemIcon>{<ExitToAppIcon/>}</ListItemIcon>
 						</ListItem>
