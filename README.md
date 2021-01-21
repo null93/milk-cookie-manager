@@ -1,11 +1,12 @@
-# Chrome Extension - MILK
+# MILK — Cookie Manager
 > Cookie's best friend! Modern cookie manager.
 
 ![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge&color=1A73E8)
 ![Version 2.3.0](https://img.shields.io/badge/Version-2.3.0-yellow.svg?style=for-the-badge&color=1A73E8)
-![Users](https://img.shields.io/chrome-web-store/d/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge&color=1A73E8)
-![Rating](https://img.shields.io/chrome-web-store/rating/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge&color=1A73E8)
-![Reviews](https://img.shields.io/chrome-web-store/rating-count/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge&color=1A73E8)
+![Chrome Users](https://img.shields.io/chrome-web-store/d/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge&color=1A73E8&label=chrome-users)
+![Chrome Rating](https://img.shields.io/chrome-web-store/rating/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge&color=1A73E8&label=chrome-rating)
+<!-- ![Firefox Users](https://img.shields.io/amo/users/031ab6ca80074459a477.svg?style=for-the-badge&color=1A73E8&label=firefox-users) -->
+<!-- ![Firefox Rating](https://img.shields.io/amo/rating/031ab6ca80074459a477.svg?style=for-the-badge&color=1A73E8&label=firefox-rating) -->
 
 ![screenshot](assets/images/github-banner.png)
 

@@ -1396,10 +1396,10 @@
     react-is "^16.8.0 || ^17.0.0"
     react-transition-group "^4.4.0"
 
-"@material-ui/icons@^5.0.0-alpha.14":
-  version "5.0.0-alpha.19"
-  resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-5.0.0-alpha.19.tgz#16a57cdb54aea3c57c0ba5601e9283bf28f3f90d"
-  integrity sha512-5FNUZ0Xw9BXBJhQVwTO5rV5yvR2N3C52IfFOWYSSVWVSot0WJ1ZP9qU+dY+qJWEcTlEcV+aG6nvG6b9eLoP7KA==
+"@material-ui/icons@^5.0.0-alpha.23":
+  version "5.0.0-alpha.23"
+  resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-5.0.0-alpha.23.tgz#b7d5141cfaa1df4a9697c60e50df2e5f2c6a0047"
+  integrity sha512-paML0ghK4qN+Z0oAd66lDfX1+Vt1LBPkMA9uSUEBmGga2yY8aGpo9tAVGM3UR7kTx0BEWT5e/4u2aDvwbdGZPQ==
   dependencies:
     "@babel/runtime" "^7.4.4"
 

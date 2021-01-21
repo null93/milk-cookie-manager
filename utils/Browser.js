@@ -4,6 +4,12 @@ const Promise = require ("bluebird")
 const puppeteer = require ("puppeteer")
 const manifest = require ("../static/manifest.json")
 
+function sleep ( ms ) {
+	return new Promise ( resolve => {
+		setTimeout ( resolve, ms )
+	})
+}
+
 async function launch () {
 	const browser = await puppeteer.launch ({
 		headless: false,
@@ -32,7 +38,7 @@ async function launch () {
 module.exports = async function ( callback ) {
 	const { browser, page, template } = await launch ()
 	return callback ({
-		browser, page,
+		browser, page, sleep,
 		goto ( path ) {
 			return page.goto (`${template}/${path}`)
 		},
@@ -45,6 +51,14 @@ module.exports = async function ( callback ) {
 					chrome.storage.local.set ( data, resolve )
 				)
 			}, data )
+		},
+		screenshot () {
+			return Promise.resolve ()
+				.then ( () => page.evaluate ( () => {
+					document.title = "🔴Waiting For Screenshot"
+				}))
+				.then ( () => sleep ( 1000 ) )
+				.then ( () => page.screenshot ({ type: "png" }) )
 		},
 		cookies: {
 			hash ( cookie ) {

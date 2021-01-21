@@ -1,7 +1,7 @@
 "use strict"
 
 const Promise = require ("bluebird")
-const Chrome = require ("../utils/Chrome")
+const Browser = require ("../utils/Browser")
 const assert = require ("assert")
 
 describe ( "User Interface", function () {
@@ -10,7 +10,7 @@ describe ( "User Interface", function () {
 
 	describe ( "Search", function () {
 		it ( "Can type in search box", function () {
-			return Chrome ( async chrome => await Promise.resolve ()
+			return Browser ( async chrome => await Promise.resolve ()
 				.then ( () => chrome.goto ( "index.html" ) )
 				.then ( () => chrome.page.type ( "#search", "Hello World" ) )
 				.then ( () => chrome.page.$("#search") )
