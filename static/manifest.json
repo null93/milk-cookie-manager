@@ -1,40 +1,43 @@
 {
-	"manifest_version": 2,
-	"minimum_chrome_version": "12.0.707.0",
-	"name": "MILK — Cookie Manager",
-	"short_name": "MILK",
-	"version": "2.3.1",
-	"description": "Cookie's best friend! Modern cookie manager.",
-	"homepage_url": "https://github.com/null93/milk-cookie-manager",
-	"author": "Rafael Grigorian",
-	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-	"offline_enabled": true,
-	"incognito": "not_allowed",
-	"permissions": [
-		"http://*/*",
-		"https://*/*",
-		"contextMenus",
-		"cookies",
-		"tabs",
-		"storage"
-	],
-	"browser_action": {
-		"default_title": "MILK — Cookie Manager",
-		"default_icon": "icon-128.png",
-		"default_popup": "index.html"
-	},
-	"background": {
-		"scripts": [ "service-worker.js" ],
-		"persistent": false
-	},
-	"options_ui": {
-		"page": "options.html",
-		"open_in_tab": true
-	},
-	"icons": {
-		"16": "icon-16.png",
-		"32": "icon-32.png",
-		"48": "icon-48.png",
-		"128": "icon-128.png"
-	}
+    "manifest_version": 3,
+    "minimum_chrome_version": "88",
+    "name": "MILK — Cookie Manager",
+    "short_name": "MILK",
+    "version": "2.3.1",
+    "description": "Cookie's best friend! Modern cookie manager.",
+    "homepage_url": "https://github.com/null93/milk-cookie-manager",
+    "author": "Rafael Grigorian",
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "offline_enabled": true,
+    "incognito": "not_allowed",
+    "permissions": [
+        "contextMenus",
+        "cookies",
+        "tabs",
+        "storage"
+    ],
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
+    },
+    "icons": {
+        "16": "icon-16.png",
+        "32": "icon-32.png",
+        "48": "icon-48.png",
+        "128": "icon-128.png"
+    },
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "action": {
+        "default_title": "MILK — Cookie Manager",
+        "default_icon": "icon-128.png",
+        "default_popup": "index.html"
+    }
 }

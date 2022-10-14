@@ -56,15 +56,15 @@ function log () {
 function handleCookieChange ({ removed, cause, cookie }) {
 	return browser.storage.local
 	.get ([ "block", "protect", "updateProtectedValue" ])
-	.then ( ({ block, protect, updateProtectedValue }) => {
+	.then ( async ({ block, protect, updateProtectedValue }) => {
 		if ( !block ) block = {}
 		if ( !protect ) protect = {}
 		const key = utils.hash ( cookie )
 		if ( [ "explicit" ].includes ( cause ) ) {
 			const maxAttention = 15
-			const history = JSON.parse ( window.localStorage.getItem ( "history" ) || "[]" )
+			const history = await browser.storage.local.get ([ "history" ]).then ( res => JSON.parse ( res.history || "[]" ) )
 			history.unshift ( key )
-			window.localStorage.setItem ( "history", JSON.stringify ( history.slice ( 0, maxAttention ) ) )
+			await browser.storage.local.set ({ "history": JSON.stringify ( history.slice ( 0, maxAttention ) ) })
 			if ( history.length >= maxAttention && history.every ( e => e === key ) ) {
 				log ("Action: Quiting to prevent infinite loop")
 				return Promise.resolve ()
@@ -112,5 +112,3 @@ browser.runtime.onInstalled.addListener ( handleFirstInstall )
 browser.storage.onChanged.addListener ( checkContextMenuOption )
 browser.contextMenus.onClicked.addListener ( handleContextMenuClick )
 browser.cookies.onChanged.addListener ( handleCookieChange )
-
-checkContextMenuOption ()

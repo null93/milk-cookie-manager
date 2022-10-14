@@ -7,7 +7,7 @@
 	"scripts": {
 		"prebuild": "mkdir -p dist && cp -r static/* dist/ && sed -i.bak \"s/ 'unsafe-eval'//\" dist/manifest.json && rm dist/manifest.json.bak",
 		"preserve": "mkdir -p dist && cp -r static/* dist/",
-		"build": "NODE_ENV=production; parcel build --no-cache --no-source-maps src/service-worker.jsx src/*.html",
+		"build": "parcel build --no-cache --no-source-maps src/service-worker.jsx src/*.html",
 		"serve": "parcel serve --no-autoinstall --no-cache src/service-worker.jsx src/*.html",
 		"package": "yarn clean && yarn build && web-ext build -s dist -a target",
 		"publish:firefox": "web-ext sign -s dist --channel=listed --api-key=$FIREFOX_API_KEY --api-secret=$FIREFOX_API_SECRET",
@@ -31,7 +31,7 @@
 		"react-dom": "^17.0.1",
 		"react-window": "^1.8.5",
 		"typeface-roboto": "^1.1.13",
-		"webextension-polyfill": "^0.7.0"
+		"webextension-polyfill": "^0.10.0"
 	},
 	"devDependencies": {
 		"jimp": "^0.16.1",
