@@ -310,5 +310,8 @@
     },
     "currentlyProcessesTemplateString": {
         "message": "Currently processed {{current}} out of {{total}} cookies."
+    },
+    "errorCookieNameValueEmpty": {
+        "message": "Error: 'Name' and 'Value' cannot both be empty"
     }
 }

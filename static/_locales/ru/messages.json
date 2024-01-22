@@ -310,5 +310,8 @@
     },
     "currentlyProcessesTemplateString": {
         "message": "В настоящее время обработано {{current}} из {{total}} куки."
+    },
+    "errorCookieNameValueEmpty": {
+        "message": "Ошибка: 'Name' и 'Значение' не могут быть пустыми одновременно."
     }
 }

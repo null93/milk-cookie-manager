@@ -134,6 +134,14 @@ class CookieViewer extends React.Component {
 			})
 	}
 
+	getErrorMessage () {
+		const { error, cookie } = this.state
+		if ( cookie.name.length < 1 && cookie.value.length < 1 ) {
+			return browser.i18n.getMessage ("errorCookieNameValueEmpty")
+		}
+		return `${browser.i18n.getMessage ("error")}: ${error}`
+	}
+
 	render () {
 		const { classes, cookie, isNew, onClose, onExport, onDelete, onBlock, onProtect, onRemoveProtect } = this.props
 		const { isProtected, error } = this.state
@@ -397,7 +405,7 @@ class CookieViewer extends React.Component {
 							onClick={() => this.handleSave ()} >
 							{
 								error
-								? `${browser.i18n.getMessage ("error")}: ${error}`
+								? this.getErrorMessage ()
 								: isProtected
 								? browser.i18n.getMessage ("protectedCookie")
 								: isNew ? browser.i18n.getMessage ("createCookie")
