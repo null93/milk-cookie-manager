@@ -3,7 +3,7 @@
     "minimum_chrome_version": "88",
     "name": "MILK — Cookie Manager",
     "short_name": "MILK",
-    "version": "2.3.1",
+    "version": "2.4.0",
     "description": "Cookie's best friend! Modern cookie manager.",
     "homepage_url": "https://github.com/null93/milk-cookie-manager",
     "author": "Rafael Grigorian",

@@ -2,7 +2,7 @@
 > Cookie's best friend! Modern cookie manager.
 
 ![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge&color=1A73E8)
-![Version 2.3.1](https://img.shields.io/badge/Version-2.3.1-yellow.svg?style=for-the-badge&color=1A73E8)
+![Version 2.4.0](https://img.shields.io/badge/Version-2.4.0-yellow.svg?style=for-the-badge&color=1A73E8)
 ![Chrome Users](https://img.shields.io/chrome-web-store/d/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge&color=1A73E8&label=chrome-users)
 ![Chrome Rating](https://img.shields.io/chrome-web-store/rating/haipckejfdppjfblgondaakgckohcihp.svg?style=for-the-badge&color=1A73E8&label=chrome-rating)
 ![Firefox Users](https://img.shields.io/amo/users/milk-cookie-manager.svg?style=for-the-badge&color=1A73E8&label=firefox-users)
