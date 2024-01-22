@@ -194,8 +194,8 @@ class CookieViewer extends React.Component {
 					<Grid item xs={12} md={12} >
 						<StyledTextField
 							error={Boolean ( error )}
-							disabled={isProtected}
-							value={`/${path.replace (/^\//, "")}`}
+							disabled={isProtected || name.startsWith("__Host")}
+							value={name.startsWith("__Host") ? "/" : `/${path.replace (/^\//, "")}`}
 							label="Path"
 							variant="filled"
 							onChange={e => this.setCookie ({ path: `/${e.target.value.replace (/^\//, "")}` })}
@@ -309,7 +309,7 @@ class CookieViewer extends React.Component {
 							value={[
 								...( hostOnly ? [ "hostOnly" ] : [] ),
 								...( httpOnly ? [ "httpOnly" ] : [] ),
-								...( secure || sameSite === "no_restriction" ? [ "secure" ] : [] ),
+								...( ( secure || name.startsWith ("__Secure") || name.startsWith("__Host") || sameSite === "no_restriction" ) ? [ "secure" ] : [] ),
 								...( session ? [ "session" ] : [] ),
 								...( isProtected ? [ "isProtected" ] : [] ),
 							]}
@@ -337,7 +337,7 @@ class CookieViewer extends React.Component {
 									disabled: classes.toggleDisabled,
 									selected: classes.toggleSelected,
 								}}
-								disabled={isProtected || sameSite === "no_restriction"}
+								disabled={isProtected || sameSite === "no_restriction" || name.startsWith ("__Secure") || name.startsWith("__Host")}
 								value="secure" >
 								{secure || sameSite === "no_restriction" ? <SecureOnIcon/> : <SecureOffIcon/>}
 								<span className={classes.toggleLabel} >Secure</span>
