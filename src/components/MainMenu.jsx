@@ -57,18 +57,18 @@ class MainMenu extends React.Component {
 			anchor: null,
 			dialog: {
 				open: false,
-				title: "Confirm Action",
+				title: browser.i18n.getMessage ("confirmAction"),
 				content: <Typography gutterBottom >
-					Are you sure you want to proceed?
+					{browser.i18n.getMessage ("areYouSureYouWantToProceed")}
 				</Typography>,
 				showCancel: true,
 				showSubmit: true,
 				cancel: {
-					label: "Cancel",
+					label: browser.i18n.getMessage ("cancel"),
 					callback: () => this.handleDialogClose (),
 				},
 				submit: {
-					label: "Submit",
+					label: browser.i18n.getMessage ("submit"),
 					callback: () => {},
 				},
 			},
@@ -101,7 +101,7 @@ class MainMenu extends React.Component {
 				arrow
 				TransitionComponent={Fade}
 				placement="bottom"
-				title="Show Available Actions" >
+				title={browser.i18n.getMessage ("menuTooltip")} >
 				<IconButton
 					size="small"
 					color="primary"
@@ -149,7 +149,7 @@ class MainMenu extends React.Component {
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title="Delete Visible Cookies" >
+						title={browser.i18n.getMessage ("deleteVisibleCookiesTooltip")} >  
 						<MenuItem
 							className={classes.item}
 							disabled={hits < 1}
@@ -157,11 +157,11 @@ class MainMenu extends React.Component {
 								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
-									content: <Typography gutterBottom >You are about to delete all currently visible cookies. Are you sure you want to proceed?</Typography>,
+									content: <Typography gutterBottom >{browser.i18n.getMessage ("deleteVisibleCookiesConfirmation")}</Typography>,
 									showCancel: true,
 									showSubmit: true,
 									submit: {
-										label: `Delete ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} Cookie${hits > 1 ? "s" : ""}`,
+										label: `${browser.i18n.getMessage ("delete")} ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${hits > 1 ? browser.i18n.getMessage ("cookies") : browser.i18n.getMessage ("cookie")}`,
 										callback: () => {
 											cookies.delete ()
 											this.handleDialogClose ()
@@ -178,14 +178,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<DeleteIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{`Delete (${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} Cookies)`}</Typography>
+							<Typography>{`${browser.i18n.getMessage ("delete")} (${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${browser.i18n.getMessage ("cookies")})`}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title="Block Visible Cookies" >
+						title={browser.i18n.getMessage ("blockVisibleCookiesTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={hits < 1}
@@ -193,11 +193,11 @@ class MainMenu extends React.Component {
 								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
-									content: <Typography gutterBottom >You are about to block and delete all currently visible cookies (protected cookies are skipped). Are you sure you want to proceed?</Typography>,
+									content: <Typography gutterBottom >{browser.i18n.getMessage ("blockVisibleCookiesConfirmation")}</Typography>,
 									showCancel: true,
 									showSubmit: true,
 									submit: {
-										label: `Block ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} Cookie${hits > 1 ? "s" : ""}`,
+										label: `${browser.i18n.getMessage ("block")} ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${hits > 1 ? browser.i18n.getMessage ("cookies") : browser.i18n.getMessage ("cookie")}`,
 										callback: () => {
 											cookies.block ()
 											this.handleDialogClose ()
@@ -214,14 +214,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<BlockIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{`Block (${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} Cookies)`}</Typography>
+							<Typography>{`${browser.i18n.getMessage ("block")} (${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${browser.i18n.getMessage ("cookies")})`}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title="Protect Visible Cookies" >
+						title={browser.i18n.getMessage ("protectVisibleCookiesTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={hits < 1}
@@ -229,11 +229,11 @@ class MainMenu extends React.Component {
 								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
-									content: <Typography gutterBottom >You are about to protect all currently visible cookies. Are you sure you want to proceed?</Typography>,
+									content: <Typography gutterBottom >{browser.i18n.getMessage ("protectVisibleCookiesConfirmation")}</Typography>,
 									showCancel: true,
 									showSubmit: true,
 									submit: {
-										label: `Protect ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} Cookie${hits > 1 ? "s" : ""}`,
+										label: `${browser.i18n.getMessage ("protect")} ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${hits > 1 ? browser.i18n.getMessage ("cookies") : browser.i18n.getMessage ("cookie")}`,
 										callback: () => {
 											cookies.protect ()
 											this.handleDialogClose ()
@@ -250,14 +250,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<ProtectIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{`Protect (${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} Cookies)`}</Typography>
+							<Typography>{`${browser.i18n.getMessage ("protect")} (${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${browser.i18n.getMessage ("cookies")})`}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title="Copy CURL Command With Visible Cookies" >
+						title={browser.i18n.getMessage ("copyCurlTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={hits < 1 || !focus.last || !search.filtered}
@@ -268,34 +268,40 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<TerminalIcon color="primary" />
 							</ListItemIcon>
-							<Typography>Copy <i>CURL</i> Command</Typography>
+							<Typography>{browser.i18n.getMessage ("copyCurlCommand")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title="Import Cookies Via JSON File" >
+						title={browser.i18n.getMessage ("importCookiesViaJsonTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={false}
 							onClick={() => this.handleClose ( () => cookies.import (
 									({ current, total }) => this.setDialogState ({
 										open: true,
-										title: "Importing Cookies",
-										content: <Typography gutterBottom >{`Currently processed ${current} out of ${total} cookies.`}</Typography>,
+										title: browser.i18n.getMessage ("importingCookies"),
+										content: <Typography gutterBottom >
+											{
+												browser.i18n.getMessage ("currentlyProcessesTemplateString")
+													.replace("{{current}}", current)
+													.replace("{{total}}", total)
+											}
+										</Typography>,
 										showCancel: false,
 										showSubmit: false,
 									})
 								)
 								.then ( results => this.setDialogState ({
 									open: true,
-									title: "Imported Results",
+									title: browser.i18n.getMessage ("importedResults"),
 									content: <Table>
 										<TableBody>
 											<TableRow>
 												<TableCell padding="none" size="small" className={classes.cell} >
-													<Typography>Successfully Imported</Typography>
+													<Typography>{browser.i18n.getMessage ("successfullyImported")}</Typography>
 												</TableCell>
 												<TableCell padding="none" size="small" className={classes.cell} >
 													<Typography>{results.success.length}</Typography>
@@ -309,7 +315,7 @@ class MainMenu extends React.Component {
 											</TableRow>
 											<TableRow>
 												<TableCell padding="none" size="small" className={classes.cell} >
-													<Typography>Expired Cookies</Typography>
+													<Typography>{browser.i18n.getMessage ("expiredCookies")}</Typography>
 												</TableCell>
 												<TableCell padding="none" size="small" className={classes.cell} >
 													<Typography>{results.expired.length}</Typography>
@@ -323,7 +329,7 @@ class MainMenu extends React.Component {
 											</TableRow>
 											<TableRow>
 												<TableCell padding="none" size="small" className={classes.cell} >
-													<Typography>Failed To Import</Typography>
+													<Typography>{browser.i18n.getMessage ("failedImported")}</Typography>
 												</TableCell>
 												<TableCell padding="none" size="small" className={classes.cell} >
 													<Typography>{results.failed.length}</Typography>
@@ -340,7 +346,7 @@ class MainMenu extends React.Component {
 									showCancel: false,
 									showSubmit: true,
 									submit: {
-										label: `close`,
+										label: browser.i18n.getMessage ("close"),
 										callback: () => {
 											this.handleDialogClose ()
 											this.handleClose ()
@@ -349,12 +355,12 @@ class MainMenu extends React.Component {
 								}))
 								.catch ( error => this.setDialogState ({
 									open: true,
-									title: "Import Results",
-									content: <Typography gutterBottom >Failed to import cookies, please check JSON file and try again.</Typography>,
+									title: browser.i18n.getMessage ("importedResults"),
+									content: <Typography gutterBottom >{browser.i18n.getMessage ("failedImportMessage")}</Typography>,
 									showCancel: false,
 									showSubmit: true,
 									submit: {
-										label: `close`,
+										label: browser.i18n.getMessage ("close"),
 										callback: () => {
 											this.handleDialogClose ()
 											this.handleClose ()
@@ -365,14 +371,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<ImportIcon color="primary" />
 							</ListItemIcon>
-							<Typography>Import Cookies</Typography>
+							<Typography>{browser.i18n.getMessage ("importCookies")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title="Export Visible Cookies To JSON File" >
+						title={browser.i18n.getMessage ("exportToJsonTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={hits < 1}
@@ -380,14 +386,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<ExportIcon color="primary" />
 							</ListItemIcon>
-							<Typography>Export Cookies</Typography>
+							<Typography>{browser.i18n.getMessage ("exportCookies")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title="Open In New Tab" >
+						title={browser.i18n.getMessage ("fullscreenTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={false}
@@ -398,14 +404,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<FullscreenIcon color="primary" />
 							</ListItemIcon>
-							<Typography>Fullscreen</Typography>
+							<Typography>{browser.i18n.getMessage ("fullscreen")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title="Show Extension Options" >
+						title={browser.i18n.getMessage ("optionsTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={false}
@@ -416,7 +422,7 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<SettingsIcon color="primary" />
 							</ListItemIcon>
-							<Typography>Options</Typography>
+							<Typography>{browser.i18n.getMessage ("options")}</Typography>
 						</MenuItem>
 					</Tooltip>
 				</div>

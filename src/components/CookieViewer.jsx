@@ -1,3 +1,4 @@
+import browser from "webextension-polyfill"
 import moment from "moment"
 import React from "react"
 import PropTypes from "prop-types"
@@ -5,8 +6,6 @@ import Paper from "@material-ui/core/Paper"
 import Select from "@material-ui/core/Select"
 import MenuItem from "@material-ui/core/MenuItem"
 import FormControl from "@material-ui/core/FormControl"
-import Tooltip from "components/Tooltip"
-import Fade from "@material-ui/core/Fade"
 import InputLabel from "@material-ui/core/InputLabel"
 import Button from "@material-ui/core/Button"
 import Typography from "@material-ui/core/Typography"
@@ -153,7 +152,7 @@ class CookieViewer extends React.Component {
 						<CloseIcon/>
 					</IconButton>
 					<Typography className={classes.title} >
-						<b>{name || <i>Not Named</i>}</b>
+						<b>{name || <i>{browser.i18n.getMessage ("notNamed")}</i>}</b>
 					</Typography>
 					<CookieMenu
 						disabled={isNew}
@@ -396,7 +395,14 @@ class CookieViewer extends React.Component {
 							size="large"
 							disabled={isProtected || Boolean ( error )}
 							onClick={() => this.handleSave ()} >
-							{error ? `Error: ${error}` : isProtected ? "Protected Cookie" : isNew ? "Create Cookie" : "Update Cookie"}
+							{
+								error
+								? `${browser.i18n.getMessage ("error")}: ${error}`
+								: isProtected
+								? browser.i18n.getMessage ("protectedCookie")
+								: isNew ? browser.i18n.getMessage ("createCookie")
+								: browser.i18n.getMessage ("updateCookie")
+							}
 						</Button>
 					</Grid>
 				</Grid>

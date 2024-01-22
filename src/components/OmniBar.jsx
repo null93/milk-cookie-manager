@@ -1,3 +1,4 @@
+import browser from "webextension-polyfill"
 import React from "react"
 import PropTypes from "prop-types"
 import Paper from "@material-ui/core/Paper"
@@ -17,16 +18,11 @@ import MainMenu from "components/MainMenu"
 import CaseInsensitiveIcon from "@material-ui/icons/FormatStrikethrough"
 import CaseSensitiveIcon from "@material-ui/icons/Title"
 import Logo from "icons/Logo"
-import {
-	withStyles } from "@material-ui/core/styles"
-import {
-	withCookies } from "contexts/CookiesContext"
-import {
-	withStorage } from "contexts/StorageContext"
-import {
-	withSearch } from "contexts/SearchContext"
-import {
-	withFocus } from "contexts/FocusContext"
+import { withStyles } from "@material-ui/core/styles"
+import { withCookies } from "contexts/CookiesContext"
+import { withStorage } from "contexts/StorageContext"
+import { withSearch } from "contexts/SearchContext"
+import { withFocus } from "contexts/FocusContext"
 
 const styles = theme => ({
 	root: {
@@ -99,7 +95,7 @@ class OmniBar extends React.Component {
 			<InputBase
 				autoFocus
 				className={classes.input}
-				placeholder={regexp ? "Search Cookies With RegExp" : "Search Cookies"}
+				placeholder={regexp ? browser.i18n.getMessage ("searchWithRegExpPlaceholder") : browser.i18n.getMessage ("searchPlaceholder")}
 				value={term}
 				onChange={e => search.set ( "term", e.target.value )}
 				inputProps={{ spellCheck: false, id: "search" }}
@@ -134,7 +130,7 @@ class OmniBar extends React.Component {
 				id="hits"
 				variant="overline"
 				className={classes.hits} >
-				{`${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} Cookie${hits > 1 || hits < 1 ? "s" : ""}`}
+				{`${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${hits > 1 || hits < 1 ? browser.i18n.getMessage ("cookies") : browser.i18n.getMessage ("cookie")}`}
 			</Typography>
 			<Divider
 				className={classes.divider}
@@ -144,7 +140,7 @@ class OmniBar extends React.Component {
 				arrow
 				TransitionComponent={Fade}
 				placement="bottom"
-				title={sensitive ? "Currently Case Sensitive" : "Currently Case Insensitive"} >
+				title={sensitive ? browser.i18n.getMessage ("caseSensitiveTooltip") : browser.i18n.getMessage ("caseInsensitiveTooltip")} >
 				<IconButton
 					size="small"
 					color="primary"
@@ -161,7 +157,7 @@ class OmniBar extends React.Component {
 				arrow
 				TransitionComponent={Fade}
 				placement="bottom"
-				title={regexp ? "Searching With RegExp Pattern" : "Searching For Sub-Strings"} >
+				title={regexp ? browser.i18n.getMessage ("searchRegExpTooltip") : browser.i18n.getMessage ("searchSubstringTooltip")} >
 				<IconButton
 					size="small"
 					color="primary"
@@ -178,7 +174,7 @@ class OmniBar extends React.Component {
 				arrow
 				TransitionComponent={Fade}
 				placement="bottom"
-				title={!focus.last ? "Showing All Cookies, Focus Tab To Filter" : filtered ? "Filtering By Domain Of Last Focused Tab" : "Currently Showing All Cookies"} >
+				title={!focus.last ? browser.i18n.getMessage ("filterUnavailableTooltip") : filtered ? browser.i18n.getMessage ("filterFocusedTooltip") : browser.i18n.getMessage ("filterAllTooltip") } >
 				<IconButton
 					size="small"
 					color="primary"

@@ -1,4 +1,5 @@
 import _ from "lodash"
+import browser from "webextension-polyfill"
 import moment from "moment"
 import React from "react"
 import PropTypes from "prop-types"
@@ -24,6 +25,10 @@ class Application extends React.Component {
 			cookie: null,
 			isNew: false,
 		}
+	}
+
+	componentDidMount () {
+		document.title = browser.i18n.getMessage ("extensionFullName")
 	}
 
 	selectCookie ( cookie ) {

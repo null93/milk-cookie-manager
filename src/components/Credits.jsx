@@ -42,7 +42,7 @@ class Credits extends React.Component {
 				{name}
 			</TableCell>
 			<TableCell size="small" align="right" style={{ width: 64 }} >
-				<Button size="small" onClick={() => browser.tabs.create ({ url: link })} >link</Button>
+				<Button size="small" onClick={() => browser.tabs.create ({ url: link })} >{browser.i18n.getMessage ("link")}</Button>
 			</TableCell>
 		</TableRow>
 	}

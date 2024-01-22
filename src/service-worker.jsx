@@ -17,13 +17,13 @@ function setContextMenu ( install ) {
 			return Promise.resolve ()
 				.then ( () => browser.contextMenus.create ({
 					id: "fullscreen",
-					title: "Fullscreen",
+					title: browser.i18n.getMessage ("fullscreen"),
 					type: "normal",
 					contexts: [ "all" ],
 				}))
 				.then ( () => browser.contextMenus.create ({
 					id: "options",
-					title: "Options",
+					title: browser.i18n.getMessage ("options"),
 					type: "normal",
 					contexts: [ "all" ],
 				}))
@@ -112,3 +112,5 @@ browser.runtime.onInstalled.addListener ( handleFirstInstall )
 browser.storage.onChanged.addListener ( checkContextMenuOption )
 browser.contextMenus.onClicked.addListener ( handleContextMenuClick )
 browser.cookies.onChanged.addListener ( handleCookieChange )
+
+checkContextMenuOption ()

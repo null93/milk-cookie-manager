@@ -1,3 +1,4 @@
+import browser from "webextension-polyfill"
 import copy from "copy-to-clipboard"
 import React from "react"
 import PropTypes from "prop-types"
@@ -31,7 +32,7 @@ class CopyButton extends React.Component { 
 			{...other}
 			disabled={disabled || copied}
 			onClick={this.handleClick.bind ( this )} >
-			{copied ? "copied" : "copy"}
+			{copied ? browser.i18n.getMessage ("copied") : browser.i18n.getMessage ("copy")}
 		</Button>
 	}
 

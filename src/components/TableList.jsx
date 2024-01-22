@@ -1,4 +1,5 @@
 import _ from "lodash"
+import browser from "webextension-polyfill"
 import React from "react"
 import PropTypes from "prop-types"
 import Table from "@material-ui/core/Table"
@@ -44,7 +45,7 @@ class TableList extends React.Component {
 							disabled={rows.length < 1}
 							size="small"
 							onClick={onTruncate} >
-							Truncate
+							{browser.i18n.getMessage ("truncate")}
 						</Button>
 					</TableCell>
 				</TableRow>

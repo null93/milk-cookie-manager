@@ -157,6 +157,10 @@ class Options extends React.Component {
 		}
 	}
 
+	componentDidMount () {
+		document.title = `${browser.i18n.getMessage ("extensionShortName")} — ${browser.i18n.getMessage ("cookieManager")} — ${browser.i18n.getMessage ("options")}`
+	}
+
 	setDialogState ( options, callback = () => {} ) {
 		this.setState ( state => ({
 			dialog: {
@@ -205,7 +209,7 @@ class Options extends React.Component {
 						variant="h6"
 						noWrap
 						className={classes.title} >
-						<b>MILK</b> — Cookie Manager — Options
+						<b>{browser.i18n.getMessage ("extensionShortName")}</b> — {browser.i18n.getMessage ("cookieManager")} — {browser.i18n.getMessage ("options")}
 					</Typography>
 					<Typography
 						className={classes.version}
@@ -215,7 +219,7 @@ class Options extends React.Component {
 						onClick={() => browser.tabs.create ({
 							url: `https://github.com/null93/milk-cookie-manager/releases/tag/${process.env.npm_package_version}`
 						})} >
-						version {process.env.npm_package_version}
+						{browser.i18n.getMessage ("version")} {process.env.npm_package_version}
 					</Typography>
 				</Toolbar>
 			</AppBar>
@@ -224,48 +228,47 @@ class Options extends React.Component {
 					<List className={classes.list} >
 						<ListItem button onClick={() => window.location = "#search-settings"} >
 							<ListItemIcon>{<SearchIcon/>}</ListItemIcon>
-							<ListItemText primary="Search Settings" />
+							<ListItemText primary={browser.i18n.getMessage ("searchSettings")} />
 						</ListItem>
 						<ListItem button onClick={() => window.location = "#appearance"} >
 							<ListItemIcon>{<PaletteIcon/>}</ListItemIcon>
-							<ListItemText primary="Appearance" />
+							<ListItemText primary={browser.i18n.getMessage ("appearance")} />
 						</ListItem>
 						<ListItem button onClick={() => window.location = "#blocked-cookies"} >
 							<ListItemIcon>{<BlockIcon/>}</ListItemIcon>
-							<ListItemText primary="Blocked Cookies" />
+							<ListItemText primary={browser.i18n.getMessage ("blockedCookies")} />
 						</ListItem>
 						<ListItem button onClick={() => window.location = "#protected-cookies"} >
 							<ListItemIcon>{<SecurityIcon/>}</ListItemIcon>
-							<ListItemText primary="Protected Cookies" />
+							<ListItemText primary={browser.i18n.getMessage ("protectedCookies")} />
 						</ListItem>
 						<ListItem button onClick={() => window.location = "#special-thanks"} >
 							<ListItemIcon>{<SpecialThanksIcon/>}</ListItemIcon>
-							<ListItemText primary="Special Thanks" />
+							<ListItemText primary={browser.i18n.getMessage ("specialThanks")} />
 						</ListItem>
 					</List>
 					<Divider />
 					<List className={classes.list} >
 						<ListItem button onClick={() => browser.tabs.create ({ url: "https://paypal.me/RafaelGrigorian" })} >
-							<ListItemText primary="Donate" secondary="Consider buying me a cup of coffee" />
+							<ListItemText primary={browser.i18n.getMessage ("donate")} secondary={browser.i18n.getMessage ("donateDescription")} />
 							<ListItemIcon>{<ExitToAppIcon/>}</ListItemIcon>
 						</ListItem>
 						<ListItem button onClick={() => browser.tabs.create ({ url: "https://github.com/null93/milk-cookie-manager" })} >
-							<ListItemText primary="Github Repository" secondary="View source code and report issues" />
+							<ListItemText primary={browser.i18n.getMessage ("githubRepository")} secondary={browser.i18n.getMessage ("githubRepositoryDescription")} />
 							<ListItemIcon>{<ExitToAppIcon/>}</ListItemIcon>
 						</ListItem>
 					</List>
 				</nav>
 				<main className={classes.content} >
 					<div className={classes.container} >
-						<Typography id="search-settings" className={classes.section} variant="h6" >Search Settings</Typography>
+						<Typography id="search-settings" className={classes.section} variant="h6" >{browser.i18n.getMessage ("searchSettings")}</Typography>
 						<Typography className={classes.paragraph} color="textSecondary" >
-							These settings are stored locally and are not synced across browsers.
-							Case sensitivity applies to both regular and regexp search.
+							{browser.i18n.getMessage ("searchSettingsDescription")}
 						</Typography>
 						<div>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>Case Sensitive</Typography>
+									<Typography>{browser.i18n.getMessage ("caseSensitive")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -276,7 +279,7 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>Search With Regular Expression</Typography>
+									<Typography>{browser.i18n.getMessage ("searchWithRegularExpression")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -286,15 +289,14 @@ class Options extends React.Component {
 								</AccordionSummary>
 							</Accordion>
 						</div>
-						<Typography id="appearance" className={classes.section} variant="h6" >Appearance</Typography>
+						<Typography id="appearance" className={classes.section} variant="h6" >{browser.i18n.getMessage ("appearance")}</Typography>
 						<Typography className={classes.paragraph} color="textSecondary" >
-							Unfortunately Chrome extensions cannot detect if your system is using a Dark theme.
-							Thankfully, there is still a dark mode that you can set manually!
+							{browser.i18n.getMessage ("appearanceDescription")}
 						</Typography>
 						<div>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>Dark Mode</Typography>
+									<Typography>{browser.i18n.getMessage ("darkMode")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -305,7 +307,7 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>Show Tooltips</Typography>
+									<Typography>{browser.i18n.getMessage ("showTooltips")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -316,7 +318,7 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>Show Warning Dialogs</Typography>
+									<Typography>{browser.i18n.getMessage ("showWarningDialogs")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -327,7 +329,7 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>Context Menu</Typography>
+									<Typography>{browser.i18n.getMessage ("contextMenu")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -338,7 +340,7 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>Update Protected Cookie's Value</Typography>
+									<Typography>{browser.i18n.getMessage ("updateProtectedCookiesValue")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -349,22 +351,22 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: `${classes.summary} ${classes.noMargin}` }} >
-									<Typography>Expiration Time Format</Typography>
+									<Typography>{browser.i18n.getMessage ("expirationTimeFormat")}</Typography>
 									<Select
 										disableUnderline
 										size="small"
 										value={storage.data.expirationFormat}
 										onChange={e => storage.set ( "expirationFormat", e.target.value )} >
-										<MenuItem value={"humanized"}>Humanized</MenuItem>
-										<MenuItem value={"countdown"}>Countdown</MenuItem>
-										<MenuItem value={"timestamp"}>Timestamp</MenuItem>
-										<MenuItem value={"seconds"}>Seconds</MenuItem>
+										<MenuItem value={"humanized"}>{browser.i18n.getMessage ("humanized")}</MenuItem>
+										<MenuItem value={"countdown"}>{browser.i18n.getMessage ("countdown")}</MenuItem>
+										<MenuItem value={"timestamp"}>{browser.i18n.getMessage ("timestamp")}</MenuItem>
+										<MenuItem value={"seconds"}>{browser.i18n.getMessage ("seconds")}</MenuItem>
 									</Select>
 								</AccordionSummary>
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: `${classes.summary} ${classes.noMargin}` }} >
-									<Typography>Sort Cookie List</Typography>
+									<Typography>{browser.i18n.getMessage ("sortCookieList")}</Typography>
 									<div>
 										<Select
 											disableUnderline
@@ -372,26 +374,25 @@ class Options extends React.Component {
 											value={storage.data.sortType}
 											style={{ marginRight: 10 }}
 											onChange={e => storage.set ( "sortType", e.target.value )} >
-											<MenuItem value={"name"}>Name</MenuItem>
-											<MenuItem value={"domain"}>Domain</MenuItem>
-											<MenuItem value={"expirationDate"}>Expiration</MenuItem>
+											<MenuItem value={"name"}>{browser.i18n.getMessage ("name")}</MenuItem>
+											<MenuItem value={"domain"}>{browser.i18n.getMessage ("domain")}</MenuItem>
+											<MenuItem value={"expirationDate"}>{browser.i18n.getMessage ("expiration")}</MenuItem>
 										</Select>
 										<Select
 											disableUnderline
 											size="small"
 											value={storage.data.sortDirection}
 											onChange={e => storage.set ( "sortDirection", e.target.value )} >
-											<MenuItem value={"ascending"}>Ascending</MenuItem>
-											<MenuItem value={"descending"}>Descending</MenuItem>
+											<MenuItem value={"ascending"}>{browser.i18n.getMessage ("ascending")}</MenuItem>
+											<MenuItem value={"descending"}>{browser.i18n.getMessage ("descending")}</MenuItem>
 										</Select>
 									</div>
 								</AccordionSummary>
 							</Accordion>
 						</div>
-						<Typography id="blocked-cookies" className={classes.section} variant="h6" >Blocked Cookies</Typography>
+						<Typography id="blocked-cookies" className={classes.section} variant="h6" >{browser.i18n.getMessage ("")}</Typography>
 						<Typography className={classes.paragraph} color="textSecondary" >
-							When a cookie is blocked, the name, domain, and path is saved and is used to block future cookies from being created.
-							All three properties must match exactly for a cookie to be blocked.
+							{browser.i18n.getMessage ("blockedCookiesDescription")}
 						</Typography>
 						<div>
 							<Accordion elevation={2} expanded={false} className={classes.table} >
@@ -408,24 +409,22 @@ class Options extends React.Component {
 										})
 										: () => storage.set ( "block", {} ).then ( () => this.handleDialogClose () )
 									}
-									noItemsMessage="No Blocked Cookies"
+									noItemsMessage={browser.i18n.getMessage ("noBlockedCookies")}
 									columns={{
-										"Name": item => item.name,
-										"Domain + Path": item => item.domain + item.path,
+										[browser.i18n.getMessage ("name")]: item => item.name,
+										[browser.i18n.getMessage ("domainAndPath")]: item => item.domain + item.path,
 										"": item => <Button
 											size="small"
 											onClick={() => storage.remove ( "block", utils.hash ( item ) )} >
-											unblock
+											{browser.i18n.getMessage ("unblock")}
 										</Button>,
 									}}
 								/>
 							</Accordion>
 						</div>
-						<Typography id="protected-cookies" className={classes.section} variant="h6" >Protected Cookies</Typography>
+						<Typography id="protected-cookies" className={classes.section} variant="h6" >{browser.i18n.getMessage ("protectedCookies")}</Typography>
 						<Typography className={classes.paragraph} color="textSecondary" >
-							Protected cookies are indexed by their name, domain, and path.
-							Their expiration is respected but deletion & modification is prevented.
-							If a new cookie is set with the same name, domain, and path after a protected cookie expires, then that cookie will automatically be protected.
+							{browser.i18n.getMessage ("protectedCookiesDescription")}
 						</Typography>
 						<div>
 							<Accordion elevation={2} expanded={false} className={classes.table} >
@@ -442,22 +441,22 @@ class Options extends React.Component {
 										})
 										: () => storage.set ( "protect", {} ).then ( () => this.handleDialogClose () )
 									}
-									noItemsMessage="No Protected Cookies"
+									noItemsMessage={browser.i18n.getMessage ("noProtectedCookies")}
 									columns={{
-										"Name": item => item.name,
-										"Domain + Path": item => item.domain + item.path,
+										[browser.i18n.getMessage ("name")]: item => item.name,
+										[browser.i18n.getMessage ("domainAndPath")]: item => item.domain + item.path,
 										"": item => <Button
 											size="small"
 											onClick={() => storage.remove ( "protect", utils.hash ( item ) )} >
-											release
+											{browser.i18n.getMessage ("release")}
 										</Button>,
 									}}
 								/>
 							</Accordion>
 						</div>
-						<Typography id="special-thanks" className={classes.section} variant="h6" >Special Thanks</Typography>
+						<Typography id="special-thanks" className={classes.section} variant="h6" >{browser.i18n.getMessage ("specialThanks")}</Typography>
 						<Typography className={classes.paragraph} color="textSecondary" >
-							Thank you to all the open-source resources that were available to make this project possible!
+							{browser.i18n.getMessage ("specialThanksDescription")}
 						</Typography>
 						<div>
 							<Accordion elevation={2} expanded={false} >
@@ -465,10 +464,9 @@ class Options extends React.Component {
 							</Accordion>
 						</div>
 						<Typography className={classes.madeWith} variant="overline" >
-							Coded With
+							{browser.i18n.getMessage ("codedWith")}
 							<span>❤</span>
-							<p>By</p>
-							<a href="https://github.com/null93" target="_blank" >Rafael Grigorian</a>
+							<a href="https://github.com/null93" target="_blank" >{browser.i18n.getMessage ("byAuthor")}</a>
 						</Typography>
 					</div>
 				</main>

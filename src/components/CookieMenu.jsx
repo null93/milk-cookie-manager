@@ -1,3 +1,4 @@
+import browser from "webextension-polyfill"
 import React from "react"
 import PropTypes from "prop-types"
 import IconButton from "@material-ui/core/IconButton"
@@ -132,7 +133,7 @@ class MainMenu extends React.Component {
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title="Delete This Cookie" >
+						title={browser.i18n.getMessage ("deleteTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={isProtected}
@@ -140,14 +141,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<DeleteIcon color="primary" />
 							</ListItemIcon>
-							<Typography>Delete</Typography>
+							<Typography>{browser.i18n.getMessage ("delete")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title="Duplicate Cookie" >
+						title={browser.i18n.getMessage ("duplicateTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={false}
@@ -155,14 +156,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<DuplicateIcon color="primary" />
 							</ListItemIcon>
-							<Typography>Duplicate</Typography>
+							<Typography>{browser.i18n.getMessage ("duplicate")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title="Export Cookie To JSON File" >
+						title={browser.i18n.getMessage ("exportTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={false}
@@ -170,14 +171,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<ExportIcon color="primary" />
 							</ListItemIcon>
-							<Typography>Export</Typography>
+							<Typography>{browser.i18n.getMessage ("export")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title="Block & Delete Cookie" >
+						title={browser.i18n.getMessage ("blockTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={isProtected}
@@ -188,7 +189,7 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<BlockIcon color="primary" />
 							</ListItemIcon>
-							<Typography>Block</Typography>
+							<Typography>{browser.i18n.getMessage ("block")}</Typography>
 						</MenuItem>
 					</Tooltip>
 				</div>

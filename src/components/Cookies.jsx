@@ -1,4 +1,5 @@
 import _ from "lodash"
+import browser from "webextension-polyfill"
 import React from "react"
 import PropTypes from "prop-types"
 import Fab from "@material-ui/core/Fab"
@@ -56,7 +57,7 @@ class Cookies extends React.Component {
 			}
 			{
 				cookies.initialized && items.length <= 0 && <div className={classes.none} >
-					No Cookies<br/>Found
+					{browser.i18n.getMessage ("noCookiesFound")}
 				</div>
 			}
 			{

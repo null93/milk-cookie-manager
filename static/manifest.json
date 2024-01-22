@@ -1,10 +1,10 @@
 {
     "manifest_version": 3,
     "minimum_chrome_version": "88",
-    "name": "MILK — Cookie Manager",
-    "short_name": "MILK",
+    "name": "__MSG_extensionFullName__",
+    "short_name": "__MSG_extensionShortName__",
     "version": "2.4.0",
-    "description": "Cookie's best friend! Modern cookie manager.",
+    "description": "__MSG_extensionDescription__",
     "homepage_url": "https://github.com/null93/milk-cookie-manager",
     "author": "Rafael Grigorian",
     "content_security_policy": {
@@ -12,6 +12,7 @@
     },
     "offline_enabled": true,
     "incognito": "not_allowed",
+    "default_locale": "en",
     "permissions": [
         "contextMenus",
         "cookies",
@@ -36,7 +37,7 @@
         "https://*/*"
     ],
     "action": {
-        "default_title": "MILK — Cookie Manager",
+        "default_title": "__MSG_extensionFullName__",
         "default_icon": "icon-128.png",
         "default_popup": "index.html"
     }

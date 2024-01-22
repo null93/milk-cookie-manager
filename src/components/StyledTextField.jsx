@@ -1,4 +1,5 @@
 import copy from "copy-to-clipboard"
+import browser from "webextension-polyfill"
 import React from "react"
 import TextField from "@material-ui/core/TextField"
 import Tooltip from "components/Tooltip"
@@ -37,7 +38,7 @@ class StyledTextField extends React.Component {
 					arrow
 					TransitionComponent={Fade}
 					placement="left"
-					title={done ? "Copied!" : "Copy To Clipboard"} >
+					title={done ? browser.i18n.getMessage ("copied") : browser.i18n.getMessage ("copyToClipboard")} >
 					<InputAdornment position="end" >
 						<IconButton
 							tabIndex={-1}
