@@ -11,7 +11,7 @@
         "extension_pages": "script-src 'self'; object-src 'self'"
     },
     "offline_enabled": true,
-    "incognito": "not_allowed",
+    "incognito": "split",
     "default_locale": "en",
     "permissions": [
         "contextMenus",
