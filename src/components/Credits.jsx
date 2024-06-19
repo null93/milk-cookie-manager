@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button"
 import SourceIcon from "@material-ui/icons/Github"
 import ImageIcon from "@material-ui/icons/Wallpaper"
 import TypeIcon from "@material-ui/icons/Title"
+import TranslateIcon from "@material-ui/icons/Translate"
 import { withStyles } from "@material-ui/core/styles"
 
 const styles = theme => ({
@@ -73,6 +74,7 @@ class Credits extends React.Component {
 				this.renderRow ( makeIcon ( ImageIcon ), "icon-regex", "https://materialdesignicons.com/icon/regex" ),
 				this.renderRow ( makeIcon ( ImageIcon ), "icon-shield-off", "https://materialdesignicons.com/icon/shield-off" ),
 				this.renderRow ( makeIcon ( TypeIcon ), "font-roboto", "https://fonts.google.com/specimen/Roboto" ),
+				this.renderRow ( makeIcon ( TranslateIcon ), "translation-chinese", "https://github.com/Lion-hk" ),
 			]}
 			</TableBody>
 			<TableFooter>
