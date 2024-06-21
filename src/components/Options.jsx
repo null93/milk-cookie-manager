@@ -217,9 +217,9 @@ class Options extends React.Component {
 						color="textSecondary"
 						noWrap
 						onClick={() => browser.tabs.create ({
-							url: `https://github.com/null93/milk-cookie-manager/releases/tag/${process.env.npm_package_version}`
+							url: `https://github.com/null93/milk-cookie-manager/releases/tag/${process.env.VERSION}`
 						})} >
-						{browser.i18n.getMessage ("version")} {process.env.npm_package_version}
+						{browser.i18n.getMessage ("version")} {process.env.VERSION}
 					</Typography>
 				</Toolbar>
 			</AppBar>
