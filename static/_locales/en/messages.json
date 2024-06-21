@@ -313,5 +313,59 @@
     },
     "errorCookieNameValueEmpty": {
         "message": "Error: 'Name' and 'Value' cannot both be empty"
+    },
+    "path": {
+        "message": "Path"
+    },
+    "value": {
+        "message": "Value"
+    },
+    "byte": {
+        "message": "byte"
+    },
+    "bytes": {
+        "message": "bytes"
+    },
+    "sameSiteStatus": {
+        "message": "Same Site Status"
+    },
+    "secure": {
+        "message": "Secure"
+    },
+    "httpOnly": {
+        "message": "HTTP-Only"
+    },
+    "hostOnly": {
+        "message": "Host-Only"
+    },
+    "session": {
+        "message": "Session"
+    },
+    "unspecified": {
+        "message": "Unspecified"
+    },
+    "unspecifiedDescription": {
+        "message": "Default behavior will mimic Lax"
+    },
+    "noRestriction": {
+        "message": "No Restriction"
+    },
+    "noRestrictionDescription": {
+        "message": "Not limited by context but secure flag is required"
+    },
+    "lax": {
+        "message": "Lax"
+    },
+    "laxDescription": {
+        "message": "Restricted to first-party or same-site contexts"
+    },
+    "strict": {
+        "message": "Strict"
+    },
+    "strictDescription": {
+        "message": "Restricted to first-party context only"
+    },
+    "expires": {
+        "message": "Expires"
     }
 }

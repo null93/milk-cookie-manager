@@ -313,5 +313,59 @@
     },
     "errorCookieNameValueEmpty": {
         "message": "Ошибка: 'Name' и 'Значение' не могут быть пустыми одновременно."
+    },
+    "path": {
+       "message": "Путь"
+    },
+    "value": {
+       "message": "Значение"
+    },
+    "byte": {
+       "message": "байт"
+    },
+    "bytes": {
+       "message": "байты"
+    },
+    "sameSiteStatus": {
+       "message": "Статус Same Site"
+    },
+    "secure": {
+       "message": "Безопасный"
+    },
+    "httpOnly": {
+       "message": "HTTP-Only"
+    },
+    "hostOnly": {
+       "message": "Host-Only"
+    },
+    "session": {
+       "message": "Сессия"
+    },
+    "unspecified": {
+       "message": "Неопределенный"
+    },
+    "unspecifiedDescription": {
+       "message": "Поведение по умолчанию будет имитировать Lax"
+    },
+    "noRestriction": {
+       "message": "Без ограничений"
+    },
+    "noRestrictionDescription": {
+       "message": "Не ограничено контекстом, но требуется флаг безопасности"
+    },
+    "lax": {
+       "message": "Lax"
+    },
+    "laxDescription": {
+       "message": "Ограничено контекстами первого или того же сайта"
+    },
+    "strict": {
+       "message": "Strict"
+    },
+    "strictDescription": {
+       "message": "Ограничено только контекстом первого сайта"
+    },
+    "expires": {
+       "message": "Истекает"
     }
 }

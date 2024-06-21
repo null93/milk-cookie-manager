@@ -1,13 +1,11 @@
+import browser from "webextension-polyfill"
 import moment from "moment"
 import React from "react"
 import PropTypes from "prop-types"
 import InputBase from "@material-ui/core/InputBase"
-import FormControl from "@material-ui/core/FormControl"
 import InputLabel from "@material-ui/core/InputLabel"
-import Typography from "@material-ui/core/Typography"
 import Tooltip from "@material-ui/core/Tooltip"
 import Fade from "@material-ui/core/Fade"
-import InputAdornment from "@material-ui/core/InputAdornment"
 import IconButton from "@material-ui/core/IconButton"
 import TodayIcon from "@material-ui/icons/today"
 import { withStyles } from "@material-ui/core/styles"
@@ -118,7 +116,7 @@ class DateTime extends React.Component {
 			].filter ( e => typeof e === "string" ).join (" ")}
 			onClick={() => this.setState ({ focused: !disabled })} >
 			<InputLabel shrink className={classes.label} focused={focused} disabled={disabled} error={error} >
-				{`Expires (${disabled ? disabledMessage : moment.duration ( current - moment () ).humanize ()})`}
+				{`${browser.i18n.getMessage ("expires")} (${disabled ? disabledMessage : moment.duration ( current - moment () ).humanize ()})`}
 			</InputLabel>
 			<InputBase
 				className={classes.date}
@@ -156,7 +154,6 @@ class DateTime extends React.Component {
 				title="Today" >
 				<div>
 					<IconButton
-						disabled={false}
 						tabIndex={-1}
 						className={classes.today}
 						disabled={disabled}
