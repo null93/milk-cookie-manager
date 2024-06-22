@@ -1,4 +1,3 @@
-import browser from "webextension-polyfill"
 import moment from "moment"
 import React from "react"
 import PropTypes from "prop-types"
@@ -37,6 +36,7 @@ import DateTime from "components/DateTime"
 import { withStyles } from "@material-ui/core/styles"
 import { withStorage } from "contexts/StorageContext"
 import { withCookies } from "contexts/CookiesContext"
+import { withI18n } from "contexts/I18nContext"
 
 const styles = theme => ({
 	backdrop: {
@@ -135,15 +135,16 @@ class CookieViewer extends React.Component {
 	}
 
 	getErrorMessage () {
+		const { i18n } = this.props
 		const { error, cookie } = this.state
 		if ( cookie.name.length < 1 && cookie.value.length < 1 ) {
-			return browser.i18n.getMessage ("errorCookieNameValueEmpty")
+			return i18n.translate ("errorCookieNameValueEmpty")
 		}
-		return `${browser.i18n.getMessage ("error")}: ${error}`
+		return `${i18n.translate ("error")}: ${error}`
 	}
 
 	render () {
-		const { classes, cookie, isNew, onClose, onExport, onDelete, onBlock, onProtect, onRemoveProtect } = this.props
+		const { classes, isNew, onClose, onExport, onDelete, onBlock, onProtect, onRemoveProtect, i18n } = this.props
 		const { isProtected, error } = this.state
 		const { name, domain, path, expirationDate, sameSite, value, hostOnly, httpOnly, secure, session } = this.state.cookie
 		return <Backdrop
@@ -160,7 +161,7 @@ class CookieViewer extends React.Component {
 						<CloseIcon/>
 					</IconButton>
 					<Typography className={classes.title} >
-						<b>{name || <i>{browser.i18n.getMessage ("notNamed")}</i>}</b>
+						<b>{name || <i>{i18n.translate ("notNamed")}</i>}</b>
 					</Typography>
 					<CookieMenu
 						disabled={isNew}
@@ -182,7 +183,7 @@ class CookieViewer extends React.Component {
 							disabled={isProtected}
 							autoFocus={true}
 							value={name}
-							label={browser.i18n.getMessage ("name")}
+							label={i18n.translate ("name")}
 							variant="filled"
 							onChange={e => this.setCookie ({ name: e.target.value })}
 							inputProps={{ name: "name" }}
@@ -193,7 +194,7 @@ class CookieViewer extends React.Component {
 							error={Boolean ( error )}
 							disabled={isProtected}
 							value={`${hostOnly ? "" : "."}${domain.replace (/^\./, "")}`}
-							label={browser.i18n.getMessage ("domain")}
+							label={i18n.translate ("domain")}
 							variant="filled"
 							onChange={e => this.setCookie ({ domain: `${hostOnly ? "" : "."}${e.target.value.replace (/^\./, "")}` })}
 							inputProps={{ name: "domain" }}
@@ -204,7 +205,7 @@ class CookieViewer extends React.Component {
 							error={Boolean ( error )}
 							disabled={isProtected || name.startsWith("__Host")}
 							value={name.startsWith("__Host") ? "/" : `/${path.replace (/^\//, "")}`}
-							label={browser.i18n.getMessage ("path")}
+							label={i18n.translate ("path")}
 							variant="filled"
 							onChange={e => this.setCookie ({ path: `/${e.target.value.replace (/^\//, "")}` })}
 							inputProps={{ name: "path" }}
@@ -226,13 +227,13 @@ class CookieViewer extends React.Component {
 							value={value}
 							variant="filled"
 							onChange={e => this.setCookie ({ value: e.target.value })}
-							label={`${browser.i18n.getMessage ("value")} (${value.length} ${value.length === 1 ? browser.i18n.getMessage ("byte") : browser.i18n.getMessage ("bytes")})`}
+							label={`${i18n.translate ("value")} (${value.length} ${value.length === 1 ? i18n.translate ("byte") : i18n.translate ("bytes")})`}
 							inputProps={{ name: "value" }}
 						/>
 					</Grid>
 					<Grid item xs={12} md={12} >
 						<FormControl fullWidth disabled={isProtected} variant="filled" >
-							<InputLabel>{browser.i18n.getMessage ("sameSiteStatus")}</InputLabel>
+							<InputLabel>{i18n.translate ("sameSiteStatus")}</InputLabel>
 							<Select
 								error={Boolean ( error )}
 								fullWidth
@@ -251,8 +252,8 @@ class CookieViewer extends React.Component {
 										<ListItemIcon><UnspecifiedIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
 										<ListItemText
 											classes={{ multiline: classes.listItemText }}
-											primary={browser.i18n.getMessage ("unspecified")}
-											secondary={`— ${browser.i18n.getMessage ("unspecifiedDescription")}`}
+											primary={i18n.translate ("unspecified")}
+											secondary={`— ${i18n.translate ("unspecifiedDescription")}`}
 											primaryTypographyProps={{
 												className: classes.primary,
 											}}
@@ -267,8 +268,8 @@ class CookieViewer extends React.Component {
 									<ListItemIcon><NoRestrictionIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
 									<ListItemText
 										classes={{ multiline: classes.listItemText }}
-										primary={browser.i18n.getMessage ("noRestriction")}
-										secondary={`— ${browser.i18n.getMessage ("noRestrictionDescription")}`}
+										primary={i18n.translate ("noRestriction")}
+										secondary={`— ${i18n.translate ("noRestrictionDescription")}`}
 										primaryTypographyProps={{
 											className: classes.primary,
 										}}
@@ -282,8 +283,8 @@ class CookieViewer extends React.Component {
 									<ListItemIcon><LaxIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
 									<ListItemText
 										classes={{ multiline: classes.listItemText }}
-										primary={browser.i18n.getMessage ("lax")}
-										secondary={`— ${browser.i18n.getMessage ("laxDescription")}`}
+										primary={i18n.translate ("lax")}
+										secondary={`— ${i18n.translate ("laxDescription")}`}
 										primaryTypographyProps={{
 											className: classes.primary,
 										}}
@@ -297,8 +298,8 @@ class CookieViewer extends React.Component {
 									<ListItemIcon><StrictIcon color={isProtected ? "disabled" : "inherit"} /></ListItemIcon>
 									<ListItemText
 										classes={{ multiline: classes.listItemText }}
-										primary={browser.i18n.getMessage ("strict")}
-										secondary={`— ${browser.i18n.getMessage ("strictDescription")}`}
+										primary={i18n.translate ("strict")}
+										secondary={`— ${i18n.translate ("strictDescription")}`}
 										primaryTypographyProps={{
 											className: classes.primary,
 										}}
@@ -348,7 +349,7 @@ class CookieViewer extends React.Component {
 								disabled={isProtected || sameSite === "no_restriction" || name.startsWith ("__Secure") || name.startsWith("__Host")}
 								value="secure" >
 								{secure || sameSite === "no_restriction" ? <SecureOnIcon/> : <SecureOffIcon/>}
-								<span className={classes.toggleLabel} >{browser.i18n.getMessage ("secure")}</span>
+								<span className={classes.toggleLabel} >{i18n.translate ("secure")}</span>
 							</ToggleButton>
 							<ToggleButton
 								classes={{
@@ -359,7 +360,7 @@ class CookieViewer extends React.Component {
 								disabled={isProtected}
 								value="httpOnly" >
 								{httpOnly ? <HttpOnlyOnIcon/> : <HttpOnlyOffIcon/>}
-								<span className={classes.toggleLabel} >{browser.i18n.getMessage ("httpOnly")}</span>
+								<span className={classes.toggleLabel} >{i18n.translate ("httpOnly")}</span>
 							</ToggleButton>
 							<ToggleButton
 								classes={{
@@ -370,7 +371,7 @@ class CookieViewer extends React.Component {
 								disabled={isProtected}
 								value="hostOnly" >
 								{hostOnly ? <HostOnlyOnIcon/> : <HostOnlyOffIcon/>}
-								<span className={classes.toggleLabel} >{browser.i18n.getMessage ("hostOnly")}</span>
+								<span className={classes.toggleLabel} >{i18n.translate ("hostOnly")}</span>
 							</ToggleButton>
 							<ToggleButton
 								classes={{
@@ -381,7 +382,7 @@ class CookieViewer extends React.Component {
 								disabled={isProtected}
 								value="session" >
 								{session ? <SessionOnIcon/> : <SessionOffIcon/>}
-								<span className={classes.toggleLabel} >{browser.i18n.getMessage ("session")}</span>
+								<span className={classes.toggleLabel} >{i18n.translate ("session")}</span>
 							</ToggleButton>
 							<ToggleButton
 								classes={{
@@ -392,7 +393,7 @@ class CookieViewer extends React.Component {
 								disabled={isNew}
 								value="isProtected" >
 								{isProtected ? <ProtectOnIcon/> : <ProtectOffIcon/>}
-								<span className={classes.toggleLabel} >{browser.i18n.getMessage ("protect")}</span>
+								<span className={classes.toggleLabel} >{i18n.translate ("protect")}</span>
 							</ToggleButton>
 						</ToggleButtonGroup>
 					</Grid>
@@ -407,9 +408,9 @@ class CookieViewer extends React.Component {
 								error
 								? this.getErrorMessage ()
 								: isProtected
-								? browser.i18n.getMessage ("protectedCookie")
-								: isNew ? browser.i18n.getMessage ("createCookie")
-								: browser.i18n.getMessage ("updateCookie")
+								? i18n.translate ("protectedCookie")
+								: isNew ? i18n.translate ("createCookie")
+								: i18n.translate ("updateCookie")
 							}
 						</Button>
 					</Grid>
@@ -434,4 +435,4 @@ CookieViewer.propTypes = {
 	onRemoveProtect: PropTypes.func.isRequired,
 }
 
-export default withStorage ( withCookies ( withStyles ( styles ) ( CookieViewer ) ) )
+export default withStorage ( withI18n ( withCookies ( withStyles ( styles ) ( CookieViewer ) ) ) )

@@ -1,4 +1,3 @@
-import browser from "webextension-polyfill"
 import moment from "moment"
 import React from "react"
 import PropTypes from "prop-types"
@@ -9,6 +8,7 @@ import Fade from "@material-ui/core/Fade"
 import IconButton from "@material-ui/core/IconButton"
 import TodayIcon from "@material-ui/icons/today"
 import { withStyles } from "@material-ui/core/styles"
+import { withI18n } from "contexts/I18nContext"
 
 const styles = theme => ({
 	root: {
@@ -103,7 +103,7 @@ class DateTime extends React.Component {
 	}
 
 	render () {
-		const { classes, value, onChange, disabled, error, disabledMessage } = this.props
+		const { classes, value, disabled, error, disabledMessage, i18n } = this.props
 		const { focused } = this.state
 		const current = moment ( value, "YYYY-MM-DDTHH:mm:ss" )
 		const date = current.format ("YYYY-MM-DD")
@@ -116,7 +116,7 @@ class DateTime extends React.Component {
 			].filter ( e => typeof e === "string" ).join (" ")}
 			onClick={() => this.setState ({ focused: !disabled })} >
 			<InputLabel shrink className={classes.label} focused={focused} disabled={disabled} error={error} >
-				{`${browser.i18n.getMessage ("expires")} (${disabled ? disabledMessage : moment.duration ( current - moment () ).humanize ()})`}
+				{`${i18n.translate ("expires")} (${disabled ? disabledMessage : moment.duration ( current - moment () ).humanize ()})`}
 			</InputLabel>
 			<InputBase
 				className={classes.date}
@@ -184,4 +184,4 @@ DateTime.defaultProps = {
 	disabledMessage: "when browser is closed",
 }
 
-export default withStyles ( styles ) ( DateTime )
+export default withI18n ( withStyles ( styles ) ( DateTime ) )

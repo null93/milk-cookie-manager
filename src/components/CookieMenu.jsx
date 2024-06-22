@@ -1,4 +1,3 @@
-import browser from "webextension-polyfill"
 import React from "react"
 import PropTypes from "prop-types"
 import IconButton from "@material-ui/core/IconButton"
@@ -20,6 +19,7 @@ import BlockIcon from "@material-ui/icons/Block"
 import DuplicateIcon from "@material-ui/icons/ControlPointDuplicate"
 import { withStyles } from "@material-ui/core/styles"
 import { withCookies } from "contexts/CookiesContext"
+import { withI18n } from "contexts/I18nContext"
 
 const styles = theme => ({
 	root: {
@@ -76,17 +76,15 @@ class MainMenu extends React.Component {
 	render () {
 		const {
 			classes,
-			cookies,
 			isProtected,
 			disabled,
 			onDelete,
 			onBlock,
-			onClose,
 			onExport,
-			onDuplicate
+			onDuplicate,
+			i18n,
 		} = this.props
 		const { anchor, dialog } = this.state
-		const hits = cookies.found.length
 		return <React.Fragment>
 			<Tooltip
 				arrow
@@ -133,7 +131,7 @@ class MainMenu extends React.Component {
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={browser.i18n.getMessage ("deleteTooltip")} >
+						title={i18n.translate ("deleteTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={isProtected}
@@ -141,14 +139,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<DeleteIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{browser.i18n.getMessage ("delete")}</Typography>
+							<Typography>{i18n.translate ("delete")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={browser.i18n.getMessage ("duplicateTooltip")} >
+						title={i18n.translate ("duplicateTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={false}
@@ -156,14 +154,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<DuplicateIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{browser.i18n.getMessage ("duplicate")}</Typography>
+							<Typography>{i18n.translate ("duplicate")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={browser.i18n.getMessage ("exportTooltip")} >
+						title={i18n.translate ("exportTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={false}
@@ -171,14 +169,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<ExportIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{browser.i18n.getMessage ("export")}</Typography>
+							<Typography>{i18n.translate ("export")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={browser.i18n.getMessage ("blockTooltip")} >
+						title={i18n.translate ("blockTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={isProtected}
@@ -189,7 +187,7 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<BlockIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{browser.i18n.getMessage ("block")}</Typography>
+							<Typography>{i18n.translate ("block")}</Typography>
 						</MenuItem>
 					</Tooltip>
 				</div>
@@ -201,7 +199,6 @@ class MainMenu extends React.Component {
 
 MainMenu.propTypes = {
 	classes: PropTypes.object.isRequired,
-	cookies: PropTypes.object.isRequired,
 	disabled: PropTypes.bool.isRequired,
 	isProtected: PropTypes.bool.isRequired,
 	onDelete: PropTypes.func.isRequired,
@@ -211,6 +208,8 @@ MainMenu.propTypes = {
 }
 
 export default
-withCookies (
-	withStyles ( styles ) ( MainMenu )
+withI18n (
+	withCookies (
+		withStyles ( styles ) ( MainMenu )
+	)
 )

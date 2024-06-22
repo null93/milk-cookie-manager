@@ -1,5 +1,4 @@
 import _ from "lodash"
-import browser from "webextension-polyfill"
 import React from "react"
 import PropTypes from "prop-types"
 import Fab from "@material-ui/core/Fab"
@@ -11,6 +10,7 @@ import { withStyles } from "@material-ui/core/styles"
 import { withStorage } from "contexts/StorageContext"
 import { withSearch } from "contexts/SearchContext"
 import { withCookies } from "contexts/CookiesContext"
+import { withI18n } from "contexts/I18nContext"
 
 const styles = theme => ({
 	list: {
@@ -39,7 +39,7 @@ const styles = theme => ({
 class Cookies extends React.Component {
 
 	render () {
-		const { classes, storage, search, cookies, onCreate, onItemClick } = this.props
+		const { classes, storage, search, cookies, onCreate, onItemClick, i18n } = this.props
 		var items = _.sortBy ( cookies.found, o => storage.data.sortType === "expirationDate"
 			? o [ storage.data.sortType ]
 			: o [ storage.data.sortType ]
@@ -57,7 +57,7 @@ class Cookies extends React.Component {
 			}
 			{
 				cookies.initialized && items.length <= 0 && <div className={classes.none} >
-					{browser.i18n.getMessage ("noCookiesFound")}
+					{i18n.translate ("noCookiesFound")}
 				</div>
 			}
 			{
@@ -111,9 +111,11 @@ Cookies.propTypes = {
 
 export default
 withStorage (
-	withSearch (
-		withCookies (
-			withStyles ( styles ) ( Cookies )
+	withI18n (
+		withSearch (
+			withCookies (
+				withStyles ( styles ) ( Cookies )
+			)
 		)
 	)
 )

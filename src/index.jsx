@@ -10,6 +10,7 @@ import { CookiesProvider, CookiesConsumer } from "contexts/CookiesContext"
 import { FocusProvider, FocusConsumer } from "contexts/FocusContext"
 import { SearchProvider, SearchConsumer } from "contexts/SearchContext"
 import { StorageProvider, StorageConsumer } from "contexts/StorageContext"
+import { I18nProvider } from "contexts/I18nContext"
 
 ReactDOM.render (
 	<StorageProvider
@@ -19,24 +20,26 @@ ReactDOM.render (
 			{
 				focus => <StorageConsumer>
 				{
-					storage => <SearchProvider
-						focus={focus}
-						storage={storage} >
-						<SearchConsumer>
-						{
-							search => <CookiesProvider
-								focus={focus}
-								storage={storage}
-								search={search} >
-								<MuiThemeProvider
-									theme={theme ( storage.data.dark )} >
-									<CssBaseline/>
-									<Application/>
-								</MuiThemeProvider>
-							</CookiesProvider>
-						}
-						</SearchConsumer>
-					</SearchProvider>
+					storage => <I18nProvider locale={storage.data.locale} >
+						<SearchProvider
+							focus={focus}
+							storage={storage} >
+							<SearchConsumer>
+							{
+								search => <CookiesProvider
+									focus={focus}
+									storage={storage}
+									search={search} >
+									<MuiThemeProvider
+										theme={theme ( storage.data.dark )} >
+										<CssBaseline/>
+										<Application/>
+									</MuiThemeProvider>
+								</CookiesProvider>
+							}
+							</SearchConsumer>
+						</SearchProvider>
+					</I18nProvider>
 				}
 				</StorageConsumer>
 			}

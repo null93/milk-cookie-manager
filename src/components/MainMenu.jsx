@@ -33,6 +33,7 @@ import { withFocus } from "contexts/FocusContext"
 import { withSearch } from "contexts/SearchContext"
 import { withStorage } from "contexts/StorageContext"
 import { withCookies } from "contexts/CookiesContext"
+import { withI18n } from "contexts/I18nContext"
 
 const styles = theme => ({
 	button: {
@@ -53,22 +54,23 @@ class MainMenu extends React.Component {
 
 	constructor ( props ) {
 		super ( props )
+		const { i18n } = this.props
 		this.state = {
 			anchor: null,
 			dialog: {
 				open: false,
-				title: browser.i18n.getMessage ("confirmAction"),
+				title: i18n.translate ("confirmAction"),
 				content: <Typography gutterBottom >
-					{browser.i18n.getMessage ("areYouSureYouWantToProceed")}
+					{i18n.translate ("areYouSureYouWantToProceed")}
 				</Typography>,
 				showCancel: true,
 				showSubmit: true,
 				cancel: {
-					label: browser.i18n.getMessage ("cancel"),
+					label: i18n.translate ("cancel"),
 					callback: () => this.handleDialogClose (),
 				},
 				submit: {
-					label: browser.i18n.getMessage ("submit"),
+					label: i18n.translate ("submit"),
 					callback: () => {},
 				},
 			},
@@ -93,7 +95,7 @@ class MainMenu extends React.Component {
 	}
 
 	render () {
-		const { classes, search, storage, focus, cookies } = this.props
+		const { classes, search, storage, focus, cookies, i18n } = this.props
 		const { anchor, dialog } = this.state
 		const hits = cookies.found.length
 		return <React.Fragment>
@@ -101,7 +103,7 @@ class MainMenu extends React.Component {
 				arrow
 				TransitionComponent={Fade}
 				placement="bottom"
-				title={browser.i18n.getMessage ("menuTooltip")} >
+				title={i18n.translate ("menuTooltip")} >
 				<IconButton
 					size="small"
 					color="primary"
@@ -149,7 +151,7 @@ class MainMenu extends React.Component {
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={browser.i18n.getMessage ("deleteVisibleCookiesTooltip")} >  
+						title={i18n.translate ("deleteVisibleCookiesTooltip")} >  
 						<MenuItem
 							className={classes.item}
 							disabled={hits < 1}
@@ -157,11 +159,11 @@ class MainMenu extends React.Component {
 								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
-									content: <Typography gutterBottom >{browser.i18n.getMessage ("deleteVisibleCookiesConfirmation")}</Typography>,
+									content: <Typography gutterBottom >{i18n.translate ("deleteVisibleCookiesConfirmation")}</Typography>,
 									showCancel: true,
 									showSubmit: true,
 									submit: {
-										label: `${browser.i18n.getMessage ("delete")} ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${hits > 1 ? browser.i18n.getMessage ("cookies") : browser.i18n.getMessage ("cookie")}`,
+										label: `${i18n.translate ("delete")} ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${hits > 1 ? i18n.translate ("cookies") : i18n.translate ("cookie")}`,
 										callback: () => {
 											cookies.delete ()
 											this.handleDialogClose ()
@@ -178,14 +180,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<DeleteIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{`${browser.i18n.getMessage ("delete")} (${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${browser.i18n.getMessage ("cookies")})`}</Typography>
+							<Typography>{`${i18n.translate ("delete")} (${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${i18n.translate ("cookies")})`}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={browser.i18n.getMessage ("blockVisibleCookiesTooltip")} >
+						title={i18n.translate ("blockVisibleCookiesTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={hits < 1}
@@ -193,11 +195,11 @@ class MainMenu extends React.Component {
 								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
-									content: <Typography gutterBottom >{browser.i18n.getMessage ("blockVisibleCookiesConfirmation")}</Typography>,
+									content: <Typography gutterBottom >{i18n.translate ("blockVisibleCookiesConfirmation")}</Typography>,
 									showCancel: true,
 									showSubmit: true,
 									submit: {
-										label: `${browser.i18n.getMessage ("block")} ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${hits > 1 ? browser.i18n.getMessage ("cookies") : browser.i18n.getMessage ("cookie")}`,
+										label: `${i18n.translate ("block")} ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${hits > 1 ? i18n.translate ("cookies") : i18n.translate ("cookie")}`,
 										callback: () => {
 											cookies.block ()
 											this.handleDialogClose ()
@@ -214,14 +216,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<BlockIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{`${browser.i18n.getMessage ("block")} (${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${browser.i18n.getMessage ("cookies")})`}</Typography>
+							<Typography>{`${i18n.translate ("block")} (${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${i18n.translate ("cookies")})`}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={browser.i18n.getMessage ("protectVisibleCookiesTooltip")} >
+						title={i18n.translate ("protectVisibleCookiesTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={hits < 1}
@@ -229,11 +231,11 @@ class MainMenu extends React.Component {
 								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
-									content: <Typography gutterBottom >{browser.i18n.getMessage ("protectVisibleCookiesConfirmation")}</Typography>,
+									content: <Typography gutterBottom >{i18n.translate ("protectVisibleCookiesConfirmation")}</Typography>,
 									showCancel: true,
 									showSubmit: true,
 									submit: {
-										label: `${browser.i18n.getMessage ("protect")} ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${hits > 1 ? browser.i18n.getMessage ("cookies") : browser.i18n.getMessage ("cookie")}`,
+										label: `${i18n.translate ("protect")} ${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${hits > 1 ? i18n.translate ("cookies") : i18n.translate ("cookie")}`,
 										callback: () => {
 											cookies.protect ()
 											this.handleDialogClose ()
@@ -250,14 +252,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<ProtectIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{`${browser.i18n.getMessage ("protect")} (${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${browser.i18n.getMessage ("cookies")})`}</Typography>
+							<Typography>{`${i18n.translate ("protect")} (${hits.toString ().replace ( /\B(?=(\d{3})+(?!\d))/g, "," )} ${i18n.translate ("cookies")})`}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={browser.i18n.getMessage ("copyCurlTooltip")} >
+						title={i18n.translate ("copyCurlTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={hits < 1 || !focus.last || !search.filtered}
@@ -268,24 +270,24 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<TerminalIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{browser.i18n.getMessage ("copyCurlCommand")}</Typography>
+							<Typography>{i18n.translate ("copyCurlCommand")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={browser.i18n.getMessage ("importCookiesViaJsonTooltip")} >
+						title={i18n.translate ("importCookiesViaJsonTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={false}
 							onClick={() => this.handleClose ( () => cookies.import (
 									({ current, total }) => this.setDialogState ({
 										open: true,
-										title: browser.i18n.getMessage ("importingCookies"),
+										title: i18n.translate ("importingCookies"),
 										content: <Typography gutterBottom >
 											{
-												browser.i18n.getMessage ("currentlyProcessesTemplateString")
+												i18n.translate ("currentlyProcessesTemplateString")
 													.replace("{{current}}", current)
 													.replace("{{total}}", total)
 											}
@@ -296,12 +298,12 @@ class MainMenu extends React.Component {
 								)
 								.then ( results => this.setDialogState ({
 									open: true,
-									title: browser.i18n.getMessage ("importedResults"),
+									title: i18n.translate ("importedResults"),
 									content: <Table>
 										<TableBody>
 											<TableRow>
 												<TableCell padding="none" size="small" className={classes.cell} >
-													<Typography>{browser.i18n.getMessage ("successfullyImported")}</Typography>
+													<Typography>{i18n.translate ("successfullyImported")}</Typography>
 												</TableCell>
 												<TableCell padding="none" size="small" className={classes.cell} >
 													<Typography>{results.success.length}</Typography>
@@ -315,7 +317,7 @@ class MainMenu extends React.Component {
 											</TableRow>
 											<TableRow>
 												<TableCell padding="none" size="small" className={classes.cell} >
-													<Typography>{browser.i18n.getMessage ("expiredCookies")}</Typography>
+													<Typography>{i18n.translate ("expiredCookies")}</Typography>
 												</TableCell>
 												<TableCell padding="none" size="small" className={classes.cell} >
 													<Typography>{results.expired.length}</Typography>
@@ -329,7 +331,7 @@ class MainMenu extends React.Component {
 											</TableRow>
 											<TableRow>
 												<TableCell padding="none" size="small" className={classes.cell} >
-													<Typography>{browser.i18n.getMessage ("failedImported")}</Typography>
+													<Typography>{i18n.translate ("failedImported")}</Typography>
 												</TableCell>
 												<TableCell padding="none" size="small" className={classes.cell} >
 													<Typography>{results.failed.length}</Typography>
@@ -346,7 +348,7 @@ class MainMenu extends React.Component {
 									showCancel: false,
 									showSubmit: true,
 									submit: {
-										label: browser.i18n.getMessage ("close"),
+										label: i18n.translate ("close"),
 										callback: () => {
 											this.handleDialogClose ()
 											this.handleClose ()
@@ -355,12 +357,12 @@ class MainMenu extends React.Component {
 								}))
 								.catch ( error => this.setDialogState ({
 									open: true,
-									title: browser.i18n.getMessage ("importedResults"),
-									content: <Typography gutterBottom >{browser.i18n.getMessage ("failedImportMessage")}</Typography>,
+									title: i18n.translate ("importedResults"),
+									content: <Typography gutterBottom >{i18n.translate ("failedImportMessage")}</Typography>,
 									showCancel: false,
 									showSubmit: true,
 									submit: {
-										label: browser.i18n.getMessage ("close"),
+										label: i18n.translate ("close"),
 										callback: () => {
 											this.handleDialogClose ()
 											this.handleClose ()
@@ -371,14 +373,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<ImportIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{browser.i18n.getMessage ("importCookies")}</Typography>
+							<Typography>{i18n.translate ("importCookies")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={browser.i18n.getMessage ("exportToJsonTooltip")} >
+						title={i18n.translate ("exportToJsonTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={hits < 1}
@@ -386,14 +388,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<ExportIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{browser.i18n.getMessage ("exportCookies")}</Typography>
+							<Typography>{i18n.translate ("exportCookies")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={browser.i18n.getMessage ("fullscreenTooltip")} >
+						title={i18n.translate ("fullscreenTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={false}
@@ -404,14 +406,14 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<FullscreenIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{browser.i18n.getMessage ("fullscreen")}</Typography>
+							<Typography>{i18n.translate ("fullscreen")}</Typography>
 						</MenuItem>
 					</Tooltip>
 					<Tooltip
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={browser.i18n.getMessage ("optionsTooltip")} >
+						title={i18n.translate ("optionsTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={false}
@@ -422,7 +424,7 @@ class MainMenu extends React.Component {
 							<ListItemIcon className={classes.icon} >
 								<SettingsIcon color="primary" />
 							</ListItemIcon>
-							<Typography>{browser.i18n.getMessage ("options")}</Typography>
+							<Typography>{i18n.translate ("options")}</Typography>
 						</MenuItem>
 					</Tooltip>
 				</div>
@@ -442,10 +444,12 @@ MainMenu.propTypes = {
 
 export default
 withStorage (
-	withSearch (
-		withFocus (
-			withCookies (
-				withStyles ( styles ) ( MainMenu )
+	withI18n (
+		withSearch (
+			withFocus (
+				withCookies (
+					withStyles ( styles ) ( MainMenu )
+				)
 			)
 		)
 	)

@@ -1,5 +1,4 @@
 import _ from "lodash"
-import browser from "webextension-polyfill"
 import React from "react"
 import PropTypes from "prop-types"
 import Table from "@material-ui/core/Table"
@@ -10,6 +9,7 @@ import TableFooter from "@material-ui/core/TableFooter"
 import TablePagination from "@material-ui/core/TablePagination"
 import TableRow from "@material-ui/core/TableRow"
 import Button from "@material-ui/core/Button"
+import { withI18n } from "contexts/I18nContext"
 
 class TableList extends React.Component {
 
@@ -22,7 +22,7 @@ class TableList extends React.Component {
 	}
 
 	render () {
-		const { items, itemKey, onTruncate, noItemsMessage, columns } = this.props
+		const { items, itemKey, onTruncate, noItemsMessage, columns, i18n } = this.props
 		const { perPage } = this.state
 		const rows = Object.values ( items )
 			.sort ( ( a, b ) => a.name < b.name ? -1 : 1 )
@@ -45,7 +45,7 @@ class TableList extends React.Component {
 							disabled={rows.length < 1}
 							size="small"
 							onClick={onTruncate} >
-							{browser.i18n.getMessage ("truncate")}
+							{i18n.translate ("truncate")}
 						</Button>
 					</TableCell>
 				</TableRow>
@@ -107,4 +107,4 @@ TableList.propTypes = {
 	columns: PropTypes.object.isRequired,
 }
 
-export default TableList 
+export default withI18n ( TableList )

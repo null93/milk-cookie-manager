@@ -1,5 +1,4 @@
 import _ from "lodash"
-import browser from "webextension-polyfill"
 import moment from "moment"
 import React from "react"
 import PropTypes from "prop-types"
@@ -10,6 +9,7 @@ import { withFocus } from "contexts/FocusContext"
 import { withStorage } from "contexts/StorageContext"
 import { withCookies } from "contexts/CookiesContext"
 import { withStyles } from "@material-ui/core/styles"
+import { withI18n } from "contexts/I18nContext"
 
 const styles = theme => ({
 	root: {
@@ -28,7 +28,8 @@ class Application extends React.Component {
 	}
 
 	componentDidMount () {
-		document.title = browser.i18n.getMessage ("extensionFullName")
+		const { i18n } = this.props
+		document.title = i18n.translate ("extensionFullName")
 	}
 
 	selectCookie ( cookie ) {
@@ -97,9 +98,13 @@ Application.propTypes = {
 
 export default
 withStorage (
-	withFocus (
+	withI18n (
 		withCookies (
-			withStyles ( styles ) ( Application )
+			withFocus (
+				withCookies (
+					withStyles ( styles ) ( Application )
+				)
+			)
 		)
 	)
 )

@@ -1,5 +1,4 @@
 import copy from "copy-to-clipboard"
-import browser from "webextension-polyfill"
 import React from "react"
 import TextField from "@material-ui/core/TextField"
 import Tooltip from "components/Tooltip"
@@ -8,6 +7,7 @@ import InputAdornment from "@material-ui/core/InputAdornment"
 import IconButton from "@material-ui/core/IconButton"
 import CopyIcon from "@material-ui/icons/FlipToFront"
 import DoneIcon from "@material-ui/icons/Done"
+import { withI18n } from "contexts/I18nContext"
 
 class StyledTextField extends React.Component {
 
@@ -26,7 +26,7 @@ class StyledTextField extends React.Component {
 	}
 
 	render () {
-		const { closeSnackbar, ...props } = this.props
+		const { closeSnackbar, i18n, ...props } = this.props
 		const { done } = this.state
 		return <TextField
 			fullWidth
@@ -38,7 +38,7 @@ class StyledTextField extends React.Component {
 					arrow
 					TransitionComponent={Fade}
 					placement="left"
-					title={done ? browser.i18n.getMessage ("copied") : browser.i18n.getMessage ("copyToClipboard")} >
+					title={done ? i18n.translate ("copied") : i18n.translate ("copyToClipboard")} >
 					<InputAdornment position="end" >
 						<IconButton
 							tabIndex={-1}
@@ -72,4 +72,4 @@ class StyledTextField extends React.Component {
 
 }
 
-export default StyledTextField
+export default withI18n ( StyledTextField )

@@ -1,5 +1,6 @@
 module.exports = {
 	// Options
+	locale: "en",
 	regexp: false,
 	sensitive: false,
 	dark: Boolean ( window.matchMedia ("(prefers-color-scheme: dark)").matches ),

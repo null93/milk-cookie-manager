@@ -3,6 +3,7 @@
 import browser from "webextension-polyfill"
 import moment from "moment"
 import utils from "utils/cookie"
+import i18n from "utils/i18n"
 
 function handleFirstInstall ({ reason }) {
 	if ( reason === "install" )  {
@@ -14,19 +15,22 @@ function handleFirstInstall ({ reason }) {
 function setContextMenu ( install ) {
 	return browser.contextMenus.removeAll ().then ( () => {
 		if ( install ) {
-			return Promise.resolve ()
-				.then ( () => browser.contextMenus.create ({
-					id: "fullscreen",
-					title: browser.i18n.getMessage ("fullscreen"),
-					type: "normal",
-					contexts: [ "all" ],
-				}))
-				.then ( () => browser.contextMenus.create ({
-					id: "options",
-					title: browser.i18n.getMessage ("options"),
-					type: "normal",
-					contexts: [ "all" ],
-				}))
+			return browser.storage.local.get ([ "locale" ]).then ( ({ locale }) => {
+				const translate = i18n.getTranslator ( locale )
+				return Promise.resolve ()
+					.then ( () => browser.contextMenus.create ({
+						id: "fullscreen",
+						title: translate ("fullscreen"),
+						type: "normal",
+						contexts: [ "all" ],
+					}))
+					.then ( () => browser.contextMenus.create ({
+						id: "options",
+						title: translate ("options"),
+						type: "normal",
+						contexts: [ "all" ],
+					}))
+			})
 		}
 		return Promise.resolve ()
 	})

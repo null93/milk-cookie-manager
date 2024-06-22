@@ -32,6 +32,7 @@ import TableList from "components/TableList"
 import Credits from "components/Credits"
 import { withStorage } from "contexts/StorageContext"
 import { withStyles } from "@material-ui/core/styles"
+import { withI18n } from "contexts/I18nContext"
 
 const styles = theme => ({
 	root: {
@@ -158,7 +159,8 @@ class Options extends React.Component {
 	}
 
 	componentDidMount () {
-		document.title = `${browser.i18n.getMessage ("extensionShortName")} — ${browser.i18n.getMessage ("cookieManager")} — ${browser.i18n.getMessage ("options")}`
+		const { i18n } = this.props
+		document.title = `${i18n.translate ("extensionShortName")} — ${i18n.translate ("cookieManager")} — ${i18n.translate ("options")}`
 	}
 
 	setDialogState ( options, callback = () => {} ) {
@@ -175,7 +177,7 @@ class Options extends React.Component {
 	}
 
 	render () {
-		const { classes, storage, data } = this.props
+		const { classes, storage, i18n } = this.props
 		const { dialog } = this.state
 		return <div className={classes.root} >
 			<Dialog onClose={() => this.handleDialogClose ()} open={dialog.open} >
@@ -209,7 +211,7 @@ class Options extends React.Component {
 						variant="h6"
 						noWrap
 						className={classes.title} >
-						<b>{browser.i18n.getMessage ("extensionShortName")}</b> — {browser.i18n.getMessage ("cookieManager")} — {browser.i18n.getMessage ("options")}
+						<b>{i18n.translate ("extensionShortName")}</b> — {i18n.translate ("cookieManager")} — {i18n.translate ("options")}
 					</Typography>
 					<Typography
 						className={classes.version}
@@ -219,7 +221,7 @@ class Options extends React.Component {
 						onClick={() => browser.tabs.create ({
 							url: `https://github.com/null93/milk-cookie-manager/releases/tag/${process.env.VERSION}`
 						})} >
-						{browser.i18n.getMessage ("version")} {process.env.VERSION}
+						{i18n.translate ("version")} {process.env.VERSION}
 					</Typography>
 				</Toolbar>
 			</AppBar>
@@ -228,47 +230,47 @@ class Options extends React.Component {
 					<List className={classes.list} >
 						<ListItem button onClick={() => window.location = "#search-settings"} >
 							<ListItemIcon>{<SearchIcon/>}</ListItemIcon>
-							<ListItemText primary={browser.i18n.getMessage ("searchSettings")} />
+							<ListItemText primary={i18n.translate ("searchSettings")} />
 						</ListItem>
 						<ListItem button onClick={() => window.location = "#appearance"} >
 							<ListItemIcon>{<PaletteIcon/>}</ListItemIcon>
-							<ListItemText primary={browser.i18n.getMessage ("appearance")} />
+							<ListItemText primary={i18n.translate ("appearance")} />
 						</ListItem>
 						<ListItem button onClick={() => window.location = "#blocked-cookies"} >
 							<ListItemIcon>{<BlockIcon/>}</ListItemIcon>
-							<ListItemText primary={browser.i18n.getMessage ("blockedCookies")} />
+							<ListItemText primary={i18n.translate ("blockedCookies")} />
 						</ListItem>
 						<ListItem button onClick={() => window.location = "#protected-cookies"} >
 							<ListItemIcon>{<SecurityIcon/>}</ListItemIcon>
-							<ListItemText primary={browser.i18n.getMessage ("protectedCookies")} />
+							<ListItemText primary={i18n.translate ("protectedCookies")} />
 						</ListItem>
 						<ListItem button onClick={() => window.location = "#special-thanks"} >
 							<ListItemIcon>{<SpecialThanksIcon/>}</ListItemIcon>
-							<ListItemText primary={browser.i18n.getMessage ("specialThanks")} />
+							<ListItemText primary={i18n.translate ("specialThanks")} />
 						</ListItem>
 					</List>
 					<Divider />
 					<List className={classes.list} >
 						<ListItem button onClick={() => browser.tabs.create ({ url: "https://paypal.me/RafaelGrigorian" })} >
-							<ListItemText primary={browser.i18n.getMessage ("donate")} secondary={browser.i18n.getMessage ("donateDescription")} />
+							<ListItemText primary={i18n.translate ("donate")} secondary={i18n.translate ("donateDescription")} />
 							<ListItemIcon>{<ExitToAppIcon/>}</ListItemIcon>
 						</ListItem>
 						<ListItem button onClick={() => browser.tabs.create ({ url: "https://github.com/null93/milk-cookie-manager" })} >
-							<ListItemText primary={browser.i18n.getMessage ("githubRepository")} secondary={browser.i18n.getMessage ("githubRepositoryDescription")} />
+							<ListItemText primary={i18n.translate ("githubRepository")} secondary={i18n.translate ("githubRepositoryDescription")} />
 							<ListItemIcon>{<ExitToAppIcon/>}</ListItemIcon>
 						</ListItem>
 					</List>
 				</nav>
 				<main className={classes.content} >
 					<div className={classes.container} >
-						<Typography id="search-settings" className={classes.section} variant="h6" >{browser.i18n.getMessage ("searchSettings")}</Typography>
+						<Typography id="search-settings" className={classes.section} variant="h6" >{i18n.translate ("searchSettings")}</Typography>
 						<Typography className={classes.paragraph} color="textSecondary" >
-							{browser.i18n.getMessage ("searchSettingsDescription")}
+							{i18n.translate ("searchSettingsDescription")}
 						</Typography>
 						<div>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>{browser.i18n.getMessage ("caseSensitive")}</Typography>
+									<Typography>{i18n.translate ("caseSensitive")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -279,7 +281,7 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>{browser.i18n.getMessage ("searchWithRegularExpression")}</Typography>
+									<Typography>{i18n.translate ("searchWithRegularExpression")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -289,14 +291,28 @@ class Options extends React.Component {
 								</AccordionSummary>
 							</Accordion>
 						</div>
-						<Typography id="appearance" className={classes.section} variant="h6" >{browser.i18n.getMessage ("appearance")}</Typography>
+						<Typography id="appearance" className={classes.section} variant="h6" >{i18n.translate ("appearance")}</Typography>
 						<Typography className={classes.paragraph} color="textSecondary" >
-							{browser.i18n.getMessage ("appearanceDescription")}
+							{i18n.translate ("appearanceDescription")}
 						</Typography>
 						<div>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>{browser.i18n.getMessage ("darkMode")}</Typography>
+									<Typography>{i18n.translate ("language")}</Typography>
+									<Select
+										disableUnderline
+										size="small"
+										value={storage.data.locale}
+										onChange={e => storage.set ( "locale", e.target.value )} >
+										<MenuItem value={"en"}>English</MenuItem>
+										<MenuItem value={"ru"}>Русский</MenuItem>
+										<MenuItem value={"zh"}>中国人</MenuItem>
+									</Select>
+								</AccordionSummary>
+							</Accordion>
+							<Accordion elevation={2} expanded={false} >
+								<AccordionSummary classes={{ content: classes.summary }} >
+									<Typography>{i18n.translate ("darkMode")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -307,7 +323,7 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>{browser.i18n.getMessage ("showTooltips")}</Typography>
+									<Typography>{i18n.translate ("showTooltips")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -318,7 +334,7 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>{browser.i18n.getMessage ("showWarningDialogs")}</Typography>
+									<Typography>{i18n.translate ("showWarningDialogs")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -329,7 +345,7 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>{browser.i18n.getMessage ("contextMenu")}</Typography>
+									<Typography>{i18n.translate ("contextMenu")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -340,7 +356,7 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>{browser.i18n.getMessage ("updateProtectedCookiesValue")}</Typography>
+									<Typography>{i18n.translate ("updateProtectedCookiesValue")}</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -351,22 +367,22 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: `${classes.summary} ${classes.noMargin}` }} >
-									<Typography>{browser.i18n.getMessage ("expirationTimeFormat")}</Typography>
+									<Typography>{i18n.translate ("expirationTimeFormat")}</Typography>
 									<Select
 										disableUnderline
 										size="small"
 										value={storage.data.expirationFormat}
 										onChange={e => storage.set ( "expirationFormat", e.target.value )} >
-										<MenuItem value={"humanized"}>{browser.i18n.getMessage ("humanized")}</MenuItem>
-										<MenuItem value={"countdown"}>{browser.i18n.getMessage ("countdown")}</MenuItem>
-										<MenuItem value={"timestamp"}>{browser.i18n.getMessage ("timestamp")}</MenuItem>
-										<MenuItem value={"seconds"}>{browser.i18n.getMessage ("seconds")}</MenuItem>
+										<MenuItem value={"humanized"}>{i18n.translate ("humanized")}</MenuItem>
+										<MenuItem value={"countdown"}>{i18n.translate ("countdown")}</MenuItem>
+										<MenuItem value={"timestamp"}>{i18n.translate ("timestamp")}</MenuItem>
+										<MenuItem value={"seconds"}>{i18n.translate ("seconds")}</MenuItem>
 									</Select>
 								</AccordionSummary>
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: `${classes.summary} ${classes.noMargin}` }} >
-									<Typography>{browser.i18n.getMessage ("sortCookieList")}</Typography>
+									<Typography>{i18n.translate ("sortCookieList")}</Typography>
 									<div>
 										<Select
 											disableUnderline
@@ -374,25 +390,25 @@ class Options extends React.Component {
 											value={storage.data.sortType}
 											style={{ marginRight: 10 }}
 											onChange={e => storage.set ( "sortType", e.target.value )} >
-											<MenuItem value={"name"}>{browser.i18n.getMessage ("name")}</MenuItem>
-											<MenuItem value={"domain"}>{browser.i18n.getMessage ("domain")}</MenuItem>
-											<MenuItem value={"expirationDate"}>{browser.i18n.getMessage ("expiration")}</MenuItem>
+											<MenuItem value={"name"}>{i18n.translate ("name")}</MenuItem>
+											<MenuItem value={"domain"}>{i18n.translate ("domain")}</MenuItem>
+											<MenuItem value={"expirationDate"}>{i18n.translate ("expiration")}</MenuItem>
 										</Select>
 										<Select
 											disableUnderline
 											size="small"
 											value={storage.data.sortDirection}
 											onChange={e => storage.set ( "sortDirection", e.target.value )} >
-											<MenuItem value={"ascending"}>{browser.i18n.getMessage ("ascending")}</MenuItem>
-											<MenuItem value={"descending"}>{browser.i18n.getMessage ("descending")}</MenuItem>
+											<MenuItem value={"ascending"}>{i18n.translate ("ascending")}</MenuItem>
+											<MenuItem value={"descending"}>{i18n.translate ("descending")}</MenuItem>
 										</Select>
 									</div>
 								</AccordionSummary>
 							</Accordion>
 						</div>
-						<Typography id="blocked-cookies" className={classes.section} variant="h6" >{browser.i18n.getMessage ("")}</Typography>
+						<Typography id="blocked-cookies" className={classes.section} variant="h6" >{i18n.translate ("")}</Typography>
 						<Typography className={classes.paragraph} color="textSecondary" >
-							{browser.i18n.getMessage ("blockedCookiesDescription")}
+							{i18n.translate ("blockedCookiesDescription")}
 						</Typography>
 						<div>
 							<Accordion elevation={2} expanded={false} className={classes.table} >
@@ -409,22 +425,22 @@ class Options extends React.Component {
 										})
 										: () => storage.set ( "block", {} ).then ( () => this.handleDialogClose () )
 									}
-									noItemsMessage={browser.i18n.getMessage ("noBlockedCookies")}
+									noItemsMessage={i18n.translate ("noBlockedCookies")}
 									columns={{
-										[browser.i18n.getMessage ("name")]: item => item.name,
-										[browser.i18n.getMessage ("domainAndPath")]: item => item.domain + item.path,
+										[i18n.translate ("name")]: item => item.name,
+										[i18n.translate ("domainAndPath")]: item => item.domain + item.path,
 										"": item => <Button
 											size="small"
 											onClick={() => storage.remove ( "block", utils.hash ( item ) )} >
-											{browser.i18n.getMessage ("unblock")}
+											{i18n.translate ("unblock")}
 										</Button>,
 									}}
 								/>
 							</Accordion>
 						</div>
-						<Typography id="protected-cookies" className={classes.section} variant="h6" >{browser.i18n.getMessage ("protectedCookies")}</Typography>
+						<Typography id="protected-cookies" className={classes.section} variant="h6" >{i18n.translate ("protectedCookies")}</Typography>
 						<Typography className={classes.paragraph} color="textSecondary" >
-							{browser.i18n.getMessage ("protectedCookiesDescription")}
+							{i18n.translate ("protectedCookiesDescription")}
 						</Typography>
 						<div>
 							<Accordion elevation={2} expanded={false} className={classes.table} >
@@ -441,22 +457,22 @@ class Options extends React.Component {
 										})
 										: () => storage.set ( "protect", {} ).then ( () => this.handleDialogClose () )
 									}
-									noItemsMessage={browser.i18n.getMessage ("noProtectedCookies")}
+									noItemsMessage={i18n.translate ("noProtectedCookies")}
 									columns={{
-										[browser.i18n.getMessage ("name")]: item => item.name,
-										[browser.i18n.getMessage ("domainAndPath")]: item => item.domain + item.path,
+										[i18n.translate ("name")]: item => item.name,
+										[i18n.translate ("domainAndPath")]: item => item.domain + item.path,
 										"": item => <Button
 											size="small"
 											onClick={() => storage.remove ( "protect", utils.hash ( item ) )} >
-											{browser.i18n.getMessage ("release")}
+											{i18n.translate ("release")}
 										</Button>,
 									}}
 								/>
 							</Accordion>
 						</div>
-						<Typography id="special-thanks" className={classes.section} variant="h6" >{browser.i18n.getMessage ("specialThanks")}</Typography>
+						<Typography id="special-thanks" className={classes.section} variant="h6" >{i18n.translate ("specialThanks")}</Typography>
 						<Typography className={classes.paragraph} color="textSecondary" >
-							{browser.i18n.getMessage ("specialThanksDescription")}
+							{i18n.translate ("specialThanksDescription")}
 						</Typography>
 						<div>
 							<Accordion elevation={2} expanded={false} >
@@ -464,9 +480,9 @@ class Options extends React.Component {
 							</Accordion>
 						</div>
 						<Typography className={classes.madeWith} variant="overline" >
-							{browser.i18n.getMessage ("codedWith")}
+							{i18n.translate ("codedWith")}
 							<span>❤</span>
-							<a href="https://github.com/null93" target="_blank" >{browser.i18n.getMessage ("byAuthor")}</a>
+							<a href="https://github.com/null93" target="_blank" >{i18n.translate ("byAuthor")}</a>
 						</Typography>
 					</div>
 				</main>
@@ -483,5 +499,7 @@ Options.propTypes = {
 
 export default
 withStorage (
-	withStyles ( styles ) ( Options )
+	withI18n (
+		withStyles ( styles ) ( Options )
+	)
 )

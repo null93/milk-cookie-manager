@@ -13,6 +13,7 @@ import ImageIcon from "@material-ui/icons/Wallpaper"
 import TypeIcon from "@material-ui/icons/Title"
 import TranslateIcon from "@material-ui/icons/Translate"
 import { withStyles } from "@material-ui/core/styles"
+import { withI18n } from "contexts/I18nContext"
 
 const styles = theme => ({
 	row: {
@@ -34,7 +35,7 @@ const styles = theme => ({
 class Credits extends React.Component {
 
 	renderRow ( icon, name, link ) {
-		const { classes } = this.props
+		const { classes, i18n } = this.props
 		return <TableRow key={name} >
 			<TableCell size="small" className={classes.row} >
 				<div className={classes.container} >{icon}</div>
@@ -43,13 +44,13 @@ class Credits extends React.Component {
 				{name}
 			</TableCell>
 			<TableCell size="small" align="right" style={{ width: 64 }} >
-				<Button size="small" onClick={() => browser.tabs.create ({ url: link })} >{browser.i18n.getMessage ("link")}</Button>
+				<Button size="small" onClick={() => browser.tabs.create ({ url: link })} >{i18n.translate ("link")}</Button>
 			</TableCell>
 		</TableRow>
 	}
 
 	render () {
-		const { classes } = this.props
+		const { classes, i18n } = this.props
 		const makeIcon = Icon => <Icon fontSize="inherit" className={classes.icon} />
 		return <Table>
 			<TableBody>
@@ -104,4 +105,4 @@ Credits.propTypes = {
 	classes: PropTypes.object.isRequired,
 }
 
-export default withStyles ( styles ) ( Credits )
+export default withI18n ( withStyles ( styles ) ( Credits ) )
