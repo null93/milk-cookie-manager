@@ -129,7 +129,7 @@
         "message": "没有受保护的Cookies"
     },
     "domainAndPath": {
-        "message": "Domain + Path"
+        "message": "域名 + 路径"
     },
     "truncate": {
         "message": "截断"
@@ -174,13 +174,13 @@
         "message": "使用正则表达式模式搜索"
     },
     "filterUnavailableTooltip": {
-        "message": "显示所有 Cookies，聚焦选项卡进行筛选"
+        "message": "显示所有 Cookies，聚焦标签页进行筛选"
     },
     "filterAllTooltip": {
         "message": "当前显示所有 Cookies"
     },
     "filterFocusedTooltip": {
-        "message": "根据上次聚焦选项卡结果的域进行筛选"
+        "message": "按最后一次打开的标签页的域名进行筛选"
     },
     "menuTooltip": {
         "message": "显示所有可用操作"
@@ -219,7 +219,7 @@
         "message": "复刻Cookie"
     },
     "exportTooltip": {
-        "message": "将 Cookie 导出到JSON文件"
+        "message": "将 Cookie 导出到json文件"
     },
     "blockTooltip": {
         "message": "阻止并删除 Cookie"
@@ -282,7 +282,7 @@
         "message": "导入失败"
     },
     "failedImportMessage": {
-        "message": "导入 cookies 失败，请检查 JSON 文件并重试。"
+        "message": "导入 cookies 失败，请检查 json 文件并重试。"
     },
     "importCookies": {
         "message": "导入Cookies"
@@ -309,9 +309,63 @@
         "message": "关闭"
     },
     "currentlyProcessesTemplateString": {
-        "message": "当前已处理 {{total}} 个Cookies 中的 {{current}}。"
+        "message": "当前已处理总共 {{total}} 个Cookies 中的 {{current}} 个。"
     },
     "errorCookieNameValueEmpty": {
         "message": "错误：“名称”和“值”不能同时为空"
+    },
+    "path": {
+        "message": "路径"
+    },
+    "value": {
+        "message": "值"
+    },
+    "byte": {
+        "message": "字节"
+    },
+    "bytes": {
+        "message": "字节"
+    },
+    "sameSiteStatus": {
+        "message": "同一站点状态"
+    },
+    "secure": {
+        "message": "安全"
+    },
+    "httpOnly": {
+        "message": "HTTP-Only"
+    },
+    "hostOnly": {
+        "message": "Host-Only"
+    },
+    "session": {
+        "message": "会话"
+    },
+    "unspecified": {
+        "message": "未指定"
+    },
+    "unspecifiedDescription": {
+        "message": "默认行为将模仿Lax"
+    },
+    "noRestriction": {
+        "message": "无限制"
+    },
+    "noRestrictionDescription": {
+        "message": "不受文本限制，但需要安全标识"
+    },
+    "lax": {
+        "message": "宽松Lax"
+    },
+    "laxDescription": {
+        "message": "仅限于第一方或同一站点环境"
+    },
+    "strict": {
+        "message": "严格"
+    },
+    "strictDescription": {
+        "message": "仅限于第一方环境"
+    },
+    "expires": {
+        "message": "过期时间"
     }
 }
