@@ -76,6 +76,7 @@ class Credits extends React.Component {
 				this.renderRow ( makeIcon ( ImageIcon ), "icon-shield-off", "https://materialdesignicons.com/icon/shield-off" ),
 				this.renderRow ( makeIcon ( TypeIcon ), "font-roboto", "https://fonts.google.com/specimen/Roboto" ),
 				this.renderRow ( makeIcon ( TranslateIcon ), "translation-chinese", "https://github.com/Lion-hk" ),
+				this.renderRow ( makeIcon ( TranslateIcon ), "translation-russian", "https://github.com/null93" ),
 			]}
 			</TableBody>
 			<TableFooter>
