@@ -90,7 +90,7 @@ class MainMenu extends React.Component {
 				arrow
 				TransitionComponent={Fade}
 				placement="bottom"
-				title={disabled ? "" : "Show Available Actions"} >
+				title={disabled ? "" : i18n.translate("showAvailableActions")} >
 				<IconButton
 					size="medium"
 					color="primary"

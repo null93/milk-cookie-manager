@@ -371,4 +371,7 @@ module.exports = {
     "language": {
         "message": "Язык"
     },
+    "showAvailableActions": {
+        "message": "Показать доступные действия"
+    },
 }

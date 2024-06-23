@@ -370,5 +370,8 @@ module.exports = {
     },
     "language": {
         "message": "语言"
-    }
+    },
+    "showAvailableActions": {
+        "message": "显示可用操作"
+    },
 }
