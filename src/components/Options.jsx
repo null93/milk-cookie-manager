@@ -33,6 +33,7 @@ import Credits from "components/Credits"
 import { withStorage } from "contexts/StorageContext"
 import { withStyles } from "@material-ui/core/styles"
 import { withI18n } from "contexts/I18nContext"
+import { getTranslator } from "utils/i18n"
 
 const styles = theme => ({
 	root: {
@@ -176,6 +177,29 @@ class Options extends React.Component {
 		this.setDialogState ( { open: false }, callback )
 	}
 
+	handleContextMenuInstall ( shouldInstall, locale ) {
+		// Load the translator instead of the i18n context for this situation
+		const i18n = { translate: getTranslator ( locale ) }
+		return browser.contextMenus.removeAll ().then ( () => {
+			if ( !shouldInstall ) {
+				return Promise.resolve ()
+			}
+			return Promise.resolve ()		
+				.then ( () => browser.contextMenus.create ({
+					id: "fullscreen",
+					title: i18n.translate ("fullscreen"),
+					type: "normal",
+					contexts: [ "all" ],
+				}))
+				.then ( () => browser.contextMenus.create ({
+					id: "options",
+					title: i18n.translate ("options"),
+					type: "normal",
+					contexts: [ "all" ],
+				}))
+		})
+	}  
+
 	render () {
 		const { classes, storage, i18n } = this.props
 		const { dialog } = this.state
@@ -303,7 +327,10 @@ class Options extends React.Component {
 										disableUnderline
 										size="small"
 										value={storage.data.locale}
-										onChange={e => storage.set ( "locale", e.target.value )} >
+										onChange={e => Promise.resolve ()
+											.then ( () => storage.set ( "locale", e.target.value ) )
+											.then ( () => this.handleContextMenuInstall ( storage.data.contextMenu, e.target.value ) )
+										} >
 										<MenuItem value={"en"}>English</MenuItem>
 										<MenuItem value={"ru"}>Русский</MenuItem>
 										<MenuItem value={"zh"}>中国人</MenuItem>
@@ -350,7 +377,10 @@ class Options extends React.Component {
 										color="primary"
 										size="small"
 										checked={storage.data.contextMenu}
-										onChange={e => storage.set ( "contextMenu", e.target.checked )}
+										onChange={e => Promise.resolve ()
+											.then ( () => storage.set ( "contextMenu", !e.target.checked ) )
+											.then ( () => this.handleContextMenuInstall ( !e.target.checked, storage.data.locale ) )
+										}
 									/>
 								</AccordionSummary>
 							</Accordion>

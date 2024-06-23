@@ -36,14 +36,6 @@ function setContextMenu ( install ) {
 	})
 }
 
-function checkContextMenuOption () {
-	return browser.storage.local.get ([ "contextMenu" ])
-		.then ( ({ contextMenu }) => {
-			const shouldInstall = contextMenu === undefined || contextMenu === true
-			return setContextMenu ( shouldInstall )
-		})
-}
-
 function handleContextMenuClick ({ menuItemId }, tab ) {
 	switch ( menuItemId ) {
 		case "fullscreen": return browser.tabs.create ({ url: "/index.html" })
@@ -113,8 +105,5 @@ function handleCookieChange ({ removed, cause, cookie }) {
 }
 
 browser.runtime.onInstalled.addListener ( handleFirstInstall )
-browser.storage.onChanged.addListener ( checkContextMenuOption )
 browser.contextMenus.onClicked.addListener ( handleContextMenuClick )
 browser.cookies.onChanged.addListener ( handleCookieChange )
-
-checkContextMenuOption ()
