@@ -5,17 +5,20 @@
 	"author": "Rafael Grigorian <rafael@grigorian.org>",
 	"license": "MIT",
 	"scripts": {
-		"prebuild": "mkdir -p dist && cp -r static/* dist/ && sed -i.bak \"s/ 'unsafe-eval'//\" dist/manifest.json && rm dist/manifest.json.bak",
 		"preserve": "mkdir -p dist && cp -r static/* dist/",
-		"build": "VERSION=$npm_package_version parcel build --no-cache --no-source-maps src/service-worker.jsx src/*.html",
 		"serve": "VERSION=$npm_package_version parcel serve --no-autoinstall --no-cache src/service-worker.jsx src/*.html",
-		"package": "yarn clean && yarn build && web-ext build -s dist -a target",
-		"publish:firefox": "web-ext sign -s dist --channel=listed --api-key=$FIREFOX_API_KEY --api-secret=$FIREFOX_API_SECRET",
+		"prebuild:chrome": "mkdir -p dist && cp -r static/* dist/ && jq -r 'del(.background.scripts)' static/manifest.json > dist/manifest.json",
+		"build:chrome": "VERSION=$npm_package_version parcel build --no-cache --no-source-maps src/service-worker.jsx src/*.html",
+		"package:chrome": "yarn clean && yarn build:chrome && web-ext build -s dist -a target",
 		"publish:chrome": "echo not supported yet",
+		"prebuild:firefox": "mkdir -p dist && cp -r static/* dist/ && jq -r 'del(.background.service_worker,.offline_enabled,.incognito)' static/manifest.json > dist/manifest.json",
+		"build:firefox": "VERSION=$npm_package_version parcel build --no-cache --no-source-maps src/service-worker.jsx src/*.html",
+		"package:firefox": "yarn clean && yarn build:firefox && web-ext build -s dist -a target",
+		"publish:firefox": "web-ext sign -s dist --channel=listed --api-key=$FIREFOX_API_KEY --api-secret=$FIREFOX_API_SECRET",
 		"clean": "rm -rf dist .parcel-cache target",
 		"nuke": "yarn clean && rm -rf node_modules",
-		"test:chrome": "yarn clean && yarn build && mocha spec",
-		"marketing": "yarn clean && yarn build && node tools/create-marketing.js"
+		"test": "yarn clean && yarn build:chrome && mocha spec",
+		"marketing": "yarn clean && yarn build:chrome && node tools/create-marketing.js"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.1.1",

@@ -20,7 +20,10 @@
         "storage"
     ],
     "background": {
-        "service_worker": "service-worker.js"
+        "service_worker": "service-worker.js",
+        "scripts": [
+            "service-worker.js"
+        ]
     },
     "options_ui": {
         "page": "options.html",

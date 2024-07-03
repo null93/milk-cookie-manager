@@ -26,6 +26,12 @@ MILK is a modern cookie manager that aims to streamline the way you interact wit
 - Dark / Light Theme
 - Fullscreen Mode Lets You See Cookies Of Focused Tab
 
+### Officially Published On:
+
+- [Chrome Web Store](https://chromewebstore.google.com/detail/milk-%E2%80%94-cookie-manager/haipckejfdppjfblgondaakgckohcihp)
+- [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/milk-cookie-manager)
+- [Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/milk-%E2%80%94-cookie-manager/jlephceclngfdednjllhjmjmbcjolhhl)
+
 ### Development
 
 ```shell
@@ -39,5 +45,6 @@ yarn serve
 
 ```shell
 # Package Extension
-yarn release
+yarn package:chrome
+yarn package:firefox
 ```
