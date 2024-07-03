@@ -7,7 +7,7 @@
 	"scripts": {
 		"preserve": "mkdir -p dist && cp -r static/* dist/",
 		"serve": "VERSION=$npm_package_version parcel serve --no-autoinstall --no-cache src/service-worker.jsx src/*.html",
-		"prebuild:chrome": "mkdir -p dist && cp -r static/* dist/ && jq -r 'del(.background.scripts)' static/manifest.json > dist/manifest.json",
+		"prebuild:chrome": "mkdir -p dist && cp -r static/* dist/ && jq -r 'del(.background.scripts,.browser_specific_settings)' static/manifest.json > dist/manifest.json",
 		"build:chrome": "VERSION=$npm_package_version parcel build --no-cache --no-source-maps src/service-worker.jsx src/*.html",
 		"package:chrome": "yarn clean && yarn build:chrome && web-ext build -s dist -a target",
 		"publish:chrome": "echo not supported yet",

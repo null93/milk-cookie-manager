@@ -43,5 +43,10 @@
         "default_title": "__MSG_extensionFullName__",
         "default_icon": "icon-128.png",
         "default_popup": "index.html"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{d2731422-5390-4257-9974-9f8b9bf17422}"
+        }
     }
 }
