@@ -221,6 +221,9 @@ module.exports = {
     "exportTooltip": {
         "message": "Export Cookie To JSON File"
     },
+    "copyTooltip": {
+        "message": "Copy cookies to clipboard"
+    },
     "blockTooltip": {
         "message": "Block & Delete Cookie"
     },
@@ -289,6 +292,9 @@ module.exports = {
     },
     "exportCookies": {
         "message": "Export Cookies"
+    },
+    "copyCookies": {
+        "message": "Copy Cookies"
     },
     "copied": {
         "message": "Copied!"

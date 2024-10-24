@@ -395,6 +395,21 @@ class MainMenu extends React.Component {
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
+						title={i18n.translate ("copyTooltip")} >
+						<MenuItem
+							className={classes.item}
+							disabled={hits < 1}
+							onClick={() => this.handleClose ( () => cookies.copy () )} >
+							<ListItemIcon className={classes.icon} >
+								<ExportIcon color="primary" />
+							</ListItemIcon>
+							<Typography>{i18n.translate ("copyCookies")}</Typography>
+						</MenuItem>
+					</Tooltip>
+					<Tooltip
+						arrow
+						TransitionComponent={Fade}
+						placement="left"
 						title={i18n.translate ("fullscreenTooltip")} >
 						<MenuItem
 							className={classes.item}

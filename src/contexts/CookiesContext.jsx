@@ -133,6 +133,16 @@ class CookiesProvider extends React.Component {
 		}
 	}
 
+	copy ( cookie ) {
+		const { found } = this.state
+		if ( cookie ) {
+			navigator.clipboard.writeText(JSON.stringify ( cookie, null, "\t" ));
+		}
+		else {
+			navigator.clipboard.writeText(JSON.stringify ( found, null, "\t" ));
+		}
+	}
+
 	import ( updateCount ) {
 		return new Promise ( ( resolve, reject ) => {
 			const chooser = document.createElement ("input")
@@ -205,6 +215,7 @@ class CookiesProvider extends React.Component {
 			curl: this.curl.bind ( this ),
 			import: this.import.bind ( this ),
 			export: this.export.bind ( this ),
+			copy: this.copy.bind ( this ),
 			set: utils.set,
 		}
 		if ( process.env.NODE_ENV !== "production" ) {
