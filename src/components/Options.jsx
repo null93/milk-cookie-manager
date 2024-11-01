@@ -333,7 +333,7 @@ class Options extends React.Component {
 										} >
 										<MenuItem value={"en"}>English</MenuItem>
 										<MenuItem value={"ru"}>Русский</MenuItem>
-										<MenuItem value={"zh"}>中国人</MenuItem>
+										<MenuItem value={"zh"}>中文</MenuItem>
 									</Select>
 								</AccordionSummary>
 							</Accordion>
