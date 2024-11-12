@@ -219,7 +219,7 @@ module.exports = {
         "message": "Duplicate Cookie"
     },
     "exportTooltip": {
-        "message": "Export Cookie To JSON File"
+        "message": "Export Cookie"
     },
     "blockTooltip": {
         "message": "Block & Delete Cookie"
@@ -236,11 +236,11 @@ module.exports = {
     "copyCurlTooltip": {
         "message": "Copy CURL Command With Visible Cookies"
     },
-    "importCookiesViaJsonTooltip": {
-        "message": "Import Cookies Via JSON File"
+    "importCookiesViaFileTooltip": {
+        "message": "Import Cookies Via File"
     },
     "exportToJsonTooltip": {
-        "message": "Export Visible Cookies To JSON File"
+        "message": "Export Visible Cookies"
     },
     "fullscreenTooltip": {
         "message": "Open In New Tab"
@@ -373,5 +373,17 @@ module.exports = {
     },
     "showAvailableActions": {
         "message": "Show Available Actions"
+    },
+    "download": {
+        "message": "Download"
+    },
+    "jsonFormat": {
+        "message": "JSON Format"
+    },
+    "netscapeFormat": {
+        "message": "Netscape Format"
+    },
+    "exportCookie": {
+        "message": "Export Cookie"
     },
 }

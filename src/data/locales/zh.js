@@ -219,7 +219,7 @@ module.exports = {
         "message": "复刻Cookie"
     },
     "exportTooltip": {
-        "message": "将 Cookie 导出到json文件"
+        "message": "导出Cookie"
     },
     "blockTooltip": {
         "message": "阻止并删除 Cookie"
@@ -236,11 +236,11 @@ module.exports = {
     "copyCurlTooltip": {
         "message": "使用 CURL 命令复制可见 Cookies"
     },
-    "importCookiesViaJsonTooltip": {
-        "message": "通过 JSON 文件导入 Cookie"
+    "importCookiesViaFileTooltip": {
+        "message": "通过文件导入Cookie"
     },
     "exportToJsonTooltip": {
-        "message": "将可见 Cookie 导出到 JSON 文件"
+        "message": "导出可见Cookie"
     },
     "fullscreenTooltip": {
         "message": "在新标签页中打开"
@@ -373,5 +373,17 @@ module.exports = {
     },
     "showAvailableActions": {
         "message": "显示可用操作"
+    },
+    "download": {
+        "message": "下载"
+    },
+    "jsonFormat": {
+        "message": "JSON格式"
+    },
+    "netscapeFormat": {
+        "message": "Netscape格式"
+    },
+    "exportCookie": {
+        "message": "导出Cookie"
     },
 }

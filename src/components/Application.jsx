@@ -73,8 +73,11 @@ class Application extends React.Component {
 				cookie && <CookieViewer
 					cookie={cookie}
 					isNew={isNew}
+					exportJson={() => cookies.getJson ( cookie )}
+					onDownloadJson={() => cookies.downloadJson ( cookie )}
+					exportNetscape={() => cookies.getNetscape ( cookie )}
+					onDownloadNetscape={() => cookies.downloadNetscape ( cookie )}
 					onClose={() => this.unSelectCookie ()}
-					onExport={() => cookies.export ( cookie )}
 					onDelete={() => this.unSelectCookie ( () => cookies.delete ( cookie ) )}
 					onBlock={() => this.unSelectCookie ( () => {
 						storage.add ( "block", cookies.hash ( cookie ), cookie )

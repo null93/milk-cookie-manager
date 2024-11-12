@@ -144,7 +144,20 @@ class CookieViewer extends React.Component {
 	}
 
 	render () {
-		const { classes, isNew, onClose, onExport, onDelete, onBlock, onProtect, onRemoveProtect, i18n } = this.props
+		const {
+			classes,
+			isNew,
+			onClose,
+			exportJson,
+			onDownloadJson,
+			exportNetscape,
+			onDownloadNetscape,
+			onDelete,
+			onBlock,
+			onProtect,
+			onRemoveProtect,
+			i18n,
+		} = this.props
 		const { isProtected, error } = this.state
 		const { name, domain, path, expirationDate, sameSite, value, hostOnly, httpOnly, secure, session } = this.state.cookie
 		return <Backdrop
@@ -169,7 +182,10 @@ class CookieViewer extends React.Component {
 						onDelete={onDelete}
 						onBlock={onBlock}
 						onClose={onClose}
-						onExport={onExport}
+						exportJson={exportJson}
+						onDownloadJson={onDownloadJson}
+						exportNetscape={exportNetscape}
+						onDownloadNetscape={onDownloadNetscape}
 						onDuplicate={() => {
 							this.handleSave ( true )
 							onClose ()
@@ -428,7 +444,10 @@ CookieViewer.propTypes = {
 	isNew: PropTypes.bool.isRequired,
 	cookie: PropTypes.object.isRequired,
 	onClose: PropTypes.func.isRequired,
-	onExport: PropTypes.func.isRequired,
+	exportJson: PropTypes.func.isRequired,
+	onDownloadJson: PropTypes.func.isRequired,
+	exportNetscape: PropTypes.func.isRequired,
+	onDownloadNetscape: PropTypes.func.isRequired,
 	onDelete: PropTypes.func.isRequired,
 	onBlock: PropTypes.func.isRequired,
 	onProtect: PropTypes.func.isRequired,

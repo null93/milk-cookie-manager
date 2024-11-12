@@ -219,7 +219,7 @@ module.exports = {
         "message": "Дублирующий файл Печенье"
     },
     "exportTooltip": {
-        "message": "Экспорт файлов Печенье в файл JSON"
+        "message": "Экспортировать куки"
     },
     "blockTooltip": {
         "message": "Заблокировать и удалить файл Печенье"
@@ -236,11 +236,11 @@ module.exports = {
     "copyCurlTooltip": {
         "message": "Скопировать команду CURL с видимыми куками"
     },
-    "importCookiesViaJsonTooltip": {
-        "message": "Импортировать куки через JSON файл"
+    "importCookiesViaFileTooltip": {
+        "message": "Импортировать куки из файла"
     },
     "exportToJsonTooltip": {
-        "message": "Экспортировать видимые куки в JSON файл"
+        "message": "Экспортировать видимые куки"
     },
     "fullscreenTooltip": {
         "message": "Открыть в новой вкладке"
@@ -373,5 +373,17 @@ module.exports = {
     },
     "showAvailableActions": {
         "message": "Показать доступные действия"
+    },
+    "download": {
+        "message": "Скачать"
+    },
+    "jsonFormat": {
+        "message": "Формат JSON"
+    },
+    "netscapeFormat": {
+        "message": "Формат Netscape"
+    },
+    "exportCookie": {
+        "message": "Экспортировать куки"
     },
 }

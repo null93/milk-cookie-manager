@@ -17,6 +17,11 @@ import ExportIcon from "icons/Export"
 import DeleteIcon from "@material-ui/icons/Delete"
 import BlockIcon from "@material-ui/icons/Block"
 import DuplicateIcon from "@material-ui/icons/ControlPointDuplicate"
+import CopyButton from "components/CopyButton"
+import Table from "@material-ui/core/Table"
+import TableBody from "@material-ui/core/TableBody"
+import TableRow from "@material-ui/core/TableRow"
+import TableCell from "@material-ui/core/TableCell"
 import { withStyles } from "@material-ui/core/styles"
 import { withCookies } from "contexts/CookiesContext"
 import { withI18n } from "contexts/I18nContext"
@@ -31,10 +36,13 @@ const styles = theme => ({
 	},
 	icon: {
 		minWidth: 34,
-	}
+	},
+	cell: {
+		borderBottom: "solid 1px transparent !important",
+	},
 })
 
-class MainMenu extends React.Component {
+class CookieMenu extends React.Component {
 
 	constructor ( props ) {
 		super ( props )
@@ -44,6 +52,8 @@ class MainMenu extends React.Component {
 				open: false,
 				title: "Confirm Action",
 				description: "Are you sure you want to proceed?",
+				showCancel: true,
+				showSubmit: true,
 				cancel: {
 					label: "Cancel",
 					callback: () => this.handleDialogClose (),
@@ -80,7 +90,10 @@ class MainMenu extends React.Component {
 			disabled,
 			onDelete,
 			onBlock,
-			onExport,
+			exportJson,
+			onDownloadJson,
+			exportNetscape,
+			onDownloadNetscape,
 			onDuplicate,
 			i18n,
 		} = this.props
@@ -99,7 +112,7 @@ class MainMenu extends React.Component {
 					<MenuIcon/>
 				</IconButton>
 			</Tooltip>
-			<Dialog onClose={() => this.handleDialogClose ()} open={dialog.open} >
+			<Dialog fullWidth onClose={() => this.handleDialogClose ()} open={dialog.open} >
 				<DialogTitle onClose={() => this.handleDialogClose ()} >
 					<b>{dialog.title}</b>
 				</DialogTitle>
@@ -108,16 +121,26 @@ class MainMenu extends React.Component {
 						{dialog.description}
 					</Typography>
 				</DialogContent>
-				<DialogActions>
-					<Button
-						autoFocus
-						onClick={() => dialog.cancel.callback ()} color="primary" >
-						{dialog.cancel.label}
-					</Button>
-					<Button onClick={() => dialog.submit.callback ()} color="primary" >
-						{dialog.submit.label}
-					</Button>
-				</DialogActions>
+				{
+					( dialog.showCancel || dialog.showSubmit ) && <DialogActions>
+						{
+							dialog.showCancel && <Button
+								autoFocus={!dialog.showSubmit}
+								color="primary"
+								onClick={() => dialog.cancel.callback ()} >
+								{dialog.cancel.label}
+							</Button>
+						}
+						{
+							dialog.showSubmit && <Button
+								autoFocus={!dialog.showCancel}
+								onClick={() => dialog.submit.callback ()}
+								color="primary" >
+								{dialog.submit.label}
+							</Button>
+						}
+					</DialogActions>
+				}
 			</Dialog>
 			<Menu
 				className={classes.root}
@@ -165,7 +188,47 @@ class MainMenu extends React.Component {
 						<MenuItem
 							className={classes.item}
 							disabled={false}
-							onClick={onExport} >
+							onClick={() => {
+								this.setDialogState ({
+									open: true,
+									title: i18n.translate ("exportCookie"),
+									description: <Table>
+										<TableBody>
+											<TableRow>
+												<TableCell padding="none" size="small" className={classes.cell} >
+													<Typography>{i18n.translate ("jsonFormat")}</Typography>
+												</TableCell>
+												<TableCell padding="none" size="small" align="right" className={classes.cell} >
+													<CopyButton data={exportJson()} />
+												</TableCell>
+												<TableCell padding="none" size="small" align="right" className={classes.cell} >
+													<Button onClick={onDownloadJson} >{i18n.translate ("download")}</Button>
+												</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableCell padding="none" size="small" className={classes.cell} >
+													<Typography>{i18n.translate ("netscapeFormat")}</Typography>
+												</TableCell>
+												<TableCell padding="none" size="small" align="right" className={classes.cell} >
+													<CopyButton data={exportNetscape ()} />
+												</TableCell>
+												<TableCell padding="none" size="small" align="right" className={classes.cell} >
+													<Button onClick={onDownloadNetscape} >{i18n.translate ("download")}</Button>
+												</TableCell>
+											</TableRow>
+										</TableBody>
+									</Table>,
+									showCancel: false,
+									showSubmit: true,
+									submit: {
+										label: i18n.translate ("close"),
+										callback: () => {
+											this.handleDialogClose ()
+											this.handleClose ()
+										},
+									},
+								})
+							}} >
 							<ListItemIcon className={classes.icon} >
 								<ExportIcon color="primary" />
 							</ListItemIcon>
@@ -197,19 +260,22 @@ class MainMenu extends React.Component {
 
 }
 
-MainMenu.propTypes = {
+CookieMenu.propTypes = {
 	classes: PropTypes.object.isRequired,
 	disabled: PropTypes.bool.isRequired,
 	isProtected: PropTypes.bool.isRequired,
 	onDelete: PropTypes.func.isRequired,
 	onClose: PropTypes.func.isRequired,
-	onExport: PropTypes.func.isRequired,
 	onDuplicate: PropTypes.func.isRequired,
+	exportJson: PropTypes.func.isRequired,
+	onDownloadJson: PropTypes.func.isRequired,
+	exportNetscape: PropTypes.func.isRequired,
+	onDownloadNetscape: PropTypes.func.isRequired,
 }
 
 export default
 withI18n (
 	withCookies (
-		withStyles ( styles ) ( MainMenu )
+		withStyles ( styles ) ( CookieMenu )
 	)
 )
