@@ -112,7 +112,22 @@ class CookiesProvider extends React.Component {
 
 	getJson ( cookie ) {
 		const { found } = this.state
-		return JSON.stringify ( cookie ? cookie : found, null, "\t" )
+		const { storage } = this.props
+		const { ignoreStoreId } = storage.data
+		var data = cookie ? cookie : found
+		if ( ignoreStoreId ) {
+			if ( Array.isArray ( data ) ) {
+				data = data.map ( cookie => {
+					const { storeId, ...rest } = cookie
+					return rest
+				})
+			}
+			else {
+				const { storeId, ...rest } = data
+				data = rest
+			}
+		}
+		return JSON.stringify ( data, null, "\t" )
 	}
 
 	getNetscape ( cookie ) {
@@ -178,6 +193,8 @@ class CookiesProvider extends React.Component {
 	}
 
 	import ( updateCount ) {
+		const { storage } = this.props
+		const { ignoreStoreId } = storage.data
 		return new Promise ( ( resolve, reject ) => {
 			const chooser = document.createElement ("input")
 			chooser.type = "file"
@@ -200,6 +217,9 @@ class CookiesProvider extends React.Component {
 								failed: [],
 							}
 							return Promise.each ( data, cookie => {
+								if ( ignoreStoreId ) {
+									cookie.storeId = undefined
+								}
 								return utils.set ( cookie )
 									.then ( () => {
 										results.current++

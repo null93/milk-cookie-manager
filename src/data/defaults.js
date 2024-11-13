@@ -11,6 +11,7 @@ module.exports = {
 	expirationFormat: "humanized",
 	sortType: "expirationDate",
 	sortDirection: "ascending",
+	ignoreStoreId: false,
 	// Lists
 	protect: {},
 	block: {},

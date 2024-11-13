@@ -15,6 +15,7 @@ import SearchIcon from "@material-ui/icons/Search"
 import SecurityIcon from "@material-ui/icons/Security"
 import BlockIcon from "@material-ui/icons/Block"
 import PaletteIcon from "@material-ui/icons/Palette"
+import SettingsSuggestIcon from "@material-ui/icons/SettingsSuggest"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import SpecialThanksIcon from "@material-ui/icons/Favorite"
 import Toolbar from "@material-ui/core/Toolbar"
@@ -260,6 +261,10 @@ class Options extends React.Component {
 							<ListItemIcon>{<PaletteIcon/>}</ListItemIcon>
 							<ListItemText primary={i18n.translate ("appearance")} />
 						</ListItem>
+						<ListItem button onClick={() => window.location = "#functionality"} >
+							<ListItemIcon>{<SettingsSuggestIcon/>}</ListItemIcon>
+							<ListItemText primary={i18n.translate ("functionality")} />
+						</ListItem>
 						<ListItem button onClick={() => window.location = "#blocked-cookies"} >
 							<ListItemIcon>{<BlockIcon/>}</ListItemIcon>
 							<ListItemText primary={i18n.translate ("blockedCookies")} />
@@ -311,6 +316,34 @@ class Options extends React.Component {
 										size="small"
 										checked={storage.data.regexp}
 										onChange={e => storage.set ( "regexp", e.target.checked )}
+									/>
+								</AccordionSummary>
+							</Accordion>
+						</div>
+						<Typography id="functionality" className={classes.section} variant="h6" >{i18n.translate ("functionality")}</Typography>
+						<Typography className={classes.paragraph} color="textSecondary" >
+							{i18n.translate ("functionalityDescription")}
+						</Typography>
+						<div>
+							<Accordion elevation={2} expanded={false} >
+								<AccordionSummary classes={{ content: classes.summary }} >
+									<Typography>{i18n.translate ("updateProtectedCookiesValue")}</Typography>
+									<Switch
+										color="primary"
+										size="small"
+										checked={storage.data.updateProtectedValue}
+										onChange={e => storage.set ( "updateProtectedValue", e.target.checked )}
+									/>
+								</AccordionSummary>
+							</Accordion>
+							<Accordion elevation={2} expanded={false} >
+								<AccordionSummary classes={{ content: classes.summary }} >
+									<Typography>{i18n.translate ("ignoreStoreId")}</Typography>
+									<Switch
+										color="primary"
+										size="small"
+										checked={storage.data.ignoreStoreId}
+										onChange={e => storage.set ( "ignoreStoreId", e.target.checked )}
 									/>
 								</AccordionSummary>
 							</Accordion>
@@ -385,17 +418,6 @@ class Options extends React.Component {
 								</AccordionSummary>
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
-								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>{i18n.translate ("updateProtectedCookiesValue")}</Typography>
-									<Switch
-										color="primary"
-										size="small"
-										checked={storage.data.updateProtectedValue}
-										onChange={e => storage.set ( "updateProtectedValue", e.target.checked )}
-									/>
-								</AccordionSummary>
-							</Accordion>
-							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: `${classes.summary} ${classes.noMargin}` }} >
 									<Typography>{i18n.translate ("expirationTimeFormat")}</Typography>
 									<Select
@@ -436,7 +458,7 @@ class Options extends React.Component {
 								</AccordionSummary>
 							</Accordion>
 						</div>
-						<Typography id="blocked-cookies" className={classes.section} variant="h6" >{i18n.translate ("")}</Typography>
+						<Typography id="blocked-cookies" className={classes.section} variant="h6" >{i18n.translate ("blockedCookies")}</Typography>
 						<Typography className={classes.paragraph} color="textSecondary" >
 							{i18n.translate ("blockedCookiesDescription")}
 						</Typography>

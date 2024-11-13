@@ -51,7 +51,7 @@ module.exports = {
         "message": "这些设置存储在本地，不会在浏览器之间同步。区分大小写适用于常规搜索和正则表达式搜索。"
     },
     "appearanceDescription": {
-        "message": "不幸的是，Chrome 扩展程序无法检测到您的系统是否使用深色主题。值得庆幸的是，您仍然可以手动设置深色模式！"
+        "message": "调整视觉设置以个性化您的浏览体验，包括主题和显示选项。"
     },
     "blockedCookiesDescription": {
         "message": "cookie 被阻止后，其名称、域和路径将被保存，用于阻止今后创建的cookies。这三个属性必须完全匹配，cookie 才能被阻止。"
@@ -385,5 +385,14 @@ module.exports = {
     },
     "exportCookie": {
         "message": "导出Cookie"
+    },
+    "functionality": {
+        "message": "功能"
+    },
+    "functionalityDescription": {
+        "message": "管理如何处理和交互 cookies，提供对 cookies 处理行为的精确控制。"
+    },
+    "ignoreStoreId": {
+        "message": "忽略 Store ID"
     },
 }

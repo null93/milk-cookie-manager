@@ -51,7 +51,7 @@ module.exports = {
         "message": "These settings are stored locally and are not synced across browsers. Case sensitivity applies to both regular and regexp search."
     },
     "appearanceDescription": {
-        "message": "Unfortunately Chrome extensions cannot detect if your system is using a Dark theme. Thankfully, there is still a dark mode that you can set manually!"
+        "message": "Adjust visual settings to personalize your browsing experience, including theme and display options."
     },
     "blockedCookiesDescription": {
         "message": "When a cookie is blocked, the name, domain, and path is saved and is used to block future cookies from being created. All three properties must match exactly for a cookie to be blocked."
@@ -385,5 +385,14 @@ module.exports = {
     },
     "exportCookie": {
         "message": "Export Cookie"
+    },
+    "functionality": {
+        "message": "Functionality"
+    },
+    "functionalityDescription": {
+        "message": "Manage how cookies are processed and interacted with, offering precise control over cookie handling behaviors."
+    },
+    "ignoreStoreId": {
+        "message": "Ignore Store ID"
     },
 }
