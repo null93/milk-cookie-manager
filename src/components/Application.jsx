@@ -50,7 +50,6 @@ class Application extends React.Component {
 				sameSite: "lax",
 				secure: focus.last ? focus.last.startsWith ("https") : true,
 				session: false,
-				storeId: "0",
 				value: "",
 			}
 		})
