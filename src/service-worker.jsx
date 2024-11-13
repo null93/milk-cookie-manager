@@ -107,3 +107,30 @@ function handleCookieChange ({ removed, cause, cookie }) {
 browser.runtime.onInstalled.addListener ( handleFirstInstall )
 browser.contextMenus.onClicked.addListener ( handleContextMenuClick )
 browser.cookies.onChanged.addListener ( handleCookieChange )
+
+// Update badge text
+
+function updateCookieCount ( url ) {
+	if ( !url ) return browser.action.setBadgeText ({ text: "" })
+	return browser.cookies.getAll ({ url }).then ( cookies => {
+		const length = cookies.length < 1 ? "" : cookies.length.toString ()
+		return browser.action.setBadgeText ({ text: length })
+	})
+}
+
+browser.tabs.onActivated.addListener ( info => {
+    browser.tabs
+		.get ( info.tabId )
+		.then ( tab => updateCookieCount ( tab.url ) )
+})
+
+browser.tabs.onUpdated.addListener ( ( tabId, info, tab ) => {
+    if ( info.url ) updateCookieCount ( info.url )
+})
+
+browser.windows.onFocusChanged.addListener ( windowId => {
+    if ( windowId === browser.windows.WINDOW_ID_NONE ) return
+    browser.tabs
+		.query ({ active: true, windowId: windowId })
+		.then ( tabs => updateCookieCount ( tabs[0]?.url ) )
+})
