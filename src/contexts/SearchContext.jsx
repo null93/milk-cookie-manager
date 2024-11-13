@@ -7,8 +7,9 @@ class SearchProvider extends React.Component {
 
 	constructor ( props ) {
 		super ( props )
+		const { storage } = props
 		this.state = {
-			term: "",
+			term: storage.data.displayLastSearch ? storage.data.lastSearch : "",
 			pattern: null,
 			filtered: Boolean ( focus.domain ),
 		}
@@ -47,6 +48,7 @@ class SearchProvider extends React.Component {
 		if ( key === "term" ) {
 			const { storage: { data: { sensitive } } } = this.props
 			newState.pattern = this.compile ( value, sensitive )
+			this.props.storage.set ( "lastSearch", value )
 		}
 		this.setState ( newState )
 	}

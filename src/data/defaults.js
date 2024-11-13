@@ -12,6 +12,8 @@ module.exports = {
 	sortType: "expirationDate",
 	sortDirection: "ascending",
 	ignoreStoreId: false,
+	lastSearch: "",
+	displayLastSearch: false,
 	// Lists
 	protect: {},
 	block: {},

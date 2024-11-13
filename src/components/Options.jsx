@@ -319,6 +319,17 @@ class Options extends React.Component {
 									/>
 								</AccordionSummary>
 							</Accordion>
+							<Accordion elevation={2} expanded={false} >
+								<AccordionSummary classes={{ content: classes.summary }} >
+									<Typography>{i18n.translate ("displayLastSearch")}</Typography>
+									<Switch
+										color="primary"
+										size="small"
+										checked={storage.data.displayLastSearch}
+										onChange={e => storage.set ( "displayLastSearch", e.target.checked )}
+									/>
+								</AccordionSummary>
+							</Accordion>
 						</div>
 						<Typography id="functionality" className={classes.section} variant="h6" >{i18n.translate ("functionality")}</Typography>
 						<Typography className={classes.paragraph} color="textSecondary" >

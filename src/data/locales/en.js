@@ -395,4 +395,7 @@ module.exports = {
     "ignoreStoreId": {
         "message": "Ignore Store ID"
     },
+    "displayLastSearch": {
+        "message": "Display Last Search"
+    },
 }

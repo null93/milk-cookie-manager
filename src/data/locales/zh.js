@@ -395,4 +395,7 @@ module.exports = {
     "ignoreStoreId": {
         "message": "忽略 Store ID"
     },
+    "displayLastSearch": {
+        "message": "显示最近的搜索"
+    },
 }
