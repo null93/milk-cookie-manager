@@ -398,4 +398,10 @@ module.exports = {
     "displayLastSearch": {
         "message": "Display Last Search"
     },
+    "updateProtectedCookiesValueTooltip": {
+        "message": "When disabled, the value of a protected cookie cannot be updated. Enable this option to allow changes to the value of a protected cookie."
+    },
+    "ignoreStoreIdTooltip": {
+        "message": "If this option is enabled, the store ID attribute is ignored during import and export. The default cookie store will be used for imported cookies."
+    },
 }

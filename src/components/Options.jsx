@@ -18,6 +18,7 @@ import PaletteIcon from "@material-ui/icons/Palette"
 import SettingsSuggestIcon from "@material-ui/icons/SettingsSuggest"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import SpecialThanksIcon from "@material-ui/icons/Favorite"
+import InfoIcon from "@material-ui/icons/Info"
 import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import Button from "@material-ui/core/Button"
@@ -28,6 +29,7 @@ import Dialog from "@material-ui/core/Dialog"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import DialogContent from "@material-ui/core/DialogContent"
 import DialogActions from "@material-ui/core/DialogActions"
+import Tooltip from "@material-ui/core/Tooltip"
 import Logo from "icons/Logo"
 import TableList from "components/TableList"
 import Credits from "components/Credits"
@@ -140,6 +142,11 @@ const styles = theme => ({
 	},
 	table: {
 		overflow: "auto",
+	},
+	typo: {
+		display: "flex",
+		alignItems: "center",
+		gap: theme.spacing ( 0.5 ),
 	},
 })
 
@@ -338,7 +345,12 @@ class Options extends React.Component {
 						<div>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>{i18n.translate ("updateProtectedCookiesValue")}</Typography>
+									<Typography alignItems="center" className={classes.typo} >
+										{i18n.translate ("updateProtectedCookiesValue")}
+										<Tooltip arrow title={i18n.translate ("updateProtectedCookiesValueTooltip")} >
+											<InfoIcon fontSize="small" />
+										</Tooltip>
+									</Typography>
 									<Switch
 										color="primary"
 										size="small"
@@ -349,7 +361,12 @@ class Options extends React.Component {
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: classes.summary }} >
-									<Typography>{i18n.translate ("ignoreStoreId")}</Typography>
+									<Typography alignItems="center" className={classes.typo} >
+										{i18n.translate ("ignoreStoreId")}
+										<Tooltip arrow title={i18n.translate ("ignoreStoreIdTooltip")} >
+											<InfoIcon fontSize="small" />
+										</Tooltip>
+									</Typography>
 									<Switch
 										color="primary"
 										size="small"

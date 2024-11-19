@@ -398,4 +398,10 @@ module.exports = {
     "displayLastSearch": {
         "message": "显示最近的搜索"
     },
+    "updateProtectedCookiesValueTooltip": {
+        "message": "禁用时，受保护的 Cookie 的值无法更新。启用此选项以允许更改受保护的 Cookie 的值。"
+    },
+    "ignoreStoreIdTooltip": {
+        "message": "如果启用此选项，在导入和导出过程中会忽略存储 ID 属性。导入的 Cookie 将使用默认存储。"
+    },
 }
