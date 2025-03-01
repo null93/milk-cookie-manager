@@ -446,6 +446,20 @@ class Options extends React.Component {
 								</AccordionSummary>
 							</Accordion>
 							<Accordion elevation={2} expanded={false} >
+								<AccordionSummary classes={{ content: classes.summary }} >
+									<Typography>{i18n.translate ("cookieCounterBadge")}</Typography>
+									<Switch
+										color="primary"
+										size="small"
+										checked={storage.data.cookieCounterBadge}
+										onChange={e => Promise.resolve ()
+											.then ( () => storage.set ( "cookieCounterBadge", !e.target.checked ) )
+											.then ( () => !e.target.checked ? browser.action.setBadgeText ({ text: "" }) : null )
+										}
+									/>
+								</AccordionSummary>
+							</Accordion>
+							<Accordion elevation={2} expanded={false} >
 								<AccordionSummary classes={{ content: `${classes.summary} ${classes.noMargin}` }} >
 									<Typography>{i18n.translate ("expirationTimeFormat")}</Typography>
 									<Select

@@ -11,6 +11,7 @@ module.exports = {
 	expirationFormat: "humanized",
 	sortType: "expirationDate",
 	sortDirection: "ascending",
+	cookieCounterBadge: true,
 	ignoreStoreId: false,
 	lastSearch: "",
 	displayLastSearch: false,

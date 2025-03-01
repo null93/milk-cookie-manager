@@ -404,4 +404,7 @@ module.exports = {
     "ignoreStoreIdTooltip": {
         "message": "If this option is enabled, the store ID attribute is ignored during import and export. The default cookie store will be used for imported cookies."
     },
+    "cookieCounterBadge": {
+        "message": "Cookie Counter Badge"
+    },
 }
