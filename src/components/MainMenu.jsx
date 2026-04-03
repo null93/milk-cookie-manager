@@ -159,6 +159,7 @@ class MainMenu extends React.Component {
 								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
+									title: i18n.translate ("confirmAction"),
 									content: <Typography gutterBottom >{i18n.translate ("deleteVisibleCookiesConfirmation")}</Typography>,
 									showCancel: true,
 									showSubmit: true,
@@ -195,6 +196,7 @@ class MainMenu extends React.Component {
 								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
+									title: i18n.translate ("confirmAction"),
 									content: <Typography gutterBottom >{i18n.translate ("blockVisibleCookiesConfirmation")}</Typography>,
 									showCancel: true,
 									showSubmit: true,
@@ -231,6 +233,7 @@ class MainMenu extends React.Component {
 								storage.data.showWarnings
 								? () => this.setDialogState ({
 									open: true,
+									title: i18n.translate ("confirmAction"),
 									content: <Typography gutterBottom >{i18n.translate ("protectVisibleCookiesConfirmation")}</Typography>,
 									showCancel: true,
 									showSubmit: true,
@@ -277,99 +280,102 @@ class MainMenu extends React.Component {
 						arrow
 						TransitionComponent={Fade}
 						placement="left"
-						title={i18n.translate ("importCookiesViaJsonTooltip")} >
+						title={i18n.translate ("importCookiesViaFileTooltip")} >
 						<MenuItem
 							className={classes.item}
 							disabled={false}
-							onClick={() => this.handleClose ( () => cookies.import (
-									({ current, total }) => this.setDialogState ({
+							onClick={() => {
+								this.handleClose (
+									() => cookies.import (
+										({ current, total }) => this.setDialogState ({
+											open: true,
+											title: i18n.translate ("importingCookies"),
+											content: <Typography gutterBottom >
+												{
+													i18n.translate ("currentlyProcessesTemplateString")
+														.replace("{{current}}", current)
+														.replace("{{total}}", total)
+												}
+											</Typography>,
+											showCancel: false,
+											showSubmit: false,
+										})
+									)
+									.then ( results => this.setDialogState ({
 										open: true,
-										title: i18n.translate ("importingCookies"),
-										content: <Typography gutterBottom >
-											{
-												i18n.translate ("currentlyProcessesTemplateString")
-													.replace("{{current}}", current)
-													.replace("{{total}}", total)
-											}
-										</Typography>,
+										title: i18n.translate ("importedResults"),
+										content: <Table>
+											<TableBody>
+												<TableRow>
+													<TableCell padding="none" size="small" className={classes.cell} >
+														<Typography>{i18n.translate ("successfullyImported")}</Typography>
+													</TableCell>
+													<TableCell padding="none" size="small" className={classes.cell} >
+														<Typography>{results.success.length}</Typography>
+													</TableCell>
+													<TableCell padding="none" size="small" align="right" className={classes.cell} >
+														<CopyButton
+															disabled={results.success.length < 1}
+															data={JSON.stringify ( results.success, null, "\t" )}
+														/>
+													</TableCell>
+												</TableRow>
+												<TableRow>
+													<TableCell padding="none" size="small" className={classes.cell} >
+														<Typography>{i18n.translate ("expiredCookies")}</Typography>
+													</TableCell>
+													<TableCell padding="none" size="small" className={classes.cell} >
+														<Typography>{results.expired.length}</Typography>
+													</TableCell>
+													<TableCell padding="none" size="small" align="right" className={classes.cell} >
+														<CopyButton
+															disabled={results.expired.length < 1}
+															data={JSON.stringify ( results.expired, null, "\t" )}
+														/>
+													</TableCell>
+												</TableRow>
+												<TableRow>
+													<TableCell padding="none" size="small" className={classes.cell} >
+														<Typography>{i18n.translate ("failedImported")}</Typography>
+													</TableCell>
+													<TableCell padding="none" size="small" className={classes.cell} >
+														<Typography>{results.failed.length}</Typography>
+													</TableCell>
+													<TableCell padding="none" size="small" align="right" className={classes.cell} >
+														<CopyButton
+															disabled={results.failed.length < 1}
+															data={JSON.stringify ( results.failed, null, "\t" )}
+														/>
+													</TableCell>
+												</TableRow>
+											</TableBody>
+										</Table>,
 										showCancel: false,
-										showSubmit: false,
-									})
+										showSubmit: true,
+										submit: {
+											label: i18n.translate ("close"),
+											callback: () => {
+												this.handleDialogClose ()
+												this.handleClose ()
+											},
+										},
+									}))
+									.catch ( error => this.setDialogState ({
+										open: true,
+										title: i18n.translate ("importedResults"),
+										content: <Typography gutterBottom >{i18n.translate ("failedImportMessage")}</Typography>,
+										showCancel: false,
+										showSubmit: true,
+										submit: {
+											label: i18n.translate ("close"),
+											callback: () => {
+												this.handleDialogClose ()
+												this.handleClose ()
+											},
+										},
+									}))
 								)
-								.then ( results => this.setDialogState ({
-									open: true,
-									title: i18n.translate ("importedResults"),
-									content: <Table>
-										<TableBody>
-											<TableRow>
-												<TableCell padding="none" size="small" className={classes.cell} >
-													<Typography>{i18n.translate ("successfullyImported")}</Typography>
-												</TableCell>
-												<TableCell padding="none" size="small" className={classes.cell} >
-													<Typography>{results.success.length}</Typography>
-												</TableCell>
-												<TableCell padding="none" size="small" align="right" className={classes.cell} >
-													<CopyButton
-														disabled={results.success.length < 1}
-														data={JSON.stringify ( results.success, null, "\t" )}
-													/>
-												</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell padding="none" size="small" className={classes.cell} >
-													<Typography>{i18n.translate ("expiredCookies")}</Typography>
-												</TableCell>
-												<TableCell padding="none" size="small" className={classes.cell} >
-													<Typography>{results.expired.length}</Typography>
-												</TableCell>
-												<TableCell padding="none" size="small" align="right" className={classes.cell} >
-													<CopyButton
-														disabled={results.expired.length < 1}
-														data={JSON.stringify ( results.expired, null, "\t" )}
-													/>
-												</TableCell>
-											</TableRow>
-											<TableRow>
-												<TableCell padding="none" size="small" className={classes.cell} >
-													<Typography>{i18n.translate ("failedImported")}</Typography>
-												</TableCell>
-												<TableCell padding="none" size="small" className={classes.cell} >
-													<Typography>{results.failed.length}</Typography>
-												</TableCell>
-												<TableCell padding="none" size="small" align="right" className={classes.cell} >
-													<CopyButton
-														disabled={results.failed.length < 1}
-														data={JSON.stringify ( results.failed, null, "\t" )}
-													/>
-												</TableCell>
-											</TableRow>
-										</TableBody>
-									</Table>,
-									showCancel: false,
-									showSubmit: true,
-									submit: {
-										label: i18n.translate ("close"),
-										callback: () => {
-											this.handleDialogClose ()
-											this.handleClose ()
-										},
-									},
-								}))
-								.catch ( error => this.setDialogState ({
-									open: true,
-									title: i18n.translate ("importedResults"),
-									content: <Typography gutterBottom >{i18n.translate ("failedImportMessage")}</Typography>,
-									showCancel: false,
-									showSubmit: true,
-									submit: {
-										label: i18n.translate ("close"),
-										callback: () => {
-											this.handleDialogClose ()
-											this.handleClose ()
-										},
-									},
-								}))
-							)} >
+							}} >
 							<ListItemIcon className={classes.icon} >
 								<ImportIcon color="primary" />
 							</ListItemIcon>
@@ -384,7 +390,47 @@ class MainMenu extends React.Component {
 						<MenuItem
 							className={classes.item}
 							disabled={hits < 1}
-							onClick={() => this.handleClose ( () => cookies.export () )} >
+							onClick={() => {
+								this.setDialogState ({
+									open: true,
+									title: i18n.translate ("exportCookies"),
+									content: <Table>
+										<TableBody>
+											<TableRow>
+												<TableCell padding="none" size="small" className={classes.cell} >
+													<Typography>{i18n.translate ("jsonFormat")}</Typography>
+												</TableCell>
+												<TableCell padding="none" size="small" align="right" className={classes.cell} >
+													<CopyButton data={cookies.getJson ()} />
+												</TableCell>
+												<TableCell padding="none" size="small" align="right" className={classes.cell} >
+													<Button onClick={() => cookies.downloadJson ()} >{i18n.translate ("download")}</Button>
+												</TableCell>
+											</TableRow>
+											<TableRow>
+												<TableCell padding="none" size="small" className={classes.cell} >
+													<Typography>{i18n.translate ("netscapeFormat")}</Typography>
+												</TableCell>
+												<TableCell padding="none" size="small" align="right" className={classes.cell} >
+													<CopyButton data={cookies.getNetscape ()} />
+												</TableCell>
+												<TableCell padding="none" size="small" align="right" className={classes.cell} >
+													<Button onClick={() => cookies.downloadNetscape ()} >{i18n.translate ("download")}</Button>
+												</TableCell>
+											</TableRow>
+										</TableBody>
+									</Table>,
+									showCancel: false,
+									showSubmit: true,
+									submit: {
+										label: i18n.translate ("close"),
+										callback: () => {
+											this.handleDialogClose ()
+											this.handleClose ()
+										},
+									},
+								})
+							}} >
 							<ListItemIcon className={classes.icon} >
 								<ExportIcon color="primary" />
 							</ListItemIcon>

@@ -3,7 +3,7 @@
     "minimum_chrome_version": "88",
     "name": "__MSG_extensionFullName__",
     "short_name": "__MSG_extensionShortName__",
-    "version": "2.5.0",
+    "version": "2.7.0",
     "description": "__MSG_extensionDescription__",
     "homepage_url": "https://github.com/null93/milk-cookie-manager",
     "author": "Rafael Grigorian",
@@ -20,7 +20,10 @@
         "storage"
     ],
     "background": {
-        "service_worker": "service-worker.js"
+        "service_worker": "service-worker.js",
+        "scripts": [
+            "service-worker.js"
+        ]
     },
     "options_ui": {
         "page": "options.html",
@@ -40,5 +43,10 @@
         "default_title": "__MSG_extensionFullName__",
         "default_icon": "icon-128.png",
         "default_popup": "index.html"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{d2731422-5390-4257-9974-9f8b9bf17422}"
+        }
     }
 }

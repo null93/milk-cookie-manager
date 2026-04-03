@@ -50,7 +50,6 @@ class Application extends React.Component {
 				sameSite: "lax",
 				secure: focus.last ? focus.last.startsWith ("https") : true,
 				session: false,
-				storeId: "0",
 				value: "",
 			}
 		})
@@ -73,8 +72,11 @@ class Application extends React.Component {
 				cookie && <CookieViewer
 					cookie={cookie}
 					isNew={isNew}
+					exportJson={() => cookies.getJson ( cookie )}
+					onDownloadJson={() => cookies.downloadJson ( cookie )}
+					exportNetscape={() => cookies.getNetscape ( cookie )}
+					onDownloadNetscape={() => cookies.downloadNetscape ( cookie )}
 					onClose={() => this.unSelectCookie ()}
-					onExport={() => cookies.export ( cookie )}
 					onDelete={() => this.unSelectCookie ( () => cookies.delete ( cookie ) )}
 					onBlock={() => this.unSelectCookie ( () => {
 						storage.add ( "block", cookies.hash ( cookie ), cookie )

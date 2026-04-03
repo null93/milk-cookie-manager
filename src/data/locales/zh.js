@@ -51,10 +51,10 @@ module.exports = {
         "message": "这些设置存储在本地，不会在浏览器之间同步。区分大小写适用于常规搜索和正则表达式搜索。"
     },
     "appearanceDescription": {
-        "message": "不幸的是，Chrome 扩展程序无法检测到您的系统是否使用深色主题。值得庆幸的是，您仍然可以手动设置深色模式！"
+        "message": "调整视觉设置以个性化您的浏览体验，包括主题和显示选项。"
     },
     "blockedCookiesDescription": {
-        "message": "cookie 被阻止后，其名称、域和路径将被保存，用于阻止今后创建的cookies。这三个属性必须完全匹配，cookie 才能被阻止。"
+        "message": "Cookie 被阻止后，其名称、域和路径将被保存，用于阻止今后创建的 cookies。这三个属性必须完全匹配，cookie 才能被阻止。"
     },
     "protectedCookiesDescription": {
         "message": "受保护的 cookies 按其名称、域和路径编制索引。它们的过期时间会被遵守，删除和修改也会被阻止。如果在受保护 cookie 过期后，以相同的名称、域名和路径设置了新的 cookie，那么该 cookie 将自动受到保护。"
@@ -63,7 +63,7 @@ module.exports = {
         "message": "感谢所有为本项目提供的开源资源！"
     },
     "donateDescription": {
-        "message": "请我喝杯咖啡."
+        "message": "请我喝杯咖啡。"
     },
     "githubRepositoryDescription": {
         "message": "查看源代码并报告问题"
@@ -105,7 +105,7 @@ module.exports = {
         "message": "秒数"
     },
     "sortCookieList": {
-        "message": "Cookie列表排序"
+        "message": "Cookie 列表排序"
     },
     "name": {
         "message": "名称"
@@ -123,10 +123,10 @@ module.exports = {
         "message": "下降"
     },
     "noBlockedCookies": {
-        "message": "没有被阻止的Cookies"
+        "message": "没有被阻止的 Cookies"
     },
     "noProtectedCookies": {
-        "message": "没有受保护的Cookies"
+        "message": "没有受保护的 Cookies"
     },
     "domainAndPath": {
         "message": "域名 + 路径"
@@ -147,7 +147,7 @@ module.exports = {
         "message": "使用正则表达式搜索 Cookies"
     },
     "searchPlaceholder": {
-        "message": "搜索Cookies"
+        "message": "搜索 Cookies"
     },
     "notNamed": {
 		"message": "未命名"
@@ -159,7 +159,7 @@ module.exports = {
         "message": "Cookies"
     },
     "noCookiesFound": {
-        "message": "没有发现Cookies"
+        "message": "没有发现 Cookies"
     },
     "caseSensitiveTooltip": {
         "message": "当前区分大小写"
@@ -186,13 +186,13 @@ module.exports = {
         "message": "显示所有可用操作"
     },
     "updateCookie": {
-        "message": "更新Cookie"
+        "message": "更新 Cookie"
     },
     "createCookie": {
-        "message": "创建Cookie"
+        "message": "创建 Cookie"
     },
     "protectedCookie": {
-        "message": "受保护的Cookie"
+        "message": "受保护的 Cookie"
     },
     "error": {
         "message": "错误"
@@ -204,7 +204,7 @@ module.exports = {
         "message": "保护"
     },
     "duplicate": {
-        "message": "复刻"
+        "message": "复制"
     },
     "export": {
         "message": "导出"
@@ -213,13 +213,13 @@ module.exports = {
         "message": "阻止"
     },
     "deleteTooltip": {
-        "message": "删除此Cookie"
+        "message": "删除此 Cookie"
     },
     "duplicateTooltip": {
-        "message": "复刻Cookie"
+        "message": "复制 Cookie"
     },
     "exportTooltip": {
-        "message": "将 Cookie 导出到json文件"
+        "message": "导出 Cookie"
     },
     "blockTooltip": {
         "message": "阻止并删除 Cookie"
@@ -236,11 +236,11 @@ module.exports = {
     "copyCurlTooltip": {
         "message": "使用 CURL 命令复制可见 Cookies"
     },
-    "importCookiesViaJsonTooltip": {
-        "message": "通过 JSON 文件导入 Cookie"
+    "importCookiesViaFileTooltip": {
+        "message": "通过文件导入 Cookie"
     },
     "exportToJsonTooltip": {
-        "message": "将可见 Cookie 导出到 JSON 文件"
+        "message": "导出可见 Cookie"
     },
     "fullscreenTooltip": {
         "message": "在新标签页中打开"
@@ -270,7 +270,7 @@ module.exports = {
         "message": "您将保护所有当前可见的 cookie。您确定要继续吗？"
     },
     "copyCurlCommand": {
-		"message": "以CURL命令复制"
+		"message": "以 CURL 命令复制"
     },
     "importedResults": {
         "message": "导入结果"
@@ -285,10 +285,10 @@ module.exports = {
         "message": "导入 cookies 失败，请检查 json 文件并重试。"
     },
     "importCookies": {
-        "message": "导入Cookies"
+        "message": "导入 Cookies"
     },
     "exportCookies": {
-        "message": "导出Cookies"
+        "message": "导出 Cookies"
     },
     "copied": {
         "message": "已复制！"
@@ -297,10 +297,10 @@ module.exports = {
         "message": "复制到剪贴板"
     },
     "expiredCookies": {
-        "message": "过期的Cookies"
+        "message": "过期的 Cookies"
     },
     "importingCookies": {
-        "message": "正在导入Cookies"
+        "message": "正在导入 Cookies"
     },
     "copy": {
         "message": "复制"
@@ -309,7 +309,7 @@ module.exports = {
         "message": "关闭"
     },
     "currentlyProcessesTemplateString": {
-        "message": "当前已处理总共 {{total}} 个Cookies 中的 {{current}} 个。"
+        "message": "当前已处理总共 {{total}} 个 Cookies 中的 {{current}} 个。"
     },
     "errorCookieNameValueEmpty": {
         "message": "错误：“名称”和“值”不能同时为空"
@@ -345,7 +345,7 @@ module.exports = {
         "message": "未指定"
     },
     "unspecifiedDescription": {
-        "message": "默认行为将模仿Lax"
+        "message": "默认行为将模仿 Lax"
     },
     "noRestriction": {
         "message": "无限制"
@@ -354,7 +354,7 @@ module.exports = {
         "message": "不受文本限制，但需要安全标识"
     },
     "lax": {
-        "message": "宽松Lax"
+        "message": "宽松 Lax"
     },
     "laxDescription": {
         "message": "仅限于第一方或同一站点环境"
@@ -373,5 +373,38 @@ module.exports = {
     },
     "showAvailableActions": {
         "message": "显示可用操作"
+    },
+    "download": {
+        "message": "下载"
+    },
+    "jsonFormat": {
+        "message": "JSON 格式"
+    },
+    "netscapeFormat": {
+        "message": "Netscape 格式"
+    },
+    "exportCookie": { 
+        "message": "导出 Cookie"
+    },
+    "functionality": {
+        "message": "功能"
+    },
+    "functionalityDescription": {
+        "message": "管理如何处理和交互 cookies，提供对 cookies 处理行为的精确控制。"
+    },
+    "ignoreStoreId": {
+        "message": "忽略 Store ID"
+    },
+    "displayLastSearch": {
+        "message": "显示最近的搜索"
+    },
+    "updateProtectedCookiesValueTooltip": {
+        "message": "禁用时，受保护的 Cookie 的值无法更新。启用此选项以允许更改受保护的 Cookie 的值。"
+    },
+    "ignoreStoreIdTooltip": {
+        "message": "如果启用此选项，在导入和导出过程中会忽略存储 ID 属性。导入的 Cookie 将使用默认存储。"
+    },
+    "cookieCounterBadge": {
+        "message": "Cookie 计数徽章"
     },
 }

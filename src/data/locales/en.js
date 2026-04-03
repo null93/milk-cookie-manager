@@ -51,7 +51,7 @@ module.exports = {
         "message": "These settings are stored locally and are not synced across browsers. Case sensitivity applies to both regular and regexp search."
     },
     "appearanceDescription": {
-        "message": "Unfortunately Chrome extensions cannot detect if your system is using a Dark theme. Thankfully, there is still a dark mode that you can set manually!"
+        "message": "Adjust visual settings to personalize your browsing experience, including theme and display options."
     },
     "blockedCookiesDescription": {
         "message": "When a cookie is blocked, the name, domain, and path is saved and is used to block future cookies from being created. All three properties must match exactly for a cookie to be blocked."
@@ -219,7 +219,7 @@ module.exports = {
         "message": "Duplicate Cookie"
     },
     "exportTooltip": {
-        "message": "Export Cookie To JSON File"
+        "message": "Export Cookie"
     },
     "blockTooltip": {
         "message": "Block & Delete Cookie"
@@ -236,11 +236,11 @@ module.exports = {
     "copyCurlTooltip": {
         "message": "Copy CURL Command With Visible Cookies"
     },
-    "importCookiesViaJsonTooltip": {
-        "message": "Import Cookies Via JSON File"
+    "importCookiesViaFileTooltip": {
+        "message": "Import Cookies Via File"
     },
     "exportToJsonTooltip": {
-        "message": "Export Visible Cookies To JSON File"
+        "message": "Export Visible Cookies"
     },
     "fullscreenTooltip": {
         "message": "Open In New Tab"
@@ -373,5 +373,38 @@ module.exports = {
     },
     "showAvailableActions": {
         "message": "Show Available Actions"
+    },
+    "download": {
+        "message": "Download"
+    },
+    "jsonFormat": {
+        "message": "JSON Format"
+    },
+    "netscapeFormat": {
+        "message": "Netscape Format"
+    },
+    "exportCookie": {
+        "message": "Export Cookie"
+    },
+    "functionality": {
+        "message": "Functionality"
+    },
+    "functionalityDescription": {
+        "message": "Manage how cookies are processed and interacted with, offering precise control over cookie handling behaviors."
+    },
+    "ignoreStoreId": {
+        "message": "Ignore Store ID"
+    },
+    "displayLastSearch": {
+        "message": "Display Last Search"
+    },
+    "updateProtectedCookiesValueTooltip": {
+        "message": "When disabled, the value of a protected cookie cannot be updated. Enable this option to allow changes to the value of a protected cookie."
+    },
+    "ignoreStoreIdTooltip": {
+        "message": "If this option is enabled, the store ID attribute is ignored during import and export. The default cookie store will be used for imported cookies."
+    },
+    "cookieCounterBadge": {
+        "message": "Cookie Counter Badge"
     },
 }
