@@ -51,10 +51,6 @@ class CookiesProvider extends React.Component {
 		return browser.cookies
 			.getAll ( params )
 			.then ( cookies => {
-				const today = moment ().unix ()
-				cookies = cookies.filter ( cookie =>
-					!cookie.expirationDate || cookie.expirationDate > today
-				)
 				this.setState ({
 					all: cookies,
 					found: search.filter ( cookies ),
