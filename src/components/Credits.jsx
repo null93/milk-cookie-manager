@@ -7,11 +7,14 @@ import TableRow from "@material-ui/core/TableRow"
 import TableCell from "@material-ui/core/TableCell"
 import TableFooter from "@material-ui/core/TableFooter"
 import TablePagination from "@material-ui/core/TablePagination"
+import Typography from "@material-ui/core/Typography"
+import Box from "@material-ui/core/Box"
 import Button from "@material-ui/core/Button"
 import SourceIcon from "@material-ui/icons/Github"
 import ImageIcon from "@material-ui/icons/Wallpaper"
 import TypeIcon from "@material-ui/icons/Title"
 import TranslateIcon from "@material-ui/icons/Translate"
+import CodeIcon from "@material-ui/icons/Code"
 import { withStyles } from "@material-ui/core/styles"
 import { withI18n } from "contexts/I18nContext"
 
@@ -42,6 +45,11 @@ class Credits extends React.Component {
 			</TableCell>
 			<TableCell size="small" >
 				{name}
+			</TableCell>
+			<TableCell size="small" >
+				<Typography variant="body2" color="textSecondary" >
+					{link}
+				</Typography>
 			</TableCell>
 			<TableCell size="small" align="right" style={{ width: 64 }} >
 				<Button size="small" onClick={() => browser.tabs.create ({ url: link })} >{i18n.translate ("link")}</Button>
@@ -78,6 +86,7 @@ class Credits extends React.Component {
 				this.renderRow ( makeIcon ( TranslateIcon ), "translation-chinese", "https://github.com/Lion-hk" ),
 				this.renderRow ( makeIcon ( TranslateIcon ), "translation-chinese", "https://github.com/Mishasama" ),
 				this.renderRow ( makeIcon ( TranslateIcon ), "translation-russian", "https://github.com/null93" ),
+				this.renderRow ( makeIcon ( CodeIcon ), "pull-request", "https://github.com/tomkabel" ),
 			]}
 			</TableBody>
 			<TableFooter>
